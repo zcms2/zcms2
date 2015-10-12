@@ -1,0 +1,9 @@
+{
+    "name" : "t_template_backend_name_default",
+    "description" : "t_template_backend_name_default_desc",
+    "uri" : "http://www.zcms.com",
+    "author" : "ZCMS Team",
+    "authorUri" : "http://www.zcms.com",
+    "version" : "1.0.0",
+    "tag" : "red, e-commerce, zcms team"
+}

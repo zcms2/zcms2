@@ -1,0 +1,158 @@
+.available-widget .widget_active {
+
+}
+
+.zwidget-title {
+    padding: 5px;
+    background: #E6E4E5;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+    font-weight: bold;
+}
+
+.skin-green .zwidget-title{
+    background-color: #00a65a;
+}
+
+.skin-purple .zwidget-title{
+    background-color: #605ca8;
+}
+
+.skin-blue .zwidget-title{
+    background-color: #3c8dbc;
+}
+
+.skin-yellow .zwidget-title{
+    background-color: #f39c12;
+}
+
+.widget_active_panel {
+    background: #ECF0F5;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.zwidget-description {
+    padding: 6px 3px 0 3px;
+}
+
+.zsidebar:first-child {
+    margin-top: 0;
+}
+
+.zsidebar-tile {
+    padding: 5px;
+    background: #E6E4E5;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.zsidebar-content {
+    min-height: 150px;
+    position: relative;
+}
+
+.box.box-sidebar, .box.available-widget{
+    border-top: none;
+}
+.box-sidebar.box .box-body .box{
+    border: 1px dashed #d2d6de;
+    box-shadow : none;
+    margin-bottom: 3px;
+}
+.widget_active {
+    padding: 5px;
+}
+
+.portlet-placeholder {
+    border: 1px dotted black;
+    padding: 5px;
+    height: 62px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.zForm {
+    background: #ffffff;
+    padding: 10px 6px 6px 6px;
+}
+
+.zForm label {
+    margin-right: 10px !important;
+}
+
+.widget {
+    margin-bottom: 0;
+}
+
+.panel-available-widget {
+    padding: 0 10px 10px 10px;
+}
+
+.zwidget-description {
+    padding-bottom: 3px;
+    font-style: italic;
+}
+
+.zsidebar .col-sm-6 {
+    width: 100% !important;
+}
+
+.zsidebar .widget_active:first-child {
+    margin-top: 0px;
+}
+
+.zsidebar .widget_active {
+    margin-top: 10px;
+    background: #E6E4E4;
+    border-radius: 3px;
+}
+
+.zwidget-title:hover {
+    cursor: pointer;
+}
+
+.zwidget-title span {
+    margin-top: 7px;
+    float: right;
+}
+
+.zForm input, .zForm select, .zForm textarea {
+    max-width: 100%;
+}
+
+.ui-draggable {
+    z-index: 100;
+}
+
+
+@media (max-width: 1200px) {
+    .content .col-sm-3 {
+        width: 50%;
+    }
+}
+
+.panel-sidebar .panel-body {
+    padding: 5px;
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+    .col-sm-6.sidebar-main .col-sm-6{
+        width: 100%;
+    }
+    .col-sm-6.sidebar-main{
+        padding-left: 15px !important;
+    }
+    .sidebar-main .col-sm-6{
+        padding: 0 !important;
+    }
+}
+@media (max-width: 767px) {
+    .sidebar-main {
+        padding: 0 !important;
+    }
+
+    .col-sidebar-first, .col-sidebar-last {
+        padding: 0 !important;
+    }
+
+}

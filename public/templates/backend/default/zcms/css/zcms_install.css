@@ -1,0 +1,38 @@
+/*.symbol.required:before {*/
+    /*content: "*";*/
+    /*display: inline;*/
+    /*color: #E6674A;*/
+/*}*/
+
+.install-page {
+    background: #d2d6de;
+}
+
+.install-box {
+    width: 350px;
+    margin: 1% auto;
+}
+
+.install-box a {
+    color: #444;
+}
+
+.install-logo {
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+
+.install-box-body {
+    background: #fff;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+}
+
+.install-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}

@@ -1,0 +1,1 @@
+app/frontend/auth/languages/email-templates/en-GB/welcome_with_facebook.volt:1

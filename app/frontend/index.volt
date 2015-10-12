@@ -1,0 +1,1 @@
+{% extends "../../../templates/frontend/default/index.volt" %}

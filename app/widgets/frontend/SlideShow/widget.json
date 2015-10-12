@@ -1,0 +1,9 @@
+{
+  "name": "w_slide_show_name",
+  "description": "w_slide_show_desc",
+  "version": "0.0.1",
+  "author": "ZCMS Team",
+  "uri": "http://www.zcms.com",
+  "authorUri": "http://www.zcms.com",
+  "location": "Frontend"
+}

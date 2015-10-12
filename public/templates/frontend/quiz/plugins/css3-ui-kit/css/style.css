@@ -1,0 +1,369 @@
+::-moz-selection {
+    color: #fff;
+    background: rgba(191, 230, 251, .50);
+    text-shadow: none;
+}
+
+::selection {
+    color: #fff;
+    background: rgba(191, 230, 251, .50);
+    text-shadow: none;
+}
+
+/* End Basic Elements */
+
+/* Start Rectangular Button */
+#r-b {
+    display: inline;
+    position: absolute;
+    margin: 0;
+    width: 80px;
+    height: 32px;
+    top: 108px;
+    left: 0px;
+}
+
+#rectangular-button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    position: relative;
+    display: block;
+    color: #666;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.59);
+    background: #ececec;
+    padding: 6px 20px 7px 20px;
+    outline: none;
+    border: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: visible;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+}
+
+#rectangular-button:hover {
+    color: #888;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+}
+
+#rectangular-button:active {
+    color: #696969;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.53);
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d8d8d8;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    -o-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14 pxpx rgba(255, 255, 255, 0.20);
+}
+
+/* End Rectangular Button */
+
+/* Start Circular Button */
+#c-b {
+    display: inline;
+    position: absolute;
+    margin: 0;
+    width: 80px;
+    height: 32px;
+    top: 154px;
+    left: 0px;
+}
+
+#circular-button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    position: relative;
+    display: block;
+    color: #666;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.59);
+    padding: 6px 20px 7px 20px;
+    outline: none;
+    background: #ececec;
+    border: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: visible;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.57);
+}
+
+#circular-button:hover {
+    color: #888;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 15px 14px rgba(255, 255, 255, 0.75);
+}
+
+#circular-button:active {
+    color: #696969;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.53);
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d8d8d8;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    -o-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -15px 14px rgba(255, 255, 255, 0.20);
+}
+
+/* End Circular Button */
+
+/* Start Dropdown Select */
+#fight-view .dropdown {
+    display: block;
+    position: absolute;
+    margin: 0;
+    width: auto;
+    height: auto;
+    top: 199px;
+    left: 0px;
+}
+
+.dropdown-select {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-appearance: button;
+    -webkit-user-select: none;
+    font-size: 13px;
+    overflow: visible;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.59);
+    display: inline;
+    position: relative;
+    margin: 0px 1px 0px 1px;
+    width: auto;
+    height: auto;
+    background: #ececec url(images/ddui.png) 85% 0px no-repeat;
+    padding: 0px 69px 0px 13px;
+    outline: none;
+    border: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.57);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.57);
+}
+
+.dropdown-select:hover {
+    color: #888;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.75);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.75);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 16px 15px rgba(255, 255, 255, 0.75);
+}
+
+.dropdown-select:active {
+    color: #696969;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.53);
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d8d8d8;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -14px 13px rgba(255, 255, 255, 0.20);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -14px 13px rgba(255, 255, 255, 0.20);
+    -o-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -14px 13px rgba(255, 255, 255, 0.20);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -14px 13px rgba(255, 255, 255, 0.20);
+}
+
+.dropdown-option {
+    color: #666;
+    background: #f9f9f9;
+}
+
+.dropdown-select::before {
+    -webkit-margin-start: 3px;
+    background: rgba(102, 102, 102, 0.74);
+    border-radius: 100%;
+    content: '';
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    height: 6px;
+    left: 0;
+    margin-top: 3px;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    vertical-align: top;
+    width: 6px;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* End Dropdown Select */
+
+/* Start Radio Buttons */
+#quiz-answer-content input.radio-button{
+    border-radius: 50% !important;
+}
+#radio {
+    display: inline;
+    position: absolute;
+    margin: 0;
+    width: auto;
+    height: auto;
+    top: 20px;
+    right: 31px;
+    border-radius: 50% !important;
+}
+
+.radio-button {
+    cursor: pointer;
+    margin: 0;
+    -webkit-appearance: none;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 3px;
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    vertical-align: baseline;
+    width: 24px;
+    background: #ececec;
+    border-radius: 100%;
+    border: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+}
+
+.radio-button:hover {
+    color: #888;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+}
+
+.radio-button:active {
+    color: #696969;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.53);
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d8d8d8;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    -o-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+}
+
+.radio-button:checked::before {
+    -webkit-margin-start: 3px;
+    background: rgba(102, 102, 102, 0.74);
+    border-radius: 100%;
+    content: '';
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    height: 6px;
+    left: 5px;
+    margin-top: 3px;
+    opacity: 1;
+    position: absolute;
+    top: 5px;
+    vertical-align: top;
+    width: 6px;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* End Radio Buttons */
+
+/* Start Checkboxes */
+#checkboxes {
+    display: inline;
+    position: absolute;
+    margin: 0;
+    width: auto;
+    height: auto;
+    top: 50px;
+    right: 31px;
+}
+
+.checkbox {
+    cursor: pointer;
+    margin: 0;
+    -webkit-appearance: none;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 3px;
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    vertical-align: baseline;
+    width: 24px;
+    background: #ececec;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.57);
+}
+
+.checkbox:hover {
+    color: #888;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.69);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    -o-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.027), inset 0px 1px 0px rgba(255, 255, 255, 0.69), inset 0px -1px 0px rgba(0, 0, 0, 0.0187), inset 0px 6px 7px rgba(255, 255, 255, 0.78);
+}
+
+.checkbox:active {
+    color: #696969;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.53);
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d8d8d8;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    -o-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.58), inset 0px 1px 6px rgba(0, 0, 0, 0.07), inset 0px -6px 7px rgba(255, 255, 255, 0.20);
+}
+
+.checkbox:checked::before {
+    -webkit-margin-start: 0;
+    content: '';
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    height: 12px;
+    left: 5px;
+    margin-top: 0;
+    opacity: 1;
+    position: absolute;
+    top: 5px;
+    vertical-align: top;
+    width: 12px;
+}
+
+.checkbox:checked.tick::before {
+    background: transparent url(images/cbui.png) -1px -0px no-repeat;
+    opacity: 1;
+}
+
+.checkbox:checked.cross::before {
+    background: transparent url(images/cbui.png) -22px 0px no-repeat;
+    opacity: 1;
+}
+
+.checkbox:checked.add::before {
+    background: transparent url(images/cbui.png) -43px 0px no-repeat;
+    opacity: 1;
+}
+
+/* End Checkboxes */

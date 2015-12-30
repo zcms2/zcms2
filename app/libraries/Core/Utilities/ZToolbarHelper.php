@@ -269,7 +269,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addDeleteButton($rule = 'delete', $buttonLink = null, $buttonName = 'gb_delete', $buttonIconClass = 'glyphicon glyphicon-remove', $buttonTypeClass = 'btn btn-danger delete', $onClickEvent = 'return ZCMS.deleteSubmit(this);')
+    public function addDeleteButton($rule = 'delete', $buttonLink = null, $buttonName = 'gb_delete', $buttonIconClass = 'fa fa-trash', $buttonTypeClass = 'btn btn-danger delete', $onClickEvent = 'return ZCMS.deleteSubmit(this);')
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -337,7 +337,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addEditButton($rule = 'edit', $buttonLink = null, $buttonName = 'gb_edit', $buttonIconClass = 'glyphicon glyphicon-edit', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.editButtonSubmit(this);')
+    public function addEditButton($rule = 'edit', $buttonLink = null, $buttonName = 'gb_edit', $buttonIconClass = 'fa fa-edit', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.editButtonSubmit(this);')
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -353,7 +353,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addSaveButton($rule = '', $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'glyphicon glyphicon-floppy-saved', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
+    public function addSaveButton($rule = '', $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -370,7 +370,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addSaveAndEditButton($rule, $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'glyphicon glyphicon-floppy-saved', $buttonTypeClass = 'btn btn-primary', $onClickEvent = "eturn ZCMS.saveAndEditForm('save_and_edit');")
+    public function addSaveAndEditButton($rule, $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'glyphicon glyphicon-floppy-saved', $buttonTypeClass = 'btn btn-primary', $onClickEvent = "return ZCMS.saveAndEditForm('save_and_edit');")
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -401,7 +401,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addCancelButton($rule, $buttonLink = null, $buttonName = 'gb_cancel', $buttonIconClass = 'glyphicon glyphicon-ban-circle', $buttonTypeClass = 'btn btn-warning', $onClickEvent = '')
+    public function addCancelButton($rule, $buttonLink = null, $buttonName = 'gb_cancel', $buttonIconClass = 'fa fa-reply', $buttonTypeClass = 'btn btn-warning', $onClickEvent = '')
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -525,30 +525,30 @@ class ZToolbarHelper
         $html = '';
         //Add href
         if ($buttonLink == '') {
-            $html .= '<a href="#" ';
+            $html .= '<a data-toggle="tooltip" data-original-title="' . __($buttonName) . '" href="#" ';
         } else {
-            $html .= "<a href=\"" . $buttonLink . "\"";
+            $html .= '<a data-toggle="tooltip" data-original-title="' . __($buttonName) . '" href="' . $buttonLink . '"';
         }
 
 
         //Add event onclick
         if (strlen($onClickEvent) > 0) {
-            $html .= " onclick=\"" . $onClickEvent . "\"";
+            $html .= ' onclick="' . $onClickEvent . '"';
         }
 
         $html .= ' class="' . $buttonTypeClass . ' btn-sm"';
 
-        $html .= ">";
+        $html .= '>';
 
-        if ($buttonIconClassDir == "left") {
+        if ($buttonIconClassDir == 'left') {
             if (strlen($buttonIconClass) > 0) {
                 $html .= '<span class="' . $buttonIconClass . '"></span> ';
             }
             //Add translation button name
-            $html .= __($buttonName);
+            //$html .= __($buttonName);
         } else {
             //Add translation button name
-            $html .= __($buttonName);
+            //$html .= __($buttonName);
             if (strlen($buttonIconClass) > 0) {
                 $html .= ' <span class="' . $buttonIconClass . '""></span>';
             }

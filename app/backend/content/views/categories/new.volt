@@ -5,20 +5,16 @@
             <div class="panel panel-default">
                 <div class="panel-body buttons-widget">
                     <div class="row">
-                        <div class="col-md-7">
-                            <div class="col-md-12">
+                        <div class="col-md-9">
                                 <div class="form-group">
                                     {{ form.label('title') }}
                                     {{ form.render('title') }}
                                 </div>
-                            </div>
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     {{ form.label('alias') }}
                                     {{ form.render('alias') }}
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 row">
                                 <div class="form-group">
                                     {{ form.label('parent') }}
                                     {{ form.render('parent') }}
@@ -32,12 +28,12 @@
                             </div>
                             <div class="clearfix"></div>
 
-                            <div class="col-md-12">
+                            <div class="form-group">
                                 {{ form.label('description') }}
                                 {{ form.render('description') }}
                             </div>
                         </div>
-                        {{ form.getSeoFormHTML(true, 'col-md-5') }}
+                        {{ form.getSeoFormHTML(true, 'col-md-3') }}
                     </div>
                 </div>
             </div>

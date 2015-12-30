@@ -125,6 +125,8 @@ class Posts extends ZModel
         $this->title = strip_tags($this->title);
         if($this->alias == ''){
             $this->alias = generateAlias($this->title);
+        }else{
+            $this->alias = generateAlias($this->alias);
         }
     }
 }

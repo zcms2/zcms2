@@ -6,7 +6,6 @@
     </div>
     <script src="{{ _baseUri }}/plugins/dropzonejs/dropzone.js"></script>
     <link rel="stylesheet" href="{{ _baseUri }}/plugins/dropzonejs/dropzone.css">
-
     <script>
         var errorUpload = [];
         var imageCount = 0;
@@ -19,7 +18,6 @@
                 if (file.previewElement) {
                     return file.previewElement.classList.add("dz-success");
                 }
-                //console.log(file.type);
             }
         };
     </script>

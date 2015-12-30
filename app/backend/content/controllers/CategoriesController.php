@@ -55,7 +55,7 @@ class CategoriesController extends ZAdminController
             $conditions[] = "published = " . intval($filter['filter_published']);
         }
 
-        if($filter['filter_role'] != '' && $filter['filter_role'] != '-1'){
+        if ($filter['filter_role'] != '' && $filter['filter_role'] != '-1') {
             $conditions[] = "u.role_id = " . intval($filter['filter_role']);
         }
 
@@ -115,6 +115,33 @@ class CategoriesController extends ZAdminController
                 ]
             ],
             [
+                'type' => 'text',
+                'title' => 'gb_created_by',
+                'column' => 'display_name',
+                'class' => 'text-center',
+                'css' => 'width : 120px',
+                'filter' => [
+                    'type' => 'select',
+                    'name' => 'filter_role',
+                    'attributes' => [
+                        'using' => [
+                            'role_id',
+                            'name'
+                        ],
+                        'useEmpty' => true,
+                        'emptyValue' => '-1',
+                        'emptyText' => __('gb_all'),
+                        'value' => $filter['filter_role'] == '' ? -1 : $filter['filter_role']
+                    ],
+                    'value' => UserRoles::find()
+                ]
+            ],
+            [
+                'type' => 'date',
+                'title' => 'gb_created_at',
+                'column' => 'created_at',
+            ],
+            [
                 'type' => 'actions',
                 'title' => 'gb_ordering',
                 'link_prefix' => 'category_id',
@@ -136,37 +163,6 @@ class CategoriesController extends ZAdminController
                         'access' => $this->acl->isAllowed('content|categories|edit'),
                     ]
                 ]
-            ],
-            [
-                'type' => 'text',
-                'title' => 'gb_created_by',
-                'column' => 'display_name',
-                'class' => 'text-center',
-                'filter' => [
-                    'type' => 'select',
-                    'name' => 'filter_role',
-                    'attributes' => [
-                        'using' =>[
-                            'role_id',
-                            'name'
-                        ],
-                        'useEmpty' => true,
-                        'emptyValue' => '-1',
-                        'emptyText' => __('gb_all'),
-                        'value' => $filter['filter_role'] == '' ? -1 : $filter['filter_role']
-                    ],
-                    'value' => UserRoles::find()
-                ]
-            ],
-            [
-                'type' => 'date',
-                'title' => 'gb_created_at',
-                'column' => 'created_at',
-            ],
-            [
-                'type' => 'date',
-                'title' => 'gb_updated_at',
-                'column' => 'updated_at',
             ],
             [
                 'type' => 'id',

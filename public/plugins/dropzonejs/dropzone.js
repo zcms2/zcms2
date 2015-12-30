@@ -27,6 +27,25 @@
  *
  */
 
+function getBase64FromImageUrl(url) {
+    var img = new Image();
+
+    img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = this.width;
+        canvas.height = this.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(this, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        alert(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+    };
+
+    img.src = url;
+}
+
 (function () {
     var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without,
         __slice = [].slice,
@@ -1017,12 +1036,12 @@
 
         Dropzone.prototype._enqueueThumbnail = function (file) {
             //if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFileSize * 1024 * 1024) {
-                this._thumbnailQueue.push(file);
-                return setTimeout(((function (_this) {
-                    return function () {
-                        return _this._processThumbnailQueue();
-                    };
-                })(this)), 0);
+            this._thumbnailQueue.push(file);
+            return setTimeout(((function (_this) {
+                return function () {
+                    return _this._processThumbnailQueue();
+                };
+            })(this)), 0);
             //}
         };
 
@@ -1066,6 +1085,7 @@
         };
 
         Dropzone.prototype.createThumbnail = function (file, callback) {
+
             var fileReader;
             fileReader = new FileReader;
             fileReader.onload = (function (_this) {
@@ -1084,17 +1104,28 @@
         };
 
         Dropzone.prototype.createThumbnailFromUrl = function (file, imageUrl, callback) {
-            //var type = file.type.split('/');
-            //console.log(type);
-            ////if (type.length) {
-            ////    type = type[0];
-            ////    if (type == 'video') {
-            ////        return '/media/default/video.png';
-            ////    }else if(type == 'audio'){
-            ////        return '/media/default/audio.jpg';
-            ////    }
-            ////}
-            //var img;
+            var type = file.type.split('/');
+            if (type.length) {
+                type = type[0];
+                if (file.type.match(/image.*/)) {
+                } else if (type == 'video') {
+                    this.emit("thumbnail", file, _baseUri + '/media/default/video.png');
+                    if (callback != null) {
+                        return callback();
+                    }
+                } else if (type == 'audio') {
+                    this.emit("thumbnail", file, _baseUri + '/media/default/audio.png');
+                    if (callback != null) {
+                        return callback();
+                    }
+                } else {
+                    this.emit("thumbnail", file, _baseUri + '/media/default/file.png');
+                    if (callback != null) {
+                        return callback();
+                    }
+                }
+            }
+            var img;
             img = document.createElement("img");
             img.onload = (function (_this) {
                 return function () {

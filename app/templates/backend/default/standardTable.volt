@@ -13,7 +13,7 @@
                                     class="fa fa-undo"></i> {{ __('gb_reset') }}</button>
                     </label>
                     <label>
-                        <button type="submit" class="btn btn-success btn-sm"><i
+                        <button type="submit" id="zcms-search" class="btn btn-success btn-sm"><i
                                     class="fa fa-filter"></i> {{ __('gb_search') }}</button>
                     </label>
                 </div>

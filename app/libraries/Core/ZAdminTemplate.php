@@ -57,6 +57,11 @@ class ZAdminTemplate
             if (!empty($filter)) {
                 $filterForm = new ZFormFilter($filter, $view->_filter);
                 $view->setVar('_filterColumn', $filterForm->getForm());
+//                if ($_POST) {
+//                    $view->setVar('_isFilter', true);
+//                }else{
+//                    $view->setVar('_isFilter', false);
+//                }
             }
         }
         $view->setVar('_toolbarHelpers', ZToolbarHelper::getInstance($this->moduleBaseName, $view->getControllerName()));

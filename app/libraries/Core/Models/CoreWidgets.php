@@ -87,33 +87,37 @@ class CoreWidgets extends Model
 
     }
 
-    protected static function _createKey($parameters)
+//    protected static function _createKey($parameters)
+//    {
+//        $uniqueKey = array();
+//
+//        foreach ($parameters as $key => $value) {
+//            if (is_scalar($value)) {
+//                $uniqueKey[] = $key . ':' . $value;
+//            } else {
+//                if (is_array($value)) {
+//                    $uniqueKey[] = $key . ':[' . self::_createKey($value) . ']';
+//                }
+//            }
+//        }
+//
+//        return 'CoreWidgets_' . md5(join(',', $uniqueKey));
+//    }
+//
+    public static function findFirst($parameters = null, $useCache = false)
     {
-        $uniqueKey = array();
+        if ($useCache) {
+            $cache = ZCache::getInstance();
+            $key = self::_createKey($parameters);
 
-        foreach ($parameters as $key => $value) {
-            if (is_scalar($value)) {
-                $uniqueKey[] = $key . ':' . $value;
-            } else {
-                if (is_array($value)) {
-                    $uniqueKey[] = $key . ':[' . self::_createKey($value) . ']';
-                }
+            $data = $cache->get($key);
+            if ($data === null) {
+                $data = parent::findFirst($parameters);
+                $cache->save($key, $data);
             }
+            return $data;
+        } else {
+            return parent::findFirst($parameters);
         }
-
-        return 'CoreWidgets_' . md5(join(',', $uniqueKey));
-    }
-
-    public static function findFirst($parameters = null)
-    {
-        $cache = ZCache::getInstance();
-        $key = self::_createKey($parameters);
-
-        $data = $cache->get($key);
-        if ($data === null) {
-            $data = parent::findFirst($parameters);
-            $cache->save($key, $data);
-        }
-        return $data;
     }
 }

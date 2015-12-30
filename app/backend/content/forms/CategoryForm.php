@@ -52,7 +52,7 @@ class CategoryForm extends ZForm
         $this->add($description);
 
         $categories = PostCategory::getTree('content');
-        $categoryFilter = array();
+        $categoryFilter = [];
 
         $categoryFilter[''] = __('gb_select');
         foreach ($categories as $index => $cat) {

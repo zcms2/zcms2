@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col-xs-6">
+    <div class="col-sm-6 hidden-xs">
         {% if _page.total_pages %}
             <div class="dataTables_info">{{ __("gb_you_are_in_current_page_per_page", ["1" : _page.current, "2" : _page.total_pages]) }}</div>
         {% else %}
             <div class="dataTables_info">{{ __("gb_you_are_in_current_page_per_page", ["1" : 0, "2" : _page.total_pages]) }}</div>
         {% endif %}
     </div>
-    <div class="col-xs-6">
+    <div class="col-sm-6">
         {% if _page.total_pages > 1 %}
             {% set startIndex = 1 %}
 
@@ -18,7 +18,7 @@
                 {% set startIndex = _page.total_pages - 5 %}
             {% endif %}
         {% endif %}
-        <div class="dataTables_paginate paging_bootstrap">
+        <div class="dataTables_paginate paging_bootstrap pull-right">
             <ul class="pagination">
                 {% if _page.current > 1 %}
                     <li><a href="{{ _baseUri }}{{ router.getRewriteUri() }}">First</a></li>

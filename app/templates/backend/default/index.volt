@@ -30,6 +30,9 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+        var _baseUri = '{{ _baseUri }}';
+    </script>
 </head>
 <body class="sidebar-mini skin-green">
 <div class="wrapper">
@@ -57,13 +60,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ _user['avatar'] }}" class="user-image" alt="User Image"/>
+                            <img src="{{ _baseUri }}{{ _user['avatar'] }}" class="user-image" alt="User Image"/>
                             <span class="hidden-xs">{{ _user['full_name'] }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ _user['avatar'] }}" class="img-circle" alt="User Image"/>
+                                <img src="{{ _baseUri }}{{ _user['avatar'] }}" class="img-circle" alt="User Image"/>
                                 <p>
                                     {{ _user['full_name'] }}
                                     <small>{{ __('Member since') }} {{ _user['created_at'] }}</small>

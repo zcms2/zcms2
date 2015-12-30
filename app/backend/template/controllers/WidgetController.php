@@ -105,7 +105,7 @@ class WidgetController extends ZAdminController
                 'column' => 'version'
             ],
             [
-                'type' => 'published',
+                'type' => 'published_is_core',
                 'title' => 'gb_published',
                 'column' => 'published',
                 'link' => '/admin/template/widget/',
@@ -190,6 +190,7 @@ class WidgetController extends ZAdminController
                 'location'
             ];
 
+
             foreach ($keys as $key) {
                 $widget->$key = $infoWidget[$key];
             }
@@ -199,6 +200,7 @@ class WidgetController extends ZAdminController
             } else {
                 $widget->location = 'frontend';
             }
+
 
             $widget->save();
         }

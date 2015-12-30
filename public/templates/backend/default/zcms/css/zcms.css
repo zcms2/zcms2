@@ -6,6 +6,10 @@
     user-select: none
 }
 
+.dataTables_info {
+    margin: 20px 0;
+}
+
 .pace-inactive {
     display: none
 }
@@ -107,17 +111,22 @@
     min-width: 120px;
 }
 
+.tr-filter-showed {
+    visibility: visible !important;
+}
+
 .zcms-toolbar-helper {
     margin-bottom: 5px;
     margin-top: 8px;
 }
 
-.zcms-toolbar-helper .alert{
+.zcms-toolbar-helper .alert {
     margin-bottom: 1px;
 }
 
 .zcms-toolbar-helper a {
     margin-left: 5px;
+    padding: 6px 10px;
 }
 
 .content {

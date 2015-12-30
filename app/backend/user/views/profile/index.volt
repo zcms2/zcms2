@@ -42,7 +42,7 @@
                                         {{ __('m_user_help_text_click_image_upload_new_avatar_avatar_must_square') }}
                                     </label>
                                     <div class="" style="cursor: pointer" onclick="openFileBrowser(this)"><img
-                                                src="{% if avatar is defined and avatar|length > 0 %}{{ avatar }}{% else %}{{ _baseUri }}/images/tmp/select-image.png{% endif %}"
+                                                src="{{ _baseUri }}{% if avatar is defined and avatar|length > 0 %}{{ avatar }}{% else %}{{ _baseUri }}/images/tmp/select-image.png{% endif %}"
                                                 style="width: 128px; height: 128px; border: 1px solid #c0c0c0; padding: 2px; border-radius: 3px">
                                     </div>
                                     <input type="file" name="avatar" style="display: none" onchange="readURL(this)">

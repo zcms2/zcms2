@@ -199,8 +199,8 @@ class MediaUpload
      */
     private function __uploadMedia($file)
     {
-        $baseDir = '/public/media/upload/' . date('Y/m/d') . '/';
-        $dir = ROOT_PATH . $baseDir;
+        $baseDir = '/media/upload/' . date('Y/m/d') . '/';
+        $dir = ROOT_PATH . '/public' . $baseDir;
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }

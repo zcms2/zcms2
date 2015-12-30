@@ -19,9 +19,6 @@ class LoginController extends ZAdminController
      */
     public function indexAction()
     {
-        if(!$this->request->get('zcms')){
-            return $this->response->redirect('/');
-        }
         //User has login yet
         if ($this->_user) {
             $this->session->remove('auth');

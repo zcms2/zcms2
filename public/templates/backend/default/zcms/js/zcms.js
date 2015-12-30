@@ -317,3 +317,13 @@ $('.alert button.close').click(function () {
         alert.remove();
     }
 });
+
+$('#zcms-search').click(function () {
+    var trFilter = $('#adminForm table tr.tr-filter');
+    if(trFilter.hasClass('tr-filter-showed')){
+        $('#adminForm').submit();
+    }else{
+        trFilter.addClass('tr-filter-showed');
+        return false;
+    }
+});

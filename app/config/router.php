@@ -24,32 +24,32 @@ $router = zcms_load_frontend_router($router);
 /**
  * Backend router
  */
-$router->add('/z-admin[/]?', [
+$router->add('/admin[/]?', [
     'module' => 'admin',
     'controller' => 'index',
     'action' => 'index',
 ]);
 
-$router->add('/z-admin/:module/:controller/:action/:params', [
+$router->add('/admin/:module/:controller/:action/:params', [
     'module' => 1,
     'controller' => 2,
     'action' => 3,
     'params' => 4,
 ]);
 
-$router->add('/z-admin/:module/:controller/:action', [
+$router->add('/admin/:module/:controller/:action', [
     'module' => 1,
     'controller' => 2,
     'action' => 3,
 ]);
 
-$router->add('/z-admin/:module/:controller[/]?', [
+$router->add('/admin/:module/:controller[/]?', [
     'module' => 1,
     'controller' => 2,
     'action' => 'index',
 ]);
 
-$router->add('/z-admin/:module[/]?', [
+$router->add('/admin/:module[/]?', [
     'module' => 1,
     'controller' => 'index',
     'action' => 'index',

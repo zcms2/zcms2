@@ -211,15 +211,24 @@ class Categories extends ZModel
      * Get tree with module
      *
      * @param $moduleName
+     * @param $includeRoot
      * @return PostCategory[]
      */
-    public static function getTree($moduleName)
+    public static function getTree($moduleName, $includeRoot = true)
     {
-        return Categories::find([
-            'conditions' => 'module = ?0',
-            'order' => 'lft',
-            'bind' => [$moduleName]
-        ]);
+        if ($includeRoot) {
+            return Categories::find([
+                'conditions' => 'module = ?0',
+                'order' => 'lft',
+                'bind' => [$moduleName]
+            ]);
+        } else {
+            return Categories::find([
+                'conditions' => 'module = ?0 AND root <> 1',
+                'order' => 'lft',
+                'bind' => [$moduleName]
+            ]);
+        }
     }
 
 }

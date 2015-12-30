@@ -3,6 +3,7 @@
 namespace ZCMS\Backend\Content\Controllers;
 
 use ZCMS\Backend\Content\Forms\PostForm;
+use ZCMS\Core\Models\PostCategory;
 use ZCMS\Core\Models\Posts;
 use ZCMS\Core\Models\UserRoles;
 use ZCMS\Core\Utilities\ZArrayHelper;
@@ -33,8 +34,9 @@ class PostsController extends ZAdminController
         $this->addFilter('filter_order_dir', 'ASC', 'string');
         $this->addFilter('filter_column_title', '', 'string');
         $this->addFilter('filter_post_id', '', 'int');
-        $this->addFilter('filter_published', '', 'string');
+        $this->addFilter('filter_published', '', 'int');
         $this->addFilter('filter_role', '', 'int');
+        $this->addFilter('filter_category', '', 'int');
 
         //Get filter
         $filter = $this->getFilter();
@@ -54,12 +56,16 @@ class PostsController extends ZAdminController
             $conditions[] = "p.published = " . intval($filter['filter_published']);
         }
 
-        if($filter['filter_role'] != '' && $filter['filter_role'] != '-1'){
+        if ($filter['filter_role'] != '' && $filter['filter_role'] != '-1') {
             $conditions[] = "u.role_id = " . intval($filter['filter_role']);
         }
 
+        if ($filter['filter_category'] != '' && $filter['filter_category'] != '-1') {
+            $conditions[] = "p.category_id = " . intval($filter['filter_category']);
+        }
+
         $items = $this->modelsManager->createBuilder()
-            ->columns('p.post_id, p.title, p.created_at, p.updated_at, p.published AS published, u.display_name, c.title as c_title')
+            ->columns('p.post_id, p.title, p.created_at, p.updated_at, p.published, u.display_name, c.title as c_title')
             ->addFrom('ZCMS\Core\Models\Posts', 'p')
             ->join('ZCMS\Core\Models\Users', 'p.created_by = u.user_id', 'u')
             ->leftJoin('ZCMS\Core\Models\PostCategory', 'p.category_id = c.category_id', 'c')
@@ -67,6 +73,15 @@ class PostsController extends ZAdminController
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
         $paginationLimit = $this->config->pagination->limit;
         $currentPage = $this->request->getQuery('page', 'int');
+
+        $categories = PostCategory::getTree('content', false);
+        $categoryFilter = [];
+
+        $categoryFilter[''] = __('gb_select');
+        foreach ($categories as $index => $cat) {
+            $pad = str_pad('', 1 * $cat->level, '- ', STR_PAD_LEFT);
+            $categoryFilter[$cat->category_id] = $pad . ' ' . $cat->title;
+        }
 
         $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $paginationLimit, $currentPage));
         $this->view->setVar('_pageLayout', [
@@ -94,7 +109,18 @@ class PostsController extends ZAdminController
                 'type' => 'text',
                 'title' => 'm_content_form_post_form_category_id',
                 'column' => 'c_title',
-                'class' => 'text-center'
+                'class' => 'text-center',
+                'filter' => [
+                    'type' => 'select',
+                    'name' => 'filter_category',
+                    'attributes' => [
+                        'useEmpty' => true,
+                        'emptyValue' => '-1',
+                        'emptyText' => __('gb_all'),
+                        'value' => $filter['filter_category'] == '' ? -1 : $filter['filter_category']
+                    ],
+                    'value' => $categoryFilter
+                ]
             ],
             [
                 'type' => 'published',
@@ -122,6 +148,7 @@ class PostsController extends ZAdminController
                 'title' => 'gb_created_by',
                 'column' => 'display_name',
                 'class' => 'text-center',
+                'css' => 'width : 120px',
                 'filter' => [
                     'type' => 'select',
                     'name' => 'filter_role',
@@ -142,11 +169,6 @@ class PostsController extends ZAdminController
                 'type' => 'date',
                 'title' => 'gb_created_at',
                 'column' => 'created_at',
-            ],
-            [
-                'type' => 'date',
-                'title' => 'gb_updated_at',
-                'column' => 'updated_at',
             ],
             [
                 'type' => 'id',
@@ -175,7 +197,7 @@ class PostsController extends ZAdminController
         $post = new Posts();
         if ($this->request->isPost() && $postForm->isValid($_POST, $post)) {
             if ($post->save()) {
-                $this->flashSession->success('m_content_category_message_add_new_post_successfully');
+                $this->flashSession->success('m_content_post_message_add_new_post_successfully');
                 $this->response->redirect('/admin/content/posts/edit/' . $post->post_id . '/');
             } else {
                 $this->setFlashSession($post->getMessages(), 'notice');

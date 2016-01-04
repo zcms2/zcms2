@@ -75,10 +75,6 @@ class CategoriesController extends ZAdminController
                 'column' => 'category_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#'
-            ],
-            [
                 'type' => 'link',
                 'title' => 'm_content_form_category_form_title',
                 'column' => 'title',
@@ -99,6 +95,7 @@ class CategoriesController extends ZAdminController
                 'access' => $this->acl->isAllowed('content|categories|edit'),
                 'link' => '/admin/content/categories/',
                 'column' => 'published',
+                'class' => 'hidden-xs hidden-sm',
                 'filter' => [
                     'type' => 'select',
                     'name' => 'filter_published',
@@ -140,12 +137,13 @@ class CategoriesController extends ZAdminController
                 'type' => 'date',
                 'title' => 'gb_created_at',
                 'column' => 'created_at',
+                'class' => 'hidden-xs hidden-sm'
             ],
             [
                 'type' => 'actions',
                 'title' => 'gb_ordering',
                 'link_prefix' => 'category_id',
-                'class' => 'text-center',
+                'class' => 'text-center hidden-xs hidden-sm',
                 'column' => 'lft',
                 'actions' => [
                     [
@@ -168,6 +166,7 @@ class CategoriesController extends ZAdminController
                 'type' => 'id',
                 'title' => 'gb_id',
                 'column' => 'category_id',
+                'class' => 'hidden-xs hidden-sm',
                 'css' => 'width : 10px',
                 'filter' => [
                     'type' => 'text',

@@ -142,7 +142,7 @@ class ZAcl extends Plugin
                 } else {
                     if ($config->debug) {
                         $this->flashSession->warning(__('gb_permission_denied_for_action', [
-                            1 => $this->getRuleError($rule) . ' => ' . $module . '<strong style=\'color: red;\'> | </strong>' . $controller . '<strong style=\'color: red;\'> | </strong>' . $action
+                            1 => $this->getRuleError($rule) . ' => ' . $module . '<strong style=\'color: white;\'> | </strong>' . $controller . '<strong style=\'color: white;\'> | </strong>' . $action
                         ]));
                     } else {
                         $this->flashSession->warning('gb_permission_denied');
@@ -157,7 +157,7 @@ class ZAcl extends Plugin
             } else {
                 if ($config->debug) {
                     $this->flashSession->warning(__('gb_permission_denied_for_action', [
-                        1 => $this->getRuleError($rule) . ' => ' . $module . '<strong style=\'color: red;\'> | </strong>' . $controller . '<strong style=\'color: red;\'> | </strong>' . $action
+                        1 => $this->getRuleError($rule) . ' => ' . $module . '<strong style=\'color: white;\'> | </strong>' . $controller . '<strong style=\'color: white;\'> | </strong>' . $action
                     ]));
                 } else {
                     $this->flashSession->warning('gb_permission_denied');

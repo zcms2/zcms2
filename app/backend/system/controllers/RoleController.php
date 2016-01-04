@@ -63,10 +63,6 @@ class RoleController extends ZAdminController
                 'type' => 'check_all',
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'link',
                 'title' => 'm_system_role_form_name',
                 'column' => 'name',

@@ -101,10 +101,6 @@ class UserController extends ZAdminController
                 'column' => 'user_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'link',
                 'title' => 'gb_user_first_name',
                 'link' => '/admin/system/user/edit/',

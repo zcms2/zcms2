@@ -90,10 +90,6 @@ class ModuleController extends ZAdminController
                 'column' => 'module_id',
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'text',
                 'title' => 'gb_module_name',
                 'column' => 'name',

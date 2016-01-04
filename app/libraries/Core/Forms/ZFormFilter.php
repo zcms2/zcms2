@@ -158,6 +158,7 @@ class ZFormFilter
         }
         //Add attribute date view mode
         $attributes['data-date-viewmode'] = 'years';
+//        $attributes['readonly'] = 'readonly';
 
         //Add attribute date format
         $attributes['data-date-format'] = __('gb_full_date_format');

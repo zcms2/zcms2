@@ -89,10 +89,6 @@ class IndexController extends ZAdminController
                 'column' => 'template_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'text',
                 'title' => 'gb_template_name',
                 'column' => 'name',

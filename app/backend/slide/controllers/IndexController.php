@@ -83,10 +83,6 @@ class IndexController extends ZAdminController
                 'column' => 'slide_show_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#'
-            ],
-            [
                 'type' => 'image',
                 'width' => '100',
                 'height' => 'auto',

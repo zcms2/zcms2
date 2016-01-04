@@ -78,10 +78,6 @@ class ManagerController extends ZAdminController
                 'column' => 'media_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'text',
                 'title' => 'm_media_form_media_form_title',
                 'column' => 'title'
@@ -127,16 +123,23 @@ class ManagerController extends ZAdminController
     public function getMediaAction()
     {
         $keyword = $this->request->get('keyword');
+        $page = (int)$this->request->get('page');
+        if($page <= 0){
+            $page = 1;
+        }
+        $offset = $page - 1 * 20;
         if ($keyword) {
             $result = Medias::find([
                 'conditions' => 'title LIKE \'%' . $keyword . '%\'',
                 'limit' => 20,
-                'order' => 'title ASC'
+                'offset' => $offset,
+                'order' => 'created_at DESC'
             ])->toArray();
         } else {
             $result = Medias::find([
                 'limit' => 20,
-                'order' => 'title ASC'
+                'offset' => $offset,
+                'order' => 'created_at DESC'
             ])->toArray();
         }
 

@@ -55,10 +55,6 @@ class DatabaseController extends ZAdminController
                 'type' => 'check_all'
             ],
             [
-                'type' => 'index',
-                'title' => '#'
-            ],
-            [
                 'type' => 'link',
                 'title' => 'File Name',
                 'column' => 'name',

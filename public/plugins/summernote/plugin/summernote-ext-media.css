@@ -71,5 +71,5 @@
     width: 100%;
     float: left;
     max-height: 350px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }

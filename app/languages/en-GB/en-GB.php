@@ -20,7 +20,7 @@ return [
     "gb_category" => "Category",
 
     //Date time format
-    'gb_date_format' => 'Y-m-d',
+    'gb_date_format' => 'Y-d-m',
     'gb_date_time_format' => 'Y-m-d, H:i:s',
     'gb_full_date_format' => 'yyyy-dd-mm',
     'gb_time_format_y_m_d_h_i' => 'Y-m-d H:i',

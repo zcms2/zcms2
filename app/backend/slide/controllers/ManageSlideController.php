@@ -169,10 +169,6 @@ class ManageSlideController extends ZAdminController
                 'column' => 'slide_show_item_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#'
-            ],
-            [
                 'type' => 'image',
                 'width' => '100',
                 'height' => 'auto',

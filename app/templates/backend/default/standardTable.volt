@@ -214,34 +214,31 @@
     </tr>
 
     {% if _filterColumn is defined %}
-        <tr class="tr-filter">
+        <tr class="tr-filter{% if _isFilter %} tr-filter-showed{% endif %}" {% if not _isFilter %}style="display: none"{% endif %}>
             {% for item in _pageLayout %}
                 {% if item['filter'] is defined %}
                     {% set type = item['filter']['type']|upper %}
                     {% if type == 'DATERANGE' %}
-                        <th class="th-filter th-filter-date-range">
+                        <th class="th-filter th-filter-date-range{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">
                             <div class="input-group">
                                 {{ _filterColumn.render(item['filter']['name'] ~ '_from') }}
-                                <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span>
                             </div>
                             <div class="input-group">
                                 {{ _filterColumn.render(item['filter']['name'] ~ '_to') }}
-                                <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span>
                             </div>
                         </th>
                     {% elseif type == 'DATE' %}
-                        <th class="th-filter th-filter-date-range">
+                        <th class="th-filter th-filter-date-range{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">
                             <div class="input-group">
                                 {{ _filterColumn.render(item['filter']['name']) }}
-                                <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span>
                             </div>
                         </th>
                     {% elseif type == 'SELECT' or type == 'MULTIPLESELECT' %}
-                        <th>
+                        <th class="{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">
                             {{ _filterColumn.render(item['filter']['name']) }}
                         </th>
                     {% elseif type == 'PRICERANGE' %}
-                        <th class="th-filter th-filter-price-range">
+                        <th class="th-filter th-filter-price-range{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">
                             <div class="input-group">
                                 {{ _filterColumn.render(item['filter']['name'] ~ '_from') }}
                                 <span class="input-group-addon"> $ </span>
@@ -252,7 +249,7 @@
                             </div>
                         </th>
                     {% elseif type == 'NUMBERRANGE' %}
-                        <th class="th-filter th-filter-number-range">
+                        <th class="th-filter th-filter-number-range{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">
                             <div class="input-group">
                                 {{ _filterColumn.render(item['filter']['name'] ~ '_from') }}
                             </div>
@@ -261,10 +258,10 @@
                             </div>
                         </th>
                     {% elseif type == 'TEXT' %}
-                        <th class="th-filter">{{ _filterColumn.render(item['filter']['name']) }}</th>
+                        <th class="th-filter{% if item['class'] is defined %} {{ item['class'] }}{% endif %}">{{ _filterColumn.render(item['filter']['name']) }}</th>
                     {% endif %}
                 {% else %}
-                    <th class="th-filter"><span class="col-no-filter">&nbsp;</span></th>
+                    <th class="th-filter{% if item['class'] is defined %} {{ item['class'] }}{% endif %}"><span class="col-no-filter">&nbsp;</span></th>
                 {% endif %}
             {% endfor %}
         </tr>

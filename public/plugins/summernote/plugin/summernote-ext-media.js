@@ -84,14 +84,45 @@
                 $mediaUrl = $mediaDialog.find('#zcms_select_item'),
                 $mediaBtn = $mediaDialog.find('.note-media-btn'),
                 $mediaSearch = $mediaDialog.find('.zcms_media_keyword'),
-                $mediaItems = $(".smn-thumb"),
+                $mediaItems = $dialog.find(".smn-thumb"),
+                $mediaFiles = $dialog.find(".zcms-media-files"),
                 $mediaInfo = {};
             $mediaInfo.keyword = $mediaSearch.val();
 
+            $mediaFiles.scroll(function () {
+                //console.log($(this).height(),$(this).scrollTop(),$(this)[0].scrollHeight);
+                //if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                //    // ajax call get data from server and append to the div
+                //}
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                    //alert('end reached');
+                    //console.log('end reached');
+                    //$mediaInfo.keyword = $mediaSearch.val();
+                    //$mediaInfo.page = $mediaFiles.attr('data-page');
+                    //if ($mediaInfo.page == '') {
+                    //    $mediaInfo.page = 1;
+                    //} else {
+                    //    $mediaInfo.page++;
+                    //}
+                    //$.get(_baseUri + '/admin/media/manager/getMedia/', {keyword: $mediaInfo.keyword, page: $mediaInfo.page}, function (result) {
+                    //    var append = '';
+                    //    if (result.code) {
+                    //        for (var i = 0; i < result.data.length; i++) {
+                    //            var tmp = processMediaBeforeDisplay(result.data[i]);
+                    //            append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + _baseUri + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
+                    //        }
+                    //    }
+                    //    $('#smn-attachments').html(append);
+                    //}, 'JSON');
+                }
+            });
+
             $mediaDialog.one('shown.bs.modal', function () {
-                $mediaItems.unbind("click");
-                $('.zcms-main-media-dialog').on('click', '.smn-thumb', function (event) {
-                    console.log($(this).hasClass('selected'));
+                if (!$mediaDialog.hasClass('modal-fullscreen')) {
+                    $mediaDialog.addClass('modal-fullscreen');
+                }
+                $mediaDialog.on('click', '.smn-thumb', function (event) {
+                    //console.log($(this).hasClass('selected'));
                     if ($(this).hasClass('selected')) {
                         $(".smn-thumb").removeClass('selected');
                         $mediaUrl.val('');
@@ -108,12 +139,13 @@
 
                 $mediaSearch.keyup(function (event) {
                     $mediaInfo.keyword = $(this).val();
+                    $mediaFiles.attr('data-page', '1');
                     $.get(_baseUri + '/admin/media/manager/getMedia/', {keyword: $mediaInfo.keyword}, function (result) {
                         var append = '';
                         if (result.code) {
                             for (var i = 0; i < result.data.length; i++) {
                                 var tmp = processMediaBeforeDisplay(result.data[i]);
-                                append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
+                                append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + _baseUri + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
                             }
                         }
                         $('#smn-attachments').html(append);
@@ -127,6 +159,8 @@
                     $mediaDialog.modal('hide');
                 });
             }).one('hidden.bs.modal', function () {
+                $mediaDialog.off();
+                $mediaFiles.off();
             }).modal('show');
         });
     };
@@ -200,7 +234,7 @@
                     if (result.code) {
                         for (var i = 0; i < result.data.length; i++) {
                             var tmp = processMediaBeforeDisplay(result.data[i]);
-                            append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
+                            append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + _baseUri + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
                         }
                     }
                     $('#smn-attachments').html(append);

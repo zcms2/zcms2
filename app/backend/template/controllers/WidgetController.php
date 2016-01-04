@@ -76,9 +76,6 @@ class WidgetController extends ZAdminController
                 'column' => 'widget_id'
             ],
             [
-                'type' => 'index',
-            ],
-            [
                 'type' => 'text',
                 'title' => 'gb_widget_name',
                 'column' => 'title',

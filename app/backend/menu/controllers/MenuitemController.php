@@ -107,10 +107,6 @@ class MenuItemController extends ZAdminController
                 'column' => 'menu_item_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'image',
                 'title' => 'm_menu_form_menu_item_thumbnail',
                 'class' => 'col-id text-center',

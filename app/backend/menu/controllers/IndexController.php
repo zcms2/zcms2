@@ -57,10 +57,6 @@ class IndexController extends ZAdminController
                 'column' => 'menu_type_id'
             ],
             [
-                'type' => 'index',
-                'title' => '#'
-            ],
-            [
                 'type' => 'link',
                 'title' => 'm_menu_form_menu_type_name',
                 'sort' => true,

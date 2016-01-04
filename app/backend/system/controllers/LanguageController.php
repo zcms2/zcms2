@@ -71,10 +71,6 @@ class LanguageController extends ZAdminController
                 'column' => 'language_id',
             ],
             [
-                'type' => 'index',
-                'title' => '#',
-            ],
-            [
                 'type' => 'text',
                 'title' => 'gb_language_title',
                 'column' => 'title'

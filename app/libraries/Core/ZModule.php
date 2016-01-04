@@ -3,12 +3,11 @@
 namespace ZCMS\Core;
 
 use Phalcon\Loader;
-use Phalcon\Di as PDI;
 use Phalcon\DiInterface;
 use Phalcon\Mvc\View as ZView;
 use Phalcon\Mvc\View\Engine\Volt;
-use Phalcon\Mvc\Dispatcher as PDispatcher;
-use Phalcon\Mvc\ModuleDefinitionInterface as ModuleDefinitionInterface;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Mvc\ModuleDefinitionInterface;
 
 /**
  * Class Base Admin Module
@@ -94,7 +93,7 @@ class ZModule implements ModuleDefinitionInterface
         $di->set('dispatcher', function () use ($di, &$module, &$baseControllers) {
 
             //Create new Dispatcher
-            $dispatcher = new PDispatcher();
+            $dispatcher = new Dispatcher();
 
             //Set default namespace to this module
             $dispatcher->setModuleName($this->module);

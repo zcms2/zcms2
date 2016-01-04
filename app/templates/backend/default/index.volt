@@ -7,6 +7,8 @@
 {% else %}<title>{{ _systemName }}</title>{% endif %}<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
     <link href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- DatePicker3 -->
+    <link href="{{ _baseUri }}/public/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- Data Tables -->
     <link href="{{ _baseUri }}/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
@@ -119,6 +121,8 @@
 <script src="{{ _baseUri }}/plugins/jquery-ui/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap JS -->
 <script src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- DatePicker -->
+<script src="{{ _baseUri }}/public/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{ _baseUri }}/templates/backend/default/js/app.min.js" type="text/javascript"></script>
 <!-- Pace -->

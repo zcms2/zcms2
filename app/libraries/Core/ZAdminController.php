@@ -320,15 +320,14 @@ class ZAdminController extends Controller
      * @param string $filterName Filter name as 'search'
      * @param string $filterValueDefault Default null
      * @param string $filterType string|array
-     * @param string $method POST|GET
+     * @param string $validator Value: date
      */
-    public function addFilter($filterName, $filterValueDefault = null, $filterType = null, $method = 'POST')
+    public function addFilter($filterName, $filterValueDefault = null, $filterType = null, $validator = null)
     {
         $this->_filterOptions[$filterName]['value'] = $filterValueDefault;
-        $method = strtoupper($method);
-        if ($method != 'POST') $method = 'GET';
-        $this->_filterOptions[$filterName]['method'] = $method;
+        $this->_filterOptions[$filterName]['method'] = 'POST';
         $this->_filterOptions[$filterName]['type'] = $filterType;
+        $this->_filterOptions[$filterName]['validator'] = strtoupper($validator);
     }
 
     /**
@@ -346,28 +345,63 @@ class ZAdminController extends Controller
         }
 
         if (count($this->_filterOptions)) {
-            foreach ($this->_filterOptions as $key => $item) {
-                if ($item['method'] == 'POST') {
-                    $this->_filter[$key] = $this->request->getPost($key, $item['type']);
-                    if ($this->_filter[$key] == null && $this->_filter[$key] !== $item['value']) {
-                        if (array_key_exists($key, $filterSession) && $filterSession[$key] != null) {
-                            $this->_filter[$key] = $filterSession[$key];
-                        } else {
+            $i = 0;
+            if ($this->request->isPost()) {
+                foreach ($this->_filterOptions as $key => $item) {
+                    if ($item['method'] == 'POST') {
+                        $this->_filter[$key] = $this->request->getPost($key, $item['type'], $item['value']);
+                        if($item['validator'] == 'DATE' && !validate_date($this->_filter[$key],__('gb_date_format'))){
                             $this->_filter[$key] = $item['value'];
+                            $_POST[$key] = $item['value'];
                         }
-                    }
-                } else {
-                    $this->_filter[$key] = $this->request->getQuery($key, $item['type']);
-                    if ($this->_filter[$key] == null && $this->_filter[$key] !== $item['value']) {
-                        if (array_key_exists($key, $filterSession) && $filterSession[$key] != null) {
-                            $this->_filter[$key] = $filterSession[$key];
-                        } else {
-                            $this->_filter[$key] = $item['value'];
+                        if ($key != 'filter_order' && $key != 'filter_order_dir' && $this->_filter[$key] != $item['value']) {
+                            $i++;
+                        }
+                        if ($this->_filter[$key] == null && $this->_filter[$key] !== $item['value']) {
+                            if (array_key_exists($key, $filterSession) && $filterSession[$key] != null) {
+                                $this->_filter[$key] = $filterSession[$key];
+                            } else {
+                                $this->_filter[$key] = $item['value'];
+                            }
                         }
                     }
                 }
+            } else {
+                if (count($filterSession)) {
+                    $this->_filter = $filterSession;
+                    foreach ($this->_filterOptions as $key => $item) {
+                        if ($key != 'filter_order' && $key != 'filter_order_dir' && $this->_filter[$key] != $item['value']) {
+                            $i++;
+                        }
+                    }
+                } else {
+                    foreach ($this->_filterOptions as $key => $item) {
+                        $this->_filter[$key] = $item['value'];
+                    }
+                }
+            }
+
+//            echo '<pre>'; var_dump($this->_filter);echo '</pre>'; die();
+
+//            $this->_filter[$key] = $this->request->getQuery($key, $item['type']);
+//            if ($key != 'filter_order' && $key != 'filter_order_dir' && $this->_filter[$key] != $item['value']) {
+//                $i++;
+//            }
+//            if ($this->_filter[$key] == null && $this->_filter[$key] !== $item['value']) {
+//                if (array_key_exists($key, $filterSession) && $filterSession[$key] != null) {
+//                    $this->_filter[$key] = $filterSession[$key];
+//                } else {
+//                    $this->_filter[$key] = $item['value'];
+//                }
+//            }
+
+            if ($i > 0) {
+                $this->view->setVar('_isFilter', true);
+            } else {
+                $this->view->setVar('_isFilter', false);
             }
         }
+//        echo '<pre>'; var_dump($_POST);echo '</pre>'; die();
         $filterSessionGlobal->set($sessionBagKey, $this->_filter);
         return $this->_filter;
     }

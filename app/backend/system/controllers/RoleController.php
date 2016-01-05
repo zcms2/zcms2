@@ -97,13 +97,13 @@ class RoleController extends ZAdminController
                 'label' => [
                     [
                         'condition' => '==',
-                        'condition_value' => 'backend',
+                        'condition_value' => '1',
                         'class' => 'label label-sm label-success',
                         'text' => 'gb_backend'
                     ],
                     [
                         'condition' => '!=',
-                        'condition_value' => 'backend',
+                        'condition_value' => '1',
                         'class' => 'label label-sm label-warning',
                         'text' => 'gb_frontend'
                     ]
@@ -134,7 +134,7 @@ class RoleController extends ZAdminController
     public function newAction()
     {
         //Add toolbar button
-        $this->_toolbar->addSaveButton();
+        $this->_toolbar->addSaveButton('new');
         $this->_toolbar->addCancelButton('index');
 
         $this->_addCSSAndJS();
@@ -245,7 +245,8 @@ class RoleController extends ZAdminController
         return $this->response->redirect('/admin/system/role/');
     }
 
-    private function _addCSSAndJS(){
+    private function _addCSSAndJS()
+    {
         //Add css
         $this->assets->collection('css_header')->addCss('/plugins/dynatree/dist/skin-vista/ui.dynatree.css');
         //Add js
@@ -271,18 +272,18 @@ class RoleController extends ZAdminController
         ]);
         //If id not exist
         if (!$edit_data) {
-            $this->flashSession->error("Cant not find that item to edit!");
+            $this->flashSession->error('Cant not find that item to edit!');
             return $this->response->redirect('/admin/system/role/');
         } elseif ($edit_data->is_super_admin == 1) {
-            $this->flashSession->error("You can't not edit Super Admin!");
+            $this->flashSession->error('You can\'t not edit Super Admin!');
             return $this->response->redirect('/admin/system/role/');
         } else {
             $this->view->setVar('edit_data', $edit_data);
         }
 
         //Add toolbar button
-        $this->_toolbar->addSaveButton();
-        $this->_toolbar->addCancelButton("index");
+        $this->_toolbar->addSaveButton('edit');
+        $this->_toolbar->addCancelButton('index');
 
         $this->_addCSSAndJS();
 
@@ -556,14 +557,14 @@ class RoleController extends ZAdminController
     {
         $array_rules = [];
         foreach ($rules as $rule) {
-            $array_rules[] = "'" . $module . "|" . $rule['controller'] . "|" . $rule['action'] . "'";
+            $array_rules[] = "'" . $module . '|' . $rule['controller'] . '|' . $rule['action'] . "'";
         }
 
         $str = implode(',', $array_rules);
 
-        $phql = "SELECT "
-            . "rule_id,mca FROM ZCMS\Core\Models\UserRules "
-            . "WHERE module = ?0 AND mca not in (" . $str . ")";
+        $phql = 'SELECT '
+            . 'rule_id,mca FROM ZCMS\Core\Models\UserRules '
+            . 'WHERE module = ?0 AND mca not in (' . $str . ')';
         /**
          * @var mixed $old_rules
          */
@@ -575,7 +576,7 @@ class RoleController extends ZAdminController
 
         if (!empty($old_rules_array)) {
             $ids = implode(',', array_column($old_rules_array, 'rule_id'));
-            $delete = "DELETE FROM user_role_mapping WHERE rule_id IN (" . $ids . ")";
+            $delete = 'DELETE FROM user_role_mapping WHERE rule_id IN (' . $ids . ')';
             $this->db->execute($delete);
         }
 
@@ -648,6 +649,7 @@ class RoleController extends ZAdminController
             }
             $roles[$i] = $mod;
         }
+
         $this->view->setVar('roles', json_encode($roles));
     }
 }

@@ -353,9 +353,9 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addSaveButton($rule = '', $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
+    public function addSaveButton($rule, $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
     {
-        if ($this->_isAllowed($rule)) {
+        if ($rule && $this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
         }
     }
@@ -566,7 +566,7 @@ class ZToolbarHelper
      */
     private function _isAllowed($rule)
     {
-        if (strpos($rule, '|') && !empty($this->moduleName) && !empty($this->controllerName)) {
+        if (strpos($rule, '|') == false && !empty($this->moduleName) && !empty($this->controllerName)) {
             return $this->security->isAllowed($this->moduleName . '|' . $this->controllerName . '|' . $rule);
         }
         return $this->security->isAllowed($rule);

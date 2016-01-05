@@ -12,12 +12,77 @@ $resource = [
             'controller' => 'categories',
             'rules' => [
                 [
+                    'action' => 'view',
+                    'sub_action' => 'index'
+                ],
+                [
+                    'action' => 'view_all',
+                    'sub_action' => 'index, view'
+                ],
+                [
+                    'action' => 'new',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'edit',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'publish',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'unPublish',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'edit_all',
+                    'sub_action' => 'edit'
+                ],
+                [
+                    'action' => 'publish_all',
+                    'sub_action' => 'publish'
+                ],
+                [
+                    'action' => 'unPublish_all',
+                    'sub_action' => 'unPublish'
+                ]
+            ]
+        ],
+        [
+            'controller' => 'posts',
+            'rules' => [
+                [
                     'action' => 'index',
                     'sub_action' => ''
                 ],
                 [
                     'action' => 'new',
-                    'sub_action' => 'edit, publish, unPublish'
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'edit',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'publish',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'unPublish',
+                    'sub_action' => ''
+                ],
+                [
+                    'action' => 'edit_all',
+                    'sub_action' => 'edit'
+                ],
+                [
+                    'action' => 'publish_all',
+                    'sub_action' => 'publish'
+                ],
+                [
+                    'action' => 'unPublish_all',
+                    'sub_action' => 'unPublish'
                 ]
             ]
         ]

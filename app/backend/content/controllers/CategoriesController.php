@@ -60,15 +60,14 @@ class CategoriesController extends ZAdminController
         }
 
         $items = $this->modelsManager->createBuilder()
-            ->columns('c.category_id, c.title, c.created_at, c.updated_at, c.published, c.lft, c.rgt, c.level, u.display_name')
+            ->columns('c.category_id, c.title, c.created_at, c.created_by, c.published, c.lft, c.rgt, c.level, u.display_name')
             ->addFrom('ZCMS\Core\Models\PostCategory', 'c')
             ->join('ZCMS\Core\Models\Users', 'c.created_by = u.user_id', 'u')
             ->where(implode(' AND ', $conditions))
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
-        $paginationLimit = $this->config->pagination->limit;
         $currentPage = $this->request->getQuery('page', 'int');
 
-        $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $paginationLimit, $currentPage));
+        $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $this->config->pagination->limit, $currentPage));
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',
@@ -80,6 +79,8 @@ class CategoriesController extends ZAdminController
                 'column' => 'title',
                 'link' => '/admin/content/categories/edit/',
                 'access' => $this->acl->isAllowed('content|categories|edit'),
+                'access_all' => $this->acl->isAllowed('content|categories|edit_all'),
+                'check_created_by' => 'created_by',//column name created_by
                 'pad_column' => 'level',
                 'pad_type' => STR_PAD_LEFT,
                 'pad_string' => '&mdash; ',
@@ -182,7 +183,7 @@ class CategoriesController extends ZAdminController
      */
     public function newAction()
     {
-        $this->_toolbar->addSaveButton();
+        $this->_toolbar->addSaveButton('new');
         $this->_toolbar->addCancelButton('index');
 
         $categoryForm = new CategoryForm();
@@ -221,11 +222,19 @@ class CategoriesController extends ZAdminController
             'bind' => [(int)$id]
         ]);
 
+
         if (!$category) {
             $this->flashSession->notice('m_content_category_message_category_not_exist');
             $this->response->redirect('/admin/content/categories/');
             return;
         }
+
+        if (!($category->created_by == $this->acl->getAuth()['id'] || $this->acl->isAllowed($this->_module . '|' . $this->_controller . '|edit_all'))) {
+            $this->flashSession->notice('gb_you_are_not_allowed_to_edit_this_item');
+            $this->response->redirect('/admin/content/categories/');
+            return;
+        }
+
 
         $parentCategory = $category->parent();
         if ($parentCategory) {
@@ -234,8 +243,7 @@ class CategoriesController extends ZAdminController
             $oldParent = 0;
         }
 
-
-        $this->_toolbar->addSaveButton();
+        $this->_toolbar->addSaveButton('edit');
         $this->_toolbar->addCancelButton('index');
 
         $categoryForm = new CategoryForm($category, ['edit' => true]);

@@ -381,20 +381,6 @@ class ZAdminController extends Controller
                 }
             }
 
-//            echo '<pre>'; var_dump($this->_filter);echo '</pre>'; die();
-
-//            $this->_filter[$key] = $this->request->getQuery($key, $item['type']);
-//            if ($key != 'filter_order' && $key != 'filter_order_dir' && $this->_filter[$key] != $item['value']) {
-//                $i++;
-//            }
-//            if ($this->_filter[$key] == null && $this->_filter[$key] !== $item['value']) {
-//                if (array_key_exists($key, $filterSession) && $filterSession[$key] != null) {
-//                    $this->_filter[$key] = $filterSession[$key];
-//                } else {
-//                    $this->_filter[$key] = $item['value'];
-//                }
-//            }
-
             if ($i > 0) {
                 $this->view->setVar('_isFilter', true);
             } else {
@@ -495,16 +481,9 @@ class ZAdminController extends Controller
     private function _getMenuAdmin($role)
     {
         $currentLink = '/admin/' . $this->_module . '/' . $this->_controller;
-        $role = UserRoles::findFirst([
-            'conditions' => 'role_id = ?0',
-            'bind' => [$role]
-        ]);
-
+        $auth = $this->acl->getAuth();
+        $menu = $auth['menu'];
         if ($role) {
-            /**
-             * @var mixed $role
-             */
-            $menu = unserialize($role->menu);
             foreach ($menu as $lv1 => $item) {
                 if (isset($item['items']) && count($item['items'])) {
                     foreach ($item['items'] as $lv2 => $childItem) {

@@ -42,4 +42,8 @@ return [
     'm_content_post_message_update_post_successfully' => 'Update post successfully',
     'm_content_post_message_delete_one_post_successfully' => '1 post successfully delete',
     'm_content_post_message_delete_posts_successfully' => '%0% posts successfully delete',
+
+    //Role
+    'm_admin_content_categories_index' => 'View All Categories',
+    'm_admin_content_posts_index' => 'View All Post',
 ];

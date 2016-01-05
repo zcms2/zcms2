@@ -258,7 +258,7 @@ class PostsController extends ZAdminController
      */
     public function editAction($id = 0)
     {
-        $this->_toolbar->addSaveButton();
+        $this->_toolbar->addSaveButton('edit');
         $this->_toolbar->addCancelButton('index');
 
         /**

@@ -46,10 +46,14 @@ return [
     'gb_off' => 'Off',
 
     //Button name
+    'gb_view' => 'View',
+    'gb_view_all' => 'View All',
     'gb_update' => 'Update',
     'gb_published' => 'Published',
+    'gb_published_all' => 'Published All',
     'gb_pending' => 'Pending',
     'gb_unpublished' => 'Unpublished',
+    'gb_unpublished_all' => 'Unpublished All',
     'gb_ordering' => 'Ordering',
     'gb_move_down' => 'Move Down',
     'gb_move_up' => 'Move Up',
@@ -58,9 +62,13 @@ return [
     'gb_save' => 'Save',
     'gb_back' => 'Back',
     'gb_edit' => 'Edit',
+    'gb_edit_all' => 'Edit All',
     'gb_active' => 'Active',
+    'gb_active_all' => 'Active All',
     'gb_deactivate' => 'Deactivate',
+    'gb_deactivate_all' => 'Deactivate All',
     'gb_delete' => 'Delete',
+    'gb_delete_all' => 'Delete All',
     'gb_add_new' => 'Add new',
     'gb_new' => 'New',
     'gb_delete_cache' => 'Delete cache',
@@ -151,4 +159,5 @@ return [
 
     //Busy or error
     'System is busy, please try again later' => 'System is busy, please try again later',
+    'gb_you_are_not_allowed_to_edit_this_item' => 'You are not allowed to edit this item',
 ];

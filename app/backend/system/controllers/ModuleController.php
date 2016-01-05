@@ -175,11 +175,15 @@ class ModuleController extends ZAdminController
      */
     public function updateAction($redirect = true)
     {
+        //Remove all cache
+        $this->cache->flush();
+
         //Get All Module
         $allModulesBackEnd = get_child_folder(APP_DIR . '/backend/');
         $allModulesFrontEnd = get_child_folder(APP_DIR . '/frontend/');
         $allModules = array_merge($allModulesBackEnd, $allModulesFrontEnd);
         $allModulesUnique = array_unique($allModules);
+
         //Module in frontend and backend is duplicate!
         if (count($allModulesUnique) != count($allModules)) {
             if ($redirect) {
@@ -188,6 +192,7 @@ class ModuleController extends ZAdminController
             $this->response->redirect('/admin/system/user/');
             die(__('m_system_message_module_in_frontend_and_backend_is_duplicate'));
         } else {
+            //Remove module delete with hand in folder
             $this->deleteModuleNotExists($allModulesUnique);
             $allModulesBackEndReturn = $this->updateModuleInfo($allModulesBackEnd, 'backend');
             $allModulesFrontEndReturn = $this->updateModuleInfo($allModulesFrontEnd, 'frontend');
@@ -207,7 +212,10 @@ class ModuleController extends ZAdminController
                 }
             }
         }
+
+        //Update role menu
         UserRoles::updateModuleMenu();
+
         if ($redirect) {
             $this->response->redirect('/admin/system/module/');
         }

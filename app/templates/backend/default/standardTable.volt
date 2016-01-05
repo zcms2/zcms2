@@ -371,7 +371,14 @@
                             {% set itemValue = column['array_values'][itemValue] %}
                         {% endif %}
                     {% endif %}
-                    {% if(column['access'] == true) %}
+                    {% if column['check_created_by'] is defined %}
+                        <?php $itemCreatedBy = $item->{$column['check_created_by']} ?>
+                    {% endif %}
+                    {% if(
+                        (column['access_all'] is defined and column['access_all'] == true) or
+                        (column['access'] == true and column['check_created_by'] is not defined) or
+                        (column['access'] == true and column['check_created_by'] is defined and itemCreatedBy == _user['id'] )
+                    ) %}
                         <td class="{{ class }}">
                             {% if column['link_href'] is defined %}
                                 <a {% if column["target"] is defined %} target="{{ column["target"] }}" {% endif %} {% if column['link_title'] is defined %}title="{{ __(column['link_title']) }}"{% endif %}

@@ -4,6 +4,7 @@ namespace ZCMS\Core\Plugins;
 
 use Phalcon\Events\Event;
 use Phalcon\Mvc\Dispatcher;
+use ZCMS\Core\Models\UserRoles;
 use ZCMS\Core\Models\Users;
 use Phalcon\Mvc\User\Plugin;
 use ZCMS\Core\Models\CoreLogs;
@@ -86,8 +87,46 @@ class ZAcl extends Plugin
     {
         //Get auth of user login
         $this->auth = $this->session->get('auth');
-        $this->rules = $this->auth['rules'];
-        $this->linkAccess = $this->auth['linkAccess'];
+        if ($this->auth) {
+            /**
+             * @var Users $user
+             */
+            $user = Users::findFirst([
+                'conditions' => 'user_id = ?0 AND is_active = 1',
+                'bind' => [$this->auth['id']]
+            ]);
+            if ($user) {
+                /**
+                 * @var UserRoles $role
+                 */
+                $role = UserRoles::findFirst($user->role_id);
+                $acl = json_decode($role->acl, true);
+                $this->auth = [
+                    'full_name' => $user->display_name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'id' => $user->user_id,
+                    'role' => $user->role_id,
+                    'rules' => $acl['rules'],
+                    'gender' => $user->gender,
+                    'linkAccess' => $acl['links'],
+                    'language' => $user->language_code,
+                    'avatar' => $user->avatar,
+                    'token' => $this->auth['token'],
+                    'coin' => (float)$user->coin,
+                    'menu' => unserialize($role->menu),
+                    'created_at' => date('Y-m-d', strtotime($user->created_at)),
+                    'is_super_admin' => $role->is_super_admin,
+                    'last_use_admin' => time(),
+                ];
+                $this->session->set('auth', $this->auth);
+                $this->rules = $this->auth['rules'];
+                $this->linkAccess = $this->auth['linkAccess'];
+            } else {
+                $this->session->destroy();
+            }
+        }
     }
 
     /**
@@ -132,11 +171,12 @@ class ZAcl extends Plugin
                     if (time() - $this->auth['last_use_admin'] > $config->auth->lifetime) {
                         //$this->session->remove('auth');
                         $this->flashSession->warning(__('gb_session_login_timeout'));
-                        $this->response->redirect('/admin/user/login/');
+//                        $this->response->redirect('/admin/user/login/');
+                        $this->response->redirect('/admin/');
                         return false;
                     } else {
-                        $this->auth['last_use_admin'] = time();
-                        $this->session->set('auth', $this->auth);
+//                        $this->auth['last_use_admin'] = time();
+//                        $this->session->set('auth', $this->auth);
                         return true;
                     }
                 } else {

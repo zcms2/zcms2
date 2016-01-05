@@ -358,7 +358,6 @@ class Users extends ZModel
             ]));
         }
 
-        //Validation
         if ($this->validationHasFailed() == true) {
             return false;
         }
@@ -431,9 +430,9 @@ class Users extends ZModel
         $security = Di::getDefault()->get('security');
         $token = $security->getToken();
         $session->set('auth', [
-//            'full_name' => $this->first_name . ' ' . $this->last_name,
             'full_name' => $this->display_name,
             'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'email' => $this->email,
             'id' => $this->user_id,
             'role' => $this->role_id,
@@ -444,6 +443,7 @@ class Users extends ZModel
             'avatar' => $this->avatar,
             'token' => $token,
             'coin' => (float)$this->coin,
+            'menu' => unserialize($role->menu),
             'created_at' => date('Y-m-d', strtotime($this->created_at)),
             'is_super_admin' => $role->is_super_admin,
             'last_use_admin' => time(),
@@ -471,7 +471,7 @@ class Users extends ZModel
         ]);
 
         if ($user->is_active != '1') {
-            return -1;
+            return false;
         }
 
         /**
@@ -493,6 +493,7 @@ class Users extends ZModel
             $session->set('auth', [
                 'full_name' => $user->display_name,
                 'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
                 'email' => $user->email,
                 'id' => $user->user_id,
                 'role' => $user->role_id,
@@ -503,6 +504,7 @@ class Users extends ZModel
                 'avatar' => $user->avatar,
                 'token' => $token,
                 'coin' => (float)$user->coin,
+                'menu' => unserialize($role->menu),
                 'created_at' => date('Y-m-d', strtotime($user->created_at)),
                 'is_super_admin' => $role->is_super_admin,
                 'last_use_admin' => time(),

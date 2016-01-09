@@ -29,12 +29,12 @@ class ConfigController extends ZAdminController
         $this->_toolbar->addHeaderSecond('m_system_system_manager');
 
         $error_is_writable = false;
-        if (!is_writable(APP_DIR . '/backup')) {
+        if (!is_writable(ROOT_PATH . '/app/backup')) {
             $this->flashSession->error('gb_backup_folder_cannot_be_writable ');
             $error_is_writable = true;
         }
 
-        if (!is_writable(APP_DIR . '/config')) {
+        if (!is_writable(ROOT_PATH . '/app/config')) {
             $error_is_writable = true;
             $this->flashSession->error('gb_config_folder_cannot_be_writable ');
         }
@@ -99,8 +99,8 @@ class ConfigController extends ZAdminController
                 } else {
                     //$defaultLanguage = CoreLanguage::findFirst('is_default = 1');
                     $this->flashSession->success('m_system_config_message_config_save_successfully');
-                    $configFileContent = file_get_contents(APP_DIR . '/config/config.php');
-                    if (file_put_contents(APP_DIR . '/backup/config.backup_' . date('Y-m-d') . '_at_' . date('H-i-s') . '.php', $configFileContent)) {
+                    $configFileContent = file_get_contents(ROOT_PATH . '/app/config/config.php');
+                    if (file_put_contents(ROOT_PATH . '/app/backup/config.backup_' . date('Y-m-d') . '_at_' . date('H-i-s') . '.php', $configFileContent)) {
 
                         $newConfig = [];
                         $sections = $this->getSectionConfig();
@@ -151,7 +151,7 @@ class ConfigController extends ZAdminController
 
                         $var_str = var_export($newConfig, true);
                         $newConfigFileContent = "<?php\n\n return $var_str;\n";
-                        if (!file_put_contents(APP_DIR . '/config/config.php', $newConfigFileContent)) {
+                        if (!file_put_contents(ROOT_PATH . '/app/config/config.php', $newConfigFileContent)) {
                             $this->flashSession->warning('gb_config_folder_cannot_be_writable');
                             return false;
                         }

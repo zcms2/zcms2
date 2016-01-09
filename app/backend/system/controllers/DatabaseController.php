@@ -28,7 +28,7 @@ class DatabaseController extends ZAdminController
         $this->_toolbar->addCustomButton('system|database|backup', 'Backup Database', '/admin/system/database/backup/', 'glyphicon glyphicon-floppy-disk', 'btn btn-success');
         $this->_toolbar->addCustomButton('system|database|fullBackUp', 'Backup Full Site', '/admin/system/database/fullBackUp/', 'glyphicon glyphicon-retweet', 'btn btn-primary');
 
-        $filesBackup = glob(APP_DIR . '/backup/database/' . '*.backup');
+        $filesBackup = glob(ROOT_PATH . '/app/backup/database/' . '*.backup');
         $files = [];
         foreach ($filesBackup as $index => $file) {
             $fileOb = new \stdClass();
@@ -103,7 +103,7 @@ class DatabaseController extends ZAdminController
             if ($databaseBackupName) {
                 $fileName = generateAlias($this->config->website->sitename) . '_' . date('dmY_His') . '_from_UserID_' . $this->_user['id'] . '.backup.001';
                 ini_set('max_execution_time', 0);
-                $path = APP_DIR . '/backup/sources';
+                $path = ROOT_PATH . '/app/backup/sources';
                 if (!is_dir($path)) {
                     mkdir($path, 0755);
                 }
@@ -177,7 +177,7 @@ class DatabaseController extends ZAdminController
                     $password = $this->request->getPost('password');
                     if ($this->security->checkHash($password, $user->password) || md5($password) == $user->password) {
                         $fileName = base64_decode($base64Name);
-                        $filePath = APP_DIR . '/backup/database/' . $fileName;
+                        $filePath = ROOT_PATH . '/app/backup/database/' . $fileName;
                         if (file_exists($filePath)) {
                             $fileType = filetype($filePath);
                             $fileSize = filesize($filePath);

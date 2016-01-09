@@ -156,12 +156,12 @@ class WidgetController extends ZAdminController
      */
     protected final function updateInfoAllWidget()
     {
-        $allWidget = get_child_folder(APP_DIR . '/widgets/frontend/');
+        $allWidget = get_child_folder(ROOT_PATH . '/app/widgets/frontend/');
         ZTranslate::getInstance()->addWidgetLang($allWidget, 'frontend');
         $this->deleteOldWidget($allWidget);
 
         foreach ($allWidget as $w) {
-            $widgetPath = APP_DIR . '/widgets/frontend/' . $w . '/' . $w . '.php';
+            $widgetPath = ROOT_PATH . '/app/widgets/frontend/' . $w . '/' . $w . '.php';
             $infoWidget = get_widget_data($widgetPath);
             $infoWidget['title'] = $infoWidget['name'];
 

@@ -2,7 +2,7 @@
 
 namespace ZCMS\Core\Utilities;
 
-require_once APP_DIR . '/libraries/sphinx/sphinxapi.php';
+require_once ROOT_PATH . '/app/libraries/sphinx/sphinxapi.php';
 
 /**
  * Class ZSphinx

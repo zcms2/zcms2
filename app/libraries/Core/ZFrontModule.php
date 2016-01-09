@@ -98,10 +98,10 @@ class ZFrontModule implements ModuleDefinitionInterface
     {
         $loader = new Loader();
         $loader->registerNamespaces([
-            $this->baseControllers => APP_DIR . '/frontend/' . $this->module . '/controllers/',
-            $this->baseModels => APP_DIR . '/frontend/' . $this->module . '/models/',
-            $this->baseForms => APP_DIR . '/frontend/' . $this->module . '/forms/',
-            $this->baseHelpers => APP_DIR . '/frontend/' . $this->module . '/helpers/',
+            $this->baseControllers => ROOT_PATH . '/app/frontend/' . $this->module . '/controllers/',
+            $this->baseModels => ROOT_PATH . '/app/frontend/' . $this->module . '/models/',
+            $this->baseForms => ROOT_PATH . '/app/frontend/' . $this->module . '/forms/',
+            $this->baseHelpers => ROOT_PATH . '/app/frontend/' . $this->module . '/helpers/',
         ]);
 
         $loader->register();
@@ -161,7 +161,7 @@ class ZFrontModule implements ModuleDefinitionInterface
         //Registering the view component
         $di->set('view', function () use ($di, &$module) {
             $view = new View();
-            $view->setViewsDir(APP_DIR . '/frontend/' . $module . '/views/');
+            $view->setViewsDir(ROOT_PATH . '/app/frontend/' . $module . '/views/');
 
             /**
              * @var \Phalcon\Events\Manager $eventsManager

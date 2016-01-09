@@ -174,7 +174,7 @@ class IndexController extends ZAdminController
     private function _updateAllTemplate($location)
     {
         if ($location === 'frontend' || $location === 'backend') {
-            $templates = get_child_folder(APP_DIR . '/templates/' . $location . '/');
+            $templates = get_child_folder(ROOT_PATH . '/app/templates/' . $location . '/');
             if (count($templates)) {
                 $templateTmp = [];
                 foreach ($templates as $template) {
@@ -196,7 +196,7 @@ class IndexController extends ZAdminController
                 }
 
                 foreach ($templates as $template) {
-                    $pathTemplate = APP_DIR . '/templates/' . $location . '/' . $template . '/template.json';
+                    $pathTemplate = ROOT_PATH . '/app/templates/' . $location . '/' . $template . '/template.json';
                     if ($resource = check_template($pathTemplate)) {
                         $templateObject = CoreTemplates::findFirst('base_name ="' . $template . '" AND location = "' . $location . '"');
                         if (!$templateObject) {
@@ -213,10 +213,10 @@ class IndexController extends ZAdminController
                         $templateObject->tag = $resource['tag'];
                         $templateObject->description = $resource['description'];
                         if (!$templateObject->save()) {
-                            $this->flashSession->error(__('m_template_notice_not_update_template', ['1' => $templateObject->name, '2' => '$location', '3' => APP_DIR . '/templates/{$location}/' . $templateObject->base_name . '/template.json']));
+                            $this->flashSession->error(__('m_template_notice_not_update_template', ['1' => $templateObject->name, '2' => '$location', '3' => ROOT_PATH . '/app/templates/{$location}/' . $templateObject->base_name . '/template.json']));
                         };
                     } else {
-                        $this->flashSession->error(__('m_template_notice_not_update_template', ['1' => 'Base name: ' . $template, '2' => '$location', '3' => APP_DIR . '/templates/{$location}/' . $template . '/template.json']));
+                        $this->flashSession->error(__('m_template_notice_not_update_template', ['1' => 'Base name: ' . $template, '2' => '$location', '3' => ROOT_PATH . '/app/templates/{$location}/' . $template . '/template.json']));
                     }
                 }
                 /**
@@ -260,7 +260,7 @@ class IndexController extends ZAdminController
             $this->db->execute($query);
             $templateMustPublish->published = 1;
             $templateMustPublish->save();
-            file_put_contents(APP_DIR . '/' . $templateMustPublish->location . '/index.volt', '{% extends "../../../templates/' . $templateMustPublish->location . '/' . $templateMustPublish->base_name . '/index.volt" %}');
+            file_put_contents(ROOT_PATH . '/app/' . $templateMustPublish->location . '/index.volt', '{% extends "../../../templates/' . $templateMustPublish->location . '/' . $templateMustPublish->base_name . '/index.volt" %}');
             if ($templateMustPublish->location == 'frontend') {
                 //Do something
             } elseif ($templateMustPublish->location == 'backend') {
@@ -278,9 +278,9 @@ class IndexController extends ZAdminController
      */
     private function _addTemplateLang()
     {
-        $templates = get_child_folder(APP_DIR . '/templates/backend/');
+        $templates = get_child_folder(ROOT_PATH . '/app/templates/backend/');
         ZTranslate::getInstance()->addTemplateLang($templates);
-        $templates = get_child_folder(APP_DIR . '/templates/frontend/');
+        $templates = get_child_folder(ROOT_PATH . '/app/templates/frontend/');
         ZTranslate::getInstance()->addTemplateLang($templates, 'frontend');
     }
 }

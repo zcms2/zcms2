@@ -14,7 +14,6 @@ try {
      * Define useful constants
      */
     define('ROOT_PATH', dirname(__DIR__));
-    define('APP_DIR', ROOT_PATH . '/app');
     require_once ROOT_PATH . '/app/config/define.php';
 
     if (is_dir(ROOT_PATH . '/app/install/') && file_exists(ROOT_PATH . '/public/install.php')) {

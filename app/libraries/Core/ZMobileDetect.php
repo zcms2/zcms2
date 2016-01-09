@@ -2,7 +2,7 @@
 
 namespace ZCMS\Core;
 
-require_once APP_DIR . '/libraries/MobileDetect/Mobile_Detect.php';
+require_once ROOT_PATH . '/app/libraries/MobileDetect/Mobile_Detect.php';
 
 /**
  * Class ZMobileDetect

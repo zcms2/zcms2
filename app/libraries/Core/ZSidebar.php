@@ -45,7 +45,7 @@ class ZSidebar
             foreach ($widgets as $widget) {
                 $class_name = explode('_', $widget['class_name'])[0];
                 if (!class_exists($widget['class_name'])) {
-                    $widget_file = APP_DIR . '/widgets/frontend/' . $class_name . '/' . $class_name . '.php';
+                    $widget_file = ROOT_PATH . '/app/widgets/frontend/' . $class_name . '/' . $class_name . '.php';
                     if (file_exists($widget_file)) {
                         require_once $widget_file;
                     } else {

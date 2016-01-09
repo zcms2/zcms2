@@ -72,9 +72,9 @@ class ZModule implements ModuleDefinitionInterface
     {
         $loader = new Loader();
         $loader->registerNamespaces([
-            $this->baseControllers => APP_DIR . '/backend/' . $this->module . '/controllers/',
-            $this->baseModels => APP_DIR . '/backend/' . $this->module . '/models/',
-            $this->baseForms => APP_DIR . '/backend/' . $this->module . '/forms/',
+            $this->baseControllers => ROOT_PATH . '/app/backend/' . $this->module . '/controllers/',
+            $this->baseModels => ROOT_PATH . '/app/backend/' . $this->module . '/models/',
+            $this->baseForms => ROOT_PATH . '/app/backend/' . $this->module . '/forms/',
         ]);
         $loader->register();
     }
@@ -142,7 +142,7 @@ class ZModule implements ModuleDefinitionInterface
             $view->setEventsManager($eventsManager);
 
             //Set view dir
-            $view->setViewsDir(APP_DIR . '/backend/' . $module . '/views/');
+            $view->setViewsDir(ROOT_PATH . '/app/backend/' . $module . '/views/');
 
             //Register engines
             $view->registerEngines([

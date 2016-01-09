@@ -36,7 +36,7 @@ class ModuleController extends ZAdminController
     public function indexAction()
     {
         //Add translation frontend
-        ZTranslate::getInstance()->addModuleLang(get_child_folder(APP_DIR . '/frontend/'), 'frontend');
+        ZTranslate::getInstance()->addModuleLang(get_child_folder(ROOT_PATH . '/app/frontend/'), 'frontend');
         $this->updateAction(false);
 
         $this->_toolbar->addPublishedButton();
@@ -179,8 +179,8 @@ class ModuleController extends ZAdminController
         $this->cache->flush();
 
         //Get All Module
-        $allModulesBackEnd = get_child_folder(APP_DIR . '/backend/');
-        $allModulesFrontEnd = get_child_folder(APP_DIR . '/frontend/');
+        $allModulesBackEnd = get_child_folder(ROOT_PATH . '/app/backend/');
+        $allModulesFrontEnd = get_child_folder(ROOT_PATH . '/app/frontend/');
         $allModules = array_merge($allModulesBackEnd, $allModulesFrontEnd);
         $allModulesUnique = array_unique($allModules);
 
@@ -235,7 +235,7 @@ class ModuleController extends ZAdminController
         } else {
             $arrayModuleReturn = [];
             foreach ($arrayModule as $module) {
-                $filePath = APP_DIR . '/' . $moduleLocale . '/' . $module . '/Resource.php';
+                $filePath = ROOT_PATH . '/app/' . $moduleLocale . '/' . $module . '/Resource.php';
                 //Get new Module name
                 $resource = check_resource($filePath, $module, $moduleLocale);
 
@@ -299,7 +299,7 @@ class ModuleController extends ZAdminController
      */
     protected function getModuleRouter($module)
     {
-        $path = APP_DIR . '/frontend/' . $module . '/Router.php';
+        $path = ROOT_PATH . '/app/frontend/' . $module . '/Router.php';
         $router = check_router($path);
         if (is_array($router)) {
             return serialize($router);
@@ -315,7 +315,7 @@ class ModuleController extends ZAdminController
      */
     protected function getModuleMenu($module)
     {
-        $path = APP_DIR . '/backend/' . $module . '/Menu.php';
+        $path = ROOT_PATH . '/app/backend/' . $module . '/Menu.php';
         $menu = check_menu($path);
         if (is_array($menu)) {
             return serialize($menu);

@@ -25,7 +25,7 @@ class RouterController extends ZAdminController
     {
         $title = strtolower($title);
         $routerClass = "Router" . ucfirst($moduleName) . 'Helper';
-        $routerFile = APP_DIR . "/frontend/{$moduleName}/" . $routerClass . '.php';
+        $routerFile = ROOT_PATH . "/app/frontend/{$moduleName}/" . $routerClass . '.php';
 
         if (file_exists($routerFile)) {
             require_once($routerFile);
@@ -64,7 +64,7 @@ class RouterController extends ZAdminController
         $menu['items'] = [];
 
         $routerClassName = 'Router' . ucfirst($module->base_name) . 'Helper';
-        $file = APP_DIR . '/frontend/' . $module->base_name . '/' . $routerClassName . '.php';
+        $file = ROOT_PATH . '/app/frontend/' . $module->base_name . '/' . $routerClassName . '.php';
 
         if (file_exists($file)) {
             require_once $file;

@@ -40,13 +40,13 @@ trait ZApplicationInit
 
         //Register plugins
         //$loader->registerDirs([
-        //    APP_DIR . '/plugins/',
+        //    ROOT_PATH . '/app/plugins/',
         //])->register();
 
         // Register some namespaces
         $loader->registerNamespaces(
             [
-                'ZCMS\Core' => APP_DIR . '/libraries/Core/'
+                'ZCMS\Core' => ROOT_PATH . '/app/libraries/Core/'
             ],
             true
         );
@@ -218,7 +218,7 @@ trait ZApplicationInit
          * Loading routes from the routes.php file
          */
         $di->set('router', function () {
-            return require APP_DIR . '/config/router.php';
+            return require ROOT_PATH . '/app/config/router.php';
         });
 
         $di->set('acl', ZAcl::getInstance());

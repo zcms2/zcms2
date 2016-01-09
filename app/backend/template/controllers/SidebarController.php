@@ -38,7 +38,7 @@ class SidebarController extends ZAdminController
         $displayIcon = '';
 
         //Add widget frontend translation
-        $allWidget = get_child_folder(APP_DIR . '/widgets/frontend/');
+        $allWidget = get_child_folder(ROOT_PATH . '/app/widgets/frontend/');
         ZTranslate::getInstance()->addWidgetLang($allWidget, 'frontend');
 
         //Get default frontend template
@@ -165,7 +165,7 @@ class SidebarController extends ZAdminController
 
         //global $_sidebar;
 
-        $pathTemplate = APP_DIR . '/templates/frontend/' . $defaultTemplate . '/template.json';
+        $pathTemplate = ROOT_PATH . '/app/templates/frontend/' . $defaultTemplate . '/template.json';
         if ($resource = check_template($pathTemplate)) {
             $_sidebars = $resource['sidebars'];
             if (count($_sidebars)) {
@@ -234,7 +234,7 @@ class SidebarController extends ZAdminController
 
         if ($this->request->isAjax()) {
             //Add widget frontend translation
-            $allWidget = get_child_folder(APP_DIR . '/widgets/frontend/');
+            $allWidget = get_child_folder(ROOT_PATH . '/app/widgets/frontend/');
             ZTranslate::getInstance()->addWidgetLang($allWidget, 'frontend');
 
             /**

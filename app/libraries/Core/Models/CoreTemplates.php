@@ -113,7 +113,7 @@ class CoreTemplates extends Model
             if ($this->getDI()->get('modelsManager')->createQuery($phql)->execute()) {
                 $defaultTemplate->published = 1;
                 if ($defaultTemplate->save()) {
-                    file_put_contents(APP_DIR . "/" . $location . "/index.volt", '{% extends "../../../templates/' . $location . "/" . $base_name . '/index.volt" %}');
+                    file_put_contents(ROOT_PATH . "/app/" . $location . "/index.volt", '{% extends "../../../templates/' . $location . "/" . $base_name . '/index.volt" %}');
                     return true;
                 }
             }

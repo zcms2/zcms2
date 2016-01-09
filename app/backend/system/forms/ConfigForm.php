@@ -226,8 +226,8 @@ class ConfigForm extends ZForm
         //Section Template
 
         //Add translation template
-        ZTranslate::getInstance()->addTemplateLang(get_child_folder(APP_DIR . '/templates/backend'));
-        ZTranslate::getInstance()->addTemplateLang(get_child_folder(APP_DIR . '/templates/frontend'), 'frontend');
+        ZTranslate::getInstance()->addTemplateLang(get_child_folder(ROOT_PATH . '/app/templates/backend'));
+        ZTranslate::getInstance()->addTemplateLang(get_child_folder(ROOT_PATH . '/app/templates/frontend'), 'frontend');
         //Backend default template
         $backendTemplateArray = CoreTemplates::find("location = 'backend'")->toArray();
         $backendTemplateBaseName = array_column($backendTemplateArray, 'base_name');

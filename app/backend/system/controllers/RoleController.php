@@ -395,8 +395,8 @@ class RoleController extends ZAdminController
 
         //Read resources
         foreach ($core_module as $cModule) {
-            $filePath = APP_DIR . "/backend/" . $cModule->base_name . "/Resource.php";
-            $module = str_replace(' ', "", $cModule->base_name);
+            $filePath = ROOT_PATH . "/app/backend/" . $cModule->base_name . "/Resource.php";
+            $module = str_replace(' ', '', $cModule->base_name);
 
             //Save rules from resource.php to database
             $resource = check_resource($filePath, $cModule->base_name, 'backend');
@@ -416,7 +416,7 @@ class RoleController extends ZAdminController
         }
 
         //Get all module backend
-        $allModuleBackEnd = get_child_folder(APP_DIR . '/backend/');
+        $allModuleBackEnd = get_child_folder(ROOT_PATH . '/app/backend/');
         foreach ($allModuleBackEnd as &$aMBE) {
             $aMBE = '"' . $aMBE . '"';
         }

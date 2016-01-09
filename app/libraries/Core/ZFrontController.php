@@ -80,7 +80,7 @@ class ZFrontController extends PController
         $_action = $this->dispatcher->getActionName();
 
         $routerName = 'Router' . ucfirst($this->dispatcher->getModuleName()) . 'Helper';
-        $routerFile = APP_DIR . '/frontend/' . $this->dispatcher->getModuleName() . '/' . $routerName . '.php';
+        $routerFile = ROOT_PATH . '/app/frontend/' . $this->dispatcher->getModuleName() . '/' . $routerName . '.php';
         if (file_exists($routerFile)) {
             require_once($routerFile);
             /**

@@ -131,7 +131,7 @@ class ZApplication extends PApplication
             foreach ($modules as $module) {
                 $registerModules[$module['base_name']] = [
                     'className' => $module['class_name'],
-                    'path' => APP_DIR . $module['path']
+                    'path' => ROOT_PATH . '/app' . $module['path']
                 ];
             }
             $cache->save(self::ZCMS_APPLICATION_CACHE_MODULES, $registerModules);

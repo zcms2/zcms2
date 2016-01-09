@@ -51,13 +51,13 @@ function get_token($length)
 function zcms_load_frontend_router($router)
 {
     //Get frontend module
-    $frontendModule = get_child_folder(APP_DIR . '/frontend/');
+    $frontendModule = get_child_folder(ROOT_PATH . '/app/frontend/');
     $frontendModule = array_reverse($frontendModule);
 //    $tmp = [];
     foreach ($frontendModule as $module) {
         $moduleRouterClassName = str_replace(' ', '', ucwords(str_replace('-', ' ', $module)));
         $routerClass = 'Router' . $moduleRouterClassName;
-        $fileRoute = APP_DIR . "/frontend/{$module}/{$routerClass}.php";
+        $fileRoute = ROOT_PATH . "/app/frontend/{$module}/{$routerClass}.php";
         if (file_exists($fileRoute)) {
 //            $tmp[] = $fileRoute;
             require_once($fileRoute);
@@ -128,10 +128,10 @@ function remove_multi_space($str)
  */
 function zcms_load_widget_file($location = 'frontend')
 {
-    $allWidget = get_child_folder(APP_DIR . "/widgets/{$location}/");
+    $allWidget = get_child_folder(ROOT_PATH . "/app/widgets/{$location}/");
 
     foreach ($allWidget as $w) {
-        $widgetPath = APP_DIR . "/widgets/{$location}/" . $w . '/' . $w . '.php';
+        $widgetPath = ROOT_PATH . "/app/widgets/{$location}/" . $w . '/' . $w . '.php';
         if (file_exists($widgetPath)) {
             require_once($widgetPath);
         } elseif (DEBUG) {

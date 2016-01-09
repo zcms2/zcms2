@@ -9,6 +9,8 @@ $router->setDefaultModule('index');
 $router->setDefaultController('index');
 $router->setDefaultAction('index');
 
+//echo '<pre>'; var_dump($_SERVER);echo '</pre>'; die();
+
 /**
  * Frontend router
  */

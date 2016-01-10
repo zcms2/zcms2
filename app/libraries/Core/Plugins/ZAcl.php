@@ -115,7 +115,7 @@ class ZAcl extends Plugin
                     'avatar' => $user->avatar,
                     'token' => $this->auth['token'],
                     'coin' => (float)$user->coin,
-                    'menu' => unserialize($role->menu),
+                    'menu' => json_decode($role->menu, true),
                     'created_at' => date('Y-m-d', strtotime($user->created_at)),
                     'is_super_admin' => $role->is_super_admin,
                     'last_use_admin' => time(),
@@ -163,7 +163,7 @@ class ZAcl extends Plugin
             return true;
         } else {
             if ($this->auth) {
-                if (!$this->isAllowed('admin|index|index')) {
+                if (!$this->isAllowed('dashboard|index|index')) {
                     $this->session->remove('auth');
                     unset($_SESSION);
                 }

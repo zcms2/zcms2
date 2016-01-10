@@ -45,13 +45,7 @@ class CoreModules extends ZModel
      *
      * @var string
      */
-    public $class_name;
-
-    /**
-     *
-     * @var string
-     */
-    public $path;
+    public $name_space;
 
     /**
      *

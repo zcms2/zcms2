@@ -1,0 +1,1 @@
+{% include '../../../../templates/backend/forgotPassword.volt' %}

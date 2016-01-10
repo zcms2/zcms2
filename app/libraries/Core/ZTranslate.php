@@ -2,7 +2,7 @@
 
 namespace ZCMS\Core;
 
-use Phalcon\Di as PhalconDI;
+use Phalcon\Di;
 use ZCMS\Core\Cache\ZCache;
 use Phalcon\Translate\Adapter\NativeArray as NativeArray;
 
@@ -15,7 +15,7 @@ use Phalcon\Translate\Adapter\NativeArray as NativeArray;
 class ZTranslate
 {
 
-    const ZCMS_Core_ZTranslate = 'ZCMS_Core_ZTranslate';
+    const ZCMS_CACHE_TRANSLATE = 'ZCMS_CACHE_TRANSLATE_';
 
     /**
      * @var ZTranslate
@@ -39,36 +39,40 @@ class ZTranslate
     /**
      * Get instance ZTranslate
      *
+     * @param string $location
      * @return ZTranslate
      */
-    public static function getInstance()
+    public static function getInstance($location)
     {
-        if (!is_object(self::$instance)) {
-            self::$instance = new ZTranslate();
+        if (!is_array(self::$instance) || !isset(self::$instance[$location])) {
+            self::$instance[$location] = new ZTranslate($location);
         }
-        return self::$instance;
+        return self::$instance[$location];
     }
 
     /**
      * Instance construct
+     *
+     * @param $location
      */
-    public function __construct()
+    public function __construct($location)
     {
-        $this->language = PhalconDI::getDefault()->get('config')->website->language;
-        global $APP_LOCATION;
-        if ($APP_LOCATION) {
-            $cache = ZCache::getInstance();
-            $translation = $cache->get('ZCMS_Core_ZTranslate' . $APP_LOCATION);
+        $this->language = Di::getDefault()->get('config')->website->language;
+        $cache = ZCache::getCore();
+        $translation = $cache->get(self::ZCMS_CACHE_TRANSLATE . $location);
+        if ($translation === null) {
+            //Add global language
+            $this->addLang(ROOT_PATH . '/app/languages/en-GB/en-GB.php');
+            $this->addLang(ROOT_PATH . '/app/languages/' . $this->language . '/' . $this->language . '.php');
 
-            if ($translation === null) {
-                $modules = get_child_folder(ROOT_PATH . "/app/{$APP_LOCATION}/");
-                $this->addLang(ROOT_PATH . '/app/languages/en-GB/en-GB.php');
-                $this->addLang(ROOT_PATH . '/app/languages/' . $this->language . '/' . $this->language . '.php');
-                $this->addModuleLang($modules, $APP_LOCATION);
-                $cache->save('ZCMS_Core_ZTranslate', $this->translation);
-            } else {
-                $this->setTranslate($translation);
+            //Add modules language
+            global $_modules;
+            foreach ($_modules as $module) {
+                $this->addModuleLang($module['baseName'], $location);
             }
+            $cache->save(self::ZCMS_CACHE_TRANSLATE . $location, $this->translation);
+        } else {
+            $this->setTranslate($translation);
         }
     }
 
@@ -78,9 +82,9 @@ class ZTranslate
      * @param string $filePath
      * @return bool
      */
-    public function addLang($filePath = '')
+    public function addLang($filePath = null)
     {
-        if (file_exists($filePath)) {
+        if ($filePath && file_exists($filePath)) {
             $contentLang = require_once($filePath);
             if ($contentLang === true) {
                 return true;
@@ -89,14 +93,14 @@ class ZTranslate
                 $this->translation = array_merge($this->translation, $contentLang);
             } else {
                 if (DEBUG) {
-                    PhalconDI::getDefault()->get('flashSession')->error('Error file translation ' . $filePath);
+                    Di::getDefault()->get('flashSession')->error('Error file translation ' . $filePath);
                 }
                 return false;
             }
             return true;
         }
         if (DEBUG) {
-            //PhalconDI::getDefault()->get('flashSession')->warning('File translation not found ' . $filePath);
+            //Di::getDefault()->get('flashSession')->warning('File translation not found ' . $filePath);
         }
         return false;
     }
@@ -104,24 +108,28 @@ class ZTranslate
     /**
      * Add a module language file in the translate
      *
-     * @param string|mixed $moduleName
+     * @param string $module
      * @param string $location
      */
-    public function addModuleLang($moduleName, $location = 'backend')
+    public function addModuleLang($module, $location = 'admin')
     {
-        if (is_array($moduleName)) {
-            foreach ($moduleName as $module_base_name) {
-                $basePath = ROOT_PATH . '/app/' . $location . '/' . $module_base_name . '/languages';
-                $this->addLang($basePath . '/en-GB/en-GB.php');
-                if ($this->language != 'en-GB') {
-                    $this->addLang($basePath . '/' . $this->language . '/' . $this->language . '.php');
-                }
+        $basePath = ROOT_PATH . '/app/modules/' . $module . '/languages/';
+        $this->addLang($basePath . 'en-GB/' . $location . '/en-GB.php');
+        if ($this->language != 'en-GB') {
+            $this->addLang($basePath . '/' . $this->language . '/' . $location . '/' . $this->language . '.php');
+        }
+    }
+
+    public function addModulesLang($location)
+    {
+        global $_modules;
+        if ($location == 'admin') {
+            foreach ($_modules as $module) {
+                $this->addModuleLang($module['baseName'], 'admin');
             }
-        } elseif (gettype($moduleName) == 'string') {
-            $basePath = ROOT_PATH . '/app/' . $location . '/' . $moduleName . '/languages';
-            $this->addLang($basePath . '/en-GB/en-GB.php');
-            if ($this->language != 'en-GB') {
-                $this->addLang($basePath . '/' . $this->language . '/' . $this->language . '.php');
+        } elseif ($location == 'frontend') {
+            foreach ($_modules as $module) {
+                $this->addModuleLang($module['baseName'], 'frontend');
             }
         }
     }
@@ -132,11 +140,11 @@ class ZTranslate
      * @param string|mixed $templateName
      * @param string $location
      */
-    public function addTemplateLang($templateName, $location = 'backend')
+    public function addTemplateLang($templateName, $location = 'admin')
     {
         if (is_array($templateName)) {
-            foreach ($templateName as $template_base_name) {
-                $basePath = ROOT_PATH . '/app/templates/' . $location . '/' . $template_base_name . '/languages';
+            foreach ($templateName as $template) {
+                $basePath = ROOT_PATH . '/app/templates/' . $location . '/' . $template . '/languages';
                 $this->addLang($basePath . '/' . $this->language . '/' . $this->language . '.php');
             }
         } elseif (gettype($templateName) == 'string') {
@@ -151,11 +159,11 @@ class ZTranslate
      * @param string|array $widgetName
      * @param string $location
      */
-    public function addWidgetLang($widgetName, $location = 'backend')
+    public function addWidgetLang($widgetName, $location = 'admin')
     {
         if (is_array($widgetName)) {
-            foreach ($widgetName as $widget_base_name) {
-                $basePath = ROOT_PATH . '/app/widgets/' . $location . '/' . $widget_base_name . '/languages';
+            foreach ($widgetName as $widget) {
+                $basePath = ROOT_PATH . '/app/widgets/' . $location . '/' . $widget . '/languages';
                 $this->addLang($basePath . '/' . $this->language . '/' . $this->language . '.php');
             }
         } elseif (gettype($widgetName) == 'string') {
@@ -182,7 +190,7 @@ class ZTranslate
      *
      * @param array $translation
      */
-    public function setTranslate($translation)
+    private function setTranslate($translation)
     {
         $this->translation = $translation;
     }

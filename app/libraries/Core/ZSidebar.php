@@ -24,7 +24,7 @@ class ZSidebar
      */
     public static function getSidebar($sidebar_base_name)
     {
-        $cache = ZCache::getInstance('ZCMS_APPLICATION');
+        $cache = ZCache::getInstance();
         $sidebarKey = self::CACHE_KEY . $sidebar_base_name;
 
         $html = '';

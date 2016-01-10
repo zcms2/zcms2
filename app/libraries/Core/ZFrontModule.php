@@ -72,7 +72,7 @@ class ZFrontModule implements ModuleDefinitionInterface
     {
         $config = PDI::getDefault()->get('config');
 
-        $cache = ZCache::getInstance('ZCMS_APPLICATION');
+        $cache = ZCache::getCore();
         $templateDefault = $cache->get('DEFAULT_TEMPLATE');
         if ($templateDefault === null) {
             /**

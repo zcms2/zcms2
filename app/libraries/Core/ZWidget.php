@@ -343,7 +343,7 @@ class ZWidget
      */
     public final function getWidgetHtmlBackend()
     {
-        $result = "<div class=\"widget_active col-sm-6 widget_new widget\" data-content=\"" . strtolower(get_class($this)) . "\">
+        $result = "<div class=\"widget_active widget_new widget\" data-content=\"" . strtolower(get_class($this)) . "\">
                         <div class=\"widget_active_panel\">
                             <div class=\"zwidget-title\">" . __($this->_title) . "</div>
                             <div class=\"zwidget-description\">" . __($this->_description) . "</div>

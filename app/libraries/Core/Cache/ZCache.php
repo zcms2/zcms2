@@ -64,11 +64,11 @@ class ZCache
      * Get instance object
      *
      * @param string $cacheName string A-Z
-     * @param string $cacheType = Memcache | ApcCache
+     * @param string $cacheType = Memcache | ApcCache | FileCache | RedisCache
      * @param int $lifeTime
      * @return ZCache
      */
-    public static function getInstance($cacheName = 'GLOBAL', $cacheType = 'ApcCache', $lifeTime = null)
+    public static function getInstance($cacheName = 'GLOBAL', $cacheType = 'FileCache', $lifeTime = null)
     {
         if (!is_array(self::$instance) || !isset(self::$instance[$cacheName])) {
             self::$instance[$cacheName] = new ZCache($cacheName, $cacheType, $lifeTime);
@@ -77,11 +77,75 @@ class ZCache
     }
 
     /**
+     * Get global cache
+     *
+     * @param string $key
+     * @param integer $lifetime
+     * @return mixed
+     */
+    public static function getCache($key, $lifetime = null)
+    {
+        $cache = self::getInstance();
+        return $cache->get($key, $lifetime);
+    }
+
+    /**
+     * Set global cache
+     *
+     * @param string $keyName
+     * @param mixed $content
+     * @param integer $lifetime
+     * @param $stopBuffer
+     */
+    public function setCache($keyName = null, $content = null, $lifetime = null, $stopBuffer = null)
+    {
+        $cache = self::getInstance();
+        $cache->save($keyName, $content, $lifetime, $stopBuffer);
+    }
+
+    /**
+     * Get core cache
+     *
+     * @param string $key
+     * @param integer $lifetime
+     * @return mixed
+     */
+    public static function getCoreCache($key, $lifetime = null)
+    {
+        $cache = self::getInstance(ZCMS_CACHE_CORE_SYSTEM);
+        return $cache->get($key, $lifetime);
+    }
+
+    /**
+     * Get core
+     *
+     * @return ZCache
+     */
+    public static function getCore()
+    {
+        return self::getInstance(ZCMS_CACHE_CORE_SYSTEM);
+    }
+
+    /**
+     * Set core cache
+     *
+     * @param string $keyName
+     * @param mixed $content
+     * @param integer $lifetime
+     * @param $stopBuffer
+     */
+    public function setCoreCache($keyName = null, $content = null, $lifetime = null, $stopBuffer = null)
+    {
+        $cache = self::getInstance(ZCMS_CACHE_CORE_SYSTEM);
+        $cache->save($keyName, $content, $lifetime, $stopBuffer);
+    }
+
+    /**
      * Starts a cache. The keyName allows to identify the created fragment
      *
-     * @param   int|string $keyName
-     * @param   integer $lifetime
-     * @return  mixed
+     * @param int|string $keyName
+     * @param integer $lifetime
+     * @return mixed
      */
     public function start($keyName, $lifetime = null)
     {

@@ -46,7 +46,8 @@ trait ZApplicationInit
         // Register some namespaces
         $loader->registerNamespaces(
             [
-                'ZCMS\Core' => ROOT_PATH . '/app/libraries/Core/'
+                'ZCMS\Core' => ROOT_PATH . '/app/libraries/Core/',
+                'ZCMS\Modules' => ROOT_PATH . '/app/modules/'
             ],
             true
         );
@@ -141,7 +142,7 @@ trait ZApplicationInit
         $di->set('db', function () use ($config) {
             $adapter = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
 
-            if($config->env == 'development'){
+            if ($config->env == 'development') {
                 /**
                  * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
                  */
@@ -155,7 +156,7 @@ trait ZApplicationInit
                         'dbname' => $config->databaseDev->dbname
                     ));
                 }
-            }else{
+            } else {
                 /**
                  * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
                  */
@@ -170,8 +171,6 @@ trait ZApplicationInit
                     ));
                 }
             }
-
-
 
             if ($config->database->log) {
                 $eventsManager = new EventsManager();
@@ -206,7 +205,7 @@ trait ZApplicationInit
          * Set up model cache for Phalcon model
          */
         $di->set('modelsCache', function () {
-            return ZCache::getInstance('_ZCMS_MODEL', 'FileCache', 60);
+            return ZCache::getInstance(ZCMS_CACHE_MODEL, 'FileCache', 60);
         });
 
         /**
@@ -239,6 +238,6 @@ trait ZApplicationInit
         /**
          * Set up cache
          */
-        $di->set('cache', ZCache::getInstance('_ZCMS_GLOBAL', 'ApcCache'));
+        $di->set('cache', ZCache::getInstance());
     }
 }

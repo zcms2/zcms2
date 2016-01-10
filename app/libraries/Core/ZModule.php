@@ -50,17 +50,14 @@ class ZModule implements ModuleDefinitionInterface
      */
     public function __construct($moduleName, $defaultController = 'index')
     {
-        global $APP_LOCATION;
-        $APP_LOCATION = 'backend';
-
         //Instance multi languages
-        ZTranslate::getInstance();
+        ZTranslate::getInstance(ZCMS_APPLICATION_LOCATION);
 
         $this->module = $moduleName;
         $this->defaultController = $defaultController;
-        $this->baseControllers = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Controllers';
-        $this->baseModels = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Models';
-        $this->baseForms = 'ZCMS\\Backend\\' . ucfirst($this->module) . '\\Forms';
+        $this->baseControllers = 'ZCMS\\Modules\\' . ucfirst($this->module) . '\\Controllers';
+        $this->baseModels = 'ZCMS\\Modules\\' . ucfirst($this->module) . '\\Models';
+        $this->baseForms = 'ZCMS\\Modules\\' . ucfirst($this->module) . '\\Forms';
     }
 
     /**
@@ -72,9 +69,9 @@ class ZModule implements ModuleDefinitionInterface
     {
         $loader = new Loader();
         $loader->registerNamespaces([
-            $this->baseControllers => ROOT_PATH . '/app/backend/' . $this->module . '/controllers/',
-            $this->baseModels => ROOT_PATH . '/app/backend/' . $this->module . '/models/',
-            $this->baseForms => ROOT_PATH . '/app/backend/' . $this->module . '/forms/',
+            $this->baseControllers => ROOT_PATH . '/app/modules/' . $this->module . '/controllers/',
+            $this->baseModels => ROOT_PATH . '/app/modules/' . $this->module . '/models/',
+            $this->baseForms => ROOT_PATH . '/app/modules/' . $this->module . '/forms/',
         ]);
         $loader->register();
     }
@@ -142,7 +139,7 @@ class ZModule implements ModuleDefinitionInterface
             $view->setEventsManager($eventsManager);
 
             //Set view dir
-            $view->setViewsDir(ROOT_PATH . '/app/backend/' . $module . '/views/');
+            $view->setViewsDir(ROOT_PATH . '/app/modules/' . $module . '/views/');
 
             //Register engines
             $view->registerEngines([

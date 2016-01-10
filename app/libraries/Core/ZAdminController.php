@@ -230,15 +230,13 @@ class ZAdminController extends Controller
 
         //Set administrator name
         $this->view->setVar('_user', $this->session->get('auth'));
-
-        $this->view->setVar('_pagination', "../../../templates/backend/{$this->_defaultTemplate}/pagination");
-        $this->view->setVar('_flashSession', "../../../templates/backend/{$this->_defaultTemplate}/flashSession");
-        $this->view->setVar('_standardTable', "../../../templates/backend/{$this->_defaultTemplate}/standardTable");
-        $this->view->setVar('_toolbarHelper', "../../../templates/backend/{$this->_defaultTemplate}/toolbarHelper");
-        $this->view->setVar('_userMenu', "../../../templates/backend/{$this->_defaultTemplate}/userMenu");
-        $this->view->setVar('_breadcrumb', "../../../templates/backend/{$this->_defaultTemplate}/breadcrumb");
+        $this->view->setVar('_pagination', '../../../../templates/backend/pagination');
+        $this->view->setVar('_flashSession', '../../../../templates/backend/flashSession');
+        $this->view->setVar('_standardTable', '../../../../templates/backend/standardTable');
+        $this->view->setVar('_toolbarHelper', '../../../../templates/backend/toolbarHelper');
+        $this->view->setVar('_userMenu', '../../../../templates/backend/userMenu');
+        $this->view->setVar('_breadcrumb', '../../../../templates/backend/breadcrumb');
         $this->view->setVar('_version', $this->config->version);
-
         $this->view->setVar('_menu', $this->_getMenuAdmin($this->_user['role']));
     }
 
@@ -501,5 +499,10 @@ class ZAdminController extends Controller
             return $menu;
         }
         return [];
+    }
+
+    public function afterExecuteRoute()
+    {
+        $this->view->setViewsDir($this->view->getViewsDir() . 'admin/');
     }
 }

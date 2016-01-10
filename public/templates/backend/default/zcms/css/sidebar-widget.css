@@ -10,19 +10,19 @@
     font-weight: bold;
 }
 
-.skin-green .zwidget-title{
+.skin-green .zwidget-title {
     background-color: #00a65a;
 }
 
-.skin-purple .zwidget-title{
+.skin-purple .zwidget-title {
     background-color: #605ca8;
 }
 
-.skin-blue .zwidget-title{
+.skin-blue .zwidget-title {
     background-color: #3c8dbc;
 }
 
-.skin-yellow .zwidget-title{
+.skin-yellow .zwidget-title {
     background-color: #f39c12;
 }
 
@@ -52,14 +52,16 @@
     position: relative;
 }
 
-.box.box-sidebar, .box.available-widget{
+.box.box-sidebar, .box.available-widget {
     border-top: none;
 }
-.box-sidebar.box .box-body .box{
+
+.box-sidebar.box .box-body .box {
     border: 1px dashed #d2d6de;
-    box-shadow : none;
+    box-shadow: none;
     margin-bottom: 3px;
 }
+
 .widget_active {
     padding: 5px;
 }
@@ -125,34 +127,37 @@
     z-index: 100;
 }
 
-
-@media (max-width: 1200px) {
-    .content .col-sm-3 {
-        width: 50%;
-    }
-}
-
 .panel-sidebar .panel-body {
     padding: 5px;
 }
-@media (min-width: 768px) and (max-width: 1200px) {
-    .col-sm-6.sidebar-main .col-sm-6{
-        width: 100%;
-    }
-    .col-sm-6.sidebar-main{
-        padding-left: 15px !important;
-    }
-    .sidebar-main .col-sm-6{
-        padding: 0 !important;
-    }
-}
-@media (max-width: 767px) {
-    .sidebar-main {
-        padding: 0 !important;
-    }
 
-    .col-sidebar-first, .col-sidebar-last {
-        padding: 0 !important;
-    }
+/*@media (max-width: 1200px) {*/
+    /*.content .col-sm-3 {*/
+        /*width: 50%;*/
+    /*}*/
+/*}*/
 
-}
+/*@media (min-width: 768px) and (max-width: 1200px) {*/
+    /*.col-sm-6.sidebar-main .col-sm-6 {*/
+        /*width: 100%;*/
+    /*}*/
+
+    /*.col-sm-6.sidebar-main {*/
+        /*padding-left: 15px !important;*/
+    /*}*/
+
+    /*.sidebar-main .col-sm-6 {*/
+        /*padding: 0 !important;*/
+    /*}*/
+/*}*/
+
+/*@media (max-width: 767px) {*/
+    /*.sidebar-main {*/
+        /*padding: 0 !important;*/
+    /*}*/
+
+    /*.col-sidebar-first, .col-sidebar-last {*/
+        /*padding: 0 !important;*/
+    /*}*/
+
+/*}*/

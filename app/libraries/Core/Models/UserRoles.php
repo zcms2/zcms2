@@ -111,24 +111,24 @@ class UserRoles extends ZModel
         }
 
         $menus = CoreModules::find([
-            'conditions' => 'menu != "" AND location = "backend" AND published = 1 AND base_name NOT IN("admin","system","template")',
+            'conditions' => "menu != '' AND published = 1 AND base_name NOT IN('dashboard','system','template')",
             'order' => 'ordering ASC'
         ])->toArray();;
         if (!count($menus)) {
             $menus = [];
         }
 
-        $menuAdmin = CoreModules::findFirst("base_name = 'admin'");
+        $menuAdmin = CoreModules::findFirst("base_name = 'dashboard'");
         $menuTemplate = CoreModules::findFirst("base_name = 'template'");
         $menuSystem = CoreModules::findFirst("base_name = 'system'");
 
-        if ($menuTemplate) array_unshift($menus, $menuAdmin->toArray());
+        if ($menuAdmin) array_unshift($menus, $menuAdmin->toArray());
         if ($menuTemplate) $menus[] = $menuTemplate->toArray();
         if ($menuSystem) $menus[] = $menuSystem->toArray();
 
         $menusAll = [];
         foreach ($menus as $index => $menu) {
-            $menusAll[] = unserialize($menu['menu']);
+            $menusAll[] = json_decode($menu['menu'], true);
         }
 
         $newMenuAll = [];
@@ -229,7 +229,7 @@ class UserRoles extends ZModel
         }
 
         foreach ($roles as $role) {
-            $role->menu = serialize($menuForRole[$role->role_id]);
+            $role->menu = json_encode($menuForRole[$role->role_id]);
             if (!$role->save()) {
                 //Do something
             }
@@ -287,7 +287,8 @@ class UserRoles extends ZModel
      *
      * @return UserRoles
      */
-    public static function getDefaultCustomerRole(){
+    public static function getDefaultCustomerRole()
+    {
         return self::findFirst([
             'conditions' => 'location = 0 AND is_default =1'
         ]);
@@ -298,9 +299,10 @@ class UserRoles extends ZModel
      *
      * @return integer
      */
-    public static function getDefaultCustomerRoleID(){
+    public static function getDefaultCustomerRoleID()
+    {
         $role = self::getDefaultCustomerRole();
-        if($role){
+        if ($role) {
             return $role->role_id;
         }
         return 0;

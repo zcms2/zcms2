@@ -95,7 +95,7 @@ class CoreTemplates extends Model
      */
     public function setDefaultTemplate($base_name, $location)
     {
-        if (!($location == 'frontend' || $location == 'backend')) {
+        if (!($location == 'frontend' || $location == 'admin')) {
             $this->getDI()->get('flashSession')->error('gb_location_template_must_be_backend_or_frontend');
             return false;
         }

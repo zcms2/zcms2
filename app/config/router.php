@@ -2,62 +2,37 @@
 /**
  * Registering a router
  */
-$router = new \Phalcon\Mvc\Router(false);
+$router = new Phalcon\Mvc\Router(false);
 
 //Set default router
 $router->setDefaultModule('index');
 $router->setDefaultController('index');
 $router->setDefaultAction('index');
 
-//echo '<pre>'; var_dump($_SERVER);echo '</pre>'; die();
-
 /**
  * Frontend router
  */
 $router->add('/', [
+    'namespace' => 'ZCMS\Modules\Index\Controllers\Admin',
     'module' => 'index',
     'controller' => 'index',
     'action' => 'index'
 ]);
 
-//Load router frontend
-$router = zcms_load_frontend_router($router);
-
-/**
- * Backend router
- */
 $router->add('/admin[/]?', [
-    'module' => 'admin',
+    'namespace' => 'ZCMS\Modules\Dashboard\Controllers\Admin',
+    'module' => 'dashboard',
     'controller' => 'index',
     'action' => 'index',
 ]);
 
-$router->add('/admin/:module/:controller/:action/:params', [
-    'module' => 1,
-    'controller' => 2,
-    'action' => 3,
-    'params' => 4,
-]);
+//Load router
+if (ZCMS_APPLICATION_LOCATION === 'admin') {
+    $router = zcms_load_admin_router($router);
+} elseif (ZCMS_APPLICATION_LOCATION === 'frontend') {
+    $router = zcms_load_frontend_router($router);
+}
 
-$router->add('/admin/:module/:controller/:action', [
-    'module' => 1,
-    'controller' => 2,
-    'action' => 3,
-]);
-
-$router->add('/admin/:module/:controller[/]?', [
-    'module' => 1,
-    'controller' => 2,
-    'action' => 'index',
-]);
-
-$router->add('/admin/:module[/]?', [
-    'module' => 1,
-    'controller' => 'index',
-    'action' => 'index',
-]);
-
-//404 not found
 $router->notFound([
     'module' => 'index',
     'controller' => 'error',

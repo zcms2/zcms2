@@ -45,11 +45,19 @@ class CoreOptions extends Model
      */
     public $autoload;
 
-    public static function initOrUpdateCacheOptions($reloadCache = false)
+    /**
+     * Init options
+     *
+     * @param bool|false $reloadCache
+     * @return array|mixed
+     */
+    public static function initOptions($reloadCache = false)
     {
-        $cache = ZCache::getInstance(ZCMS_APPLICATION);
+        $cache = ZCache::getCore();
+
         //Load cache options
         $optionsCache = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
+
         //If reload cache Or current cache is null
         if ($reloadCache || $optionsCache === null) {
             $options = self::find([
@@ -65,9 +73,17 @@ class CoreOptions extends Model
         return $optionsCache;
     }
 
+    /**
+     * Get option
+     *
+     * @param $name
+     * @param string $scope
+     * @param mixed $default
+     * @return mixed
+     */
     public static function getOptions($name, $scope = '', $default = null)
     {
-        $cache = ZCache::getInstance(ZCMS_APPLICATION);
+        $cache = ZCache::getCore();
         $optionsCache = $cache->get(self::ZCMS_CACHE_MODEL_CORE_OPTIONS);
         if ($optionsCache === null) {
             $optionsCache = self::initOrUpdateCacheOptions(true);

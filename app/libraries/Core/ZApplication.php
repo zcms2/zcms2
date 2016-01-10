@@ -19,11 +19,6 @@ class ZApplication extends PApplication
     use ZApplicationInit;
 
     /**
-     * Cache modules key
-     */
-    const ZCMS_APPLICATION_CACHE_MODULES = 'ZCMS_APPLICATION_CACHE_MODULES';
-
-    /**
      * @var mixed
      */
     protected $config;
@@ -57,7 +52,7 @@ class ZApplication extends PApplication
          * @define string BASE_URI
          */
         define('BASE_URI', $this->config->website->baseUri);
-        include ROOT_PATH . '/app/libraries/Core/Utilities/ZFunctions.php';
+        include_once ROOT_PATH . '/app/libraries/Core/Utilities/ZFunctions.php';
 
         parent::__construct($this->di);
     }
@@ -73,9 +68,10 @@ class ZApplication extends PApplication
 
         $this->_initServices($this->_dependencyInjector, $this->config);
 
-        $this->_initModule();
+        $this->_initModules();
 
         $handle = $this->handle();
+
         if ($this->config->logError) {
             $error = error_get_last();
             if ($error) {
@@ -111,31 +107,35 @@ class ZApplication extends PApplication
     /**
      * Auto load module from database
      */
-    public function _initModule()
+    public function _initModules()
     {
         //Create new cache
-        $cache = ZCache::getInstance(ZCMS_APPLICATION);
+        $cache = ZCache::getCore();
 
-        CoreOptions::initOrUpdateCacheOptions();
+        CoreOptions::initOptions();
 
         //Load module
-        $registerModules = $cache->get(self::ZCMS_APPLICATION_CACHE_MODULES);
+        $registerModules = $cache->get(ZCMS_CACHE_MODULES);
         if ($registerModules === null) {
             /**
              * @var \Phalcon\Db\Adapter\Pdo\Postgresql $db
              */
-            $db = $this->getDI()->get('db');
-            $query = 'SELECT base_name, class_name, path FROM core_modules WHERE published = 1';
+            $db = $this->di->get('db');
+            $query = 'SELECT base_name, namespace FROM core_modules WHERE published = 1';
             $modules = $db->fetchAll($query);
             $registerModules = [];
             foreach ($modules as $module) {
                 $registerModules[$module['base_name']] = [
-                    'className' => $module['class_name'],
-                    'path' => ROOT_PATH . '/app' . $module['path']
+                    'baseName' => $module['base_name'],
+                    'namespace' => $module['namespace'],
+                    'className' => $module['namespace'] . '\\Module',
+                    'path' => ROOT_PATH . '/app/modules/Module.php'
                 ];
             }
-            $cache->save(self::ZCMS_APPLICATION_CACHE_MODULES, $registerModules);
+            $cache->save(ZCMS_CACHE_MODULES, $registerModules);
         }
+        global $_modules;
+        $_modules = $registerModules;
         $this->registerModules($registerModules);
     }
 }

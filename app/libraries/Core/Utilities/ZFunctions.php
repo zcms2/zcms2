@@ -4,6 +4,7 @@ use Phalcon\Di;
 use ZCMS\Core\ZSEO;
 use ZCMS\Core\ZSidebar;
 use ZCMS\Core\ZTranslate;
+use ZCMS\Core\Cache\ZCache;
 use ZCMS\Core\Utilities\URLify;
 
 /**
@@ -43,6 +44,50 @@ function get_token($length)
 }
 
 /**
+ * Load router module
+ *
+ * @param Phalcon\Mvc\Router $router
+ * @return Phalcon\Mvc\Router
+ */
+function zcms_load_admin_router($router)
+{
+    global $_modules;
+    foreach ($_modules as $module) {
+        if ($module != 'dashboard') {
+            $router->add('/admin/' . $module['baseName'] . '/:controller/:action/:params', [
+                'namespace' => $module['namespace'] . '\Controllers\Admin',
+                'module' => $module['baseName'],
+                'controller' => 1,
+                'action' => 2,
+                'params' => 3,
+            ]);
+
+            $router->add('/admin/' . $module['baseName'] . '/:controller/:action', [
+                'namespace' => $module['namespace'] . '\Controllers\Admin',
+                'module' => $module['baseName'],
+                'controller' => 1,
+                'action' => 2,
+            ]);
+
+            $router->add('/admin/' . $module['baseName'] . '/:controller[/]?', [
+                'namespace' => $module['namespace'] . '\Controllers\Admin',
+                'module' => $module['baseName'],
+                'controller' => 1,
+                'action' => 'index',
+            ]);
+
+            $router->add('/admin/' . $module['baseName'] . '[/]?', [
+                'namespace' => $module['namespace'] . '\Controllers\Admin',
+                'module' => $module['baseName'],
+                'controller' => 'index',
+                'action' => 'index',
+            ]);
+        }
+    }
+    return $router;
+}
+
+/**
  * Load frontend router
  *
  * @param \Phalcon\Mvc\Router $router
@@ -50,23 +95,24 @@ function get_token($length)
  */
 function zcms_load_frontend_router($router)
 {
+    echo '<pre>';
+    var_dump(__METHOD__);
+    echo '</pre>';
+    die();
     //Get frontend module
     $frontendModule = get_child_folder(ROOT_PATH . '/app/frontend/');
     $frontendModule = array_reverse($frontendModule);
-//    $tmp = [];
     foreach ($frontendModule as $module) {
         $moduleRouterClassName = str_replace(' ', '', ucwords(str_replace('-', ' ', $module)));
         $routerClass = 'Router' . $moduleRouterClassName;
         $fileRoute = ROOT_PATH . "/app/frontend/{$module}/{$routerClass}.php";
         if (file_exists($fileRoute)) {
-//            $tmp[] = $fileRoute;
             require_once($fileRoute);
             if (class_exists($routerClass)) {
                 $router->mount(new $routerClass());
             }
         }
     }
-    //echo '<pre>'; var_dump($tmp);echo '</pre>'; die();
     return $router;
 }
 
@@ -82,7 +128,7 @@ function __($code, $arrayParams = null)
     if ($arrayParams != null && !is_array($arrayParams)) {
         $arrayParams = [$arrayParams];
     }
-    $translate = ZTranslate::getInstance()->getTranslate();
+    $translate = ZTranslate::getInstance(ZCMS_APPLICATION_LOCATION)->getTranslate();
     return $translate->_($code, $arrayParams);
 }
 
@@ -505,10 +551,9 @@ function recurse_copy($source, $destination)
  *
  * @param string $path
  * @param string $moduleBaseName
- * @param string $location
  * @return array|bool
  */
-function check_resource($path, $moduleBaseName, $location)
+function check_resource($path, $moduleBaseName)
 {
     $baseActions = [
         'delete' => 'gb_delete',
@@ -535,29 +580,16 @@ function check_resource($path, $moduleBaseName, $location)
         'update' => 'gb_update'
     ];
 
-    if ($location == 'backend') {
-        $prefix = 'm_admin_';
-    } else {
-        $prefix = 'm_frontend_';
-    }
+    $prefix = 'm_admin_';
 
     if (file_exists($path)) {
 
-        require_once $path;
+        require_once($path);
 
         if (isset($resource) && is_array($resource)) {
             if (!isset($resource['name'])) {
                 $resource['name'] = $prefix . $moduleBaseName;
             }
-
-            if (!isset($resource['class_name'])) {
-                $resource['class_name'] = 'ZCMS\\Backend\\' . $moduleBaseName . '\\Module';
-            }
-            if (!isset($resource['path']) || $resource['path'] == '') {
-                $resource['path'] = '/backend/' . $moduleBaseName . '/Module.php';
-            }
-
-            $resource['location'] = $location;
 
             if (!isset($resource['description'])) {
                 $resource['description'] = $prefix . $moduleBaseName . '_desc';
@@ -577,6 +609,11 @@ function check_resource($path, $moduleBaseName, $location)
 
             if (!isset($resource['uri'])) {
                 $resource['uri'] = '';
+            }
+
+            if (!isset($resource['namespace'])) {
+                if (DEBUG) die(__('gb_message_module_resource_must_namespace'.$path, ['1' => $path]));
+                return false;
             }
 
             if (!isset($resource['acl'])) {

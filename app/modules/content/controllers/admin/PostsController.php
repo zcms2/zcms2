@@ -234,7 +234,7 @@ class PostsController extends ZAdminController
      */
     public function newAction()
     {
-        $this->_toolbar->addSaveButton();
+        $this->_toolbar->addSaveButton('new');
         $this->_toolbar->addCancelButton('index');
 
         $postForm = new PostForm();

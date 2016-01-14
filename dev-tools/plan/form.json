@@ -1,0 +1,36 @@
+{
+  "username": {
+    "required": true,
+    "minlength": 2,
+    "maxlength": 255,
+    "email": true,
+    "messages": {
+      "required": "Please enter your username",
+      "minlength": "Username must be at least 2 characters long",
+      "maxlength": "Username must be at max 255 characters long",
+      "email": "Your username must be email"
+    }
+  },
+  "password": {
+    "required": true,
+    "minlength": 6,
+    "maxlength": 32,
+    "messages": {
+      "required": "Please enter your password",
+      "minlength": "Password must be at least 6 characters long",
+      "maxlength": "Password must be at max 32 characters long"
+    }
+  },
+  "confirm_password": {
+    "required": true,
+    "minlength": 6,
+    "maxlength": 32,
+    "equalTo": "password",
+    "messages": {
+      "required": "Please enter your confirm password",
+      "minlength": "Confirm password must be at least 6 characters long",
+      "maxlength": "Confirm password must be at max 32 characters long",
+      "equalTo": "Confirm password not match"
+    }
+  }
+}

@@ -10,7 +10,7 @@ use ZCMS\Core\ZTranslate;
 /**
  * Class IndexController
  *
- * @package ZCMS\Backend\Template\Controllers
+ * @package ZCMS\Modules\Template\Controllers
  * @version 0.0.1
  */
 class IndexController extends ZAdminController

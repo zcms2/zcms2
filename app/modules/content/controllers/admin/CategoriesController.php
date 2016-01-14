@@ -12,7 +12,7 @@ use ZCMS\Core\ZPagination;
 /**
  * Class CategoriesController
  *
- * @package ZCMS\Backend\Content\Controllers
+ * @package ZCMS\Modules\Content\Controllers
  */
 class CategoriesController extends ZAdminController
 {

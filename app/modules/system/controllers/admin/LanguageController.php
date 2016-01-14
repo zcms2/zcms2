@@ -9,7 +9,7 @@ use ZCMS\Core\Utilities\ZArrayHelper;
 
 /**
  * Class LanguageController
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class LanguageController extends ZAdminController
 {

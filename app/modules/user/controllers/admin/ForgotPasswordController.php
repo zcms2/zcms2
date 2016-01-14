@@ -7,7 +7,7 @@ use ZCMS\Core\ZAdminController;
 /**
  * Class ForgotPasswordController
  *
- * @package ZCMS\Backend\User\Controllers
+ * @package ZCMS\Modules\User\Controllers
  */
 class ForgotPasswordController extends ZAdminController
 {

@@ -18,7 +18,7 @@ use ZCMS\Core\ZTranslate;
 /**
  * Class ConfigForm
  *
- * @package ZCMS\Backend\System\Forms
+ * @package ZCMS\Modules\System\Forms
  */
 class ConfigForm extends ZForm
 {

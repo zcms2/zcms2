@@ -11,7 +11,7 @@ use ZCMS\Core\ZTranslate;
 
 /**
  * Class ModuleController
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class ModuleController extends ZAdminController
 {

@@ -7,7 +7,7 @@ use ZCMS\Core\ZAdminController;
 /**
  * Class LogoutController
  *
- * @package ZCMS\Backend\User\Controllers
+ * @package ZCMS\Modules\User\Controllers
  */
 class LogoutController extends ZAdminController
 {

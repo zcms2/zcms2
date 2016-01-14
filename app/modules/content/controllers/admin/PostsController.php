@@ -13,7 +13,7 @@ use ZCMS\Core\ZPagination;
 /**
  * Class PostsController
  *
- * @package ZCMS\Backend\Content\Controllers
+ * @package ZCMS\Modules\Content\Controllers
  */
 class PostsController extends ZAdminController
 {

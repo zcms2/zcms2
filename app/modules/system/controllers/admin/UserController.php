@@ -12,7 +12,7 @@ use ZCMS\Modules\System\Forms\UserForm;
 /**
  * Class UserController
  *
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class UserController extends ZAdminController
 {

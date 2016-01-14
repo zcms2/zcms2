@@ -14,7 +14,7 @@ use ZCMS\Core\Utilities\ZArrayHelper;
 /**
  * Class ManagerController
  *
- * @package ZCMS\Backend\Media\Controllers
+ * @package ZCMS\Modules\Media\Controllers
  */
 class ManagerController extends ZAdminController
 {

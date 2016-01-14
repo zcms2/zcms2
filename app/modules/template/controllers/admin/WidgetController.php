@@ -11,7 +11,7 @@ use ZCMS\Core\ZTranslate;
 /**
  * Class WidgetController
  *
- * @package ZCMS\Backend\Template\Controllers
+ * @package ZCMS\Modules\Template\Controllers
  */
 class WidgetController extends ZAdminController
 {

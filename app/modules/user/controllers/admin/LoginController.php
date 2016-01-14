@@ -10,7 +10,7 @@ use Phalcon\Validation\Validator\Email;
 /**
  * Class LoginController
  *
- * @package ZCMS\Backend\User\Controllers
+ * @package ZCMS\Modules\User\Controllers
  */
 class LoginController extends ZAdminController
 {

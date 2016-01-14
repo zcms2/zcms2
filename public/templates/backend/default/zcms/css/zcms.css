@@ -14,6 +14,10 @@
     display: none
 }
 
+.note-editor {
+    border: 1px solid #d2d6de;
+}
+
 .pace .pace-progress {
     background: #f4f8ff;
     position: fixed;
@@ -24,7 +28,7 @@
     height: 2px
 }
 
-.skin-green .main-header .navbar .nav>li>a{
+.skin-green .main-header .navbar .nav > li > a {
     border-right: 1px solid #16B36B;
 }
 
@@ -299,6 +303,7 @@ table.dataTable thead > tr > th {
        * content.
        */
 }
+
 .modal.modal-fullscreen .modal-dialog,
 .modal.modal-fullscreen .modal-content {
     bottom: 0;
@@ -307,10 +312,12 @@ table.dataTable thead > tr > th {
     right: 0;
     top: 0;
 }
+
 .modal.modal-fullscreen .modal-dialog {
     margin: 0;
     width: 100%;
 }
+
 .modal.modal-fullscreen .modal-content {
     border: none;
     -moz-border-radius: 0;
@@ -320,21 +327,26 @@ table.dataTable thead > tr > th {
     -o-box-shadow: inherit;
     box-shadow: inherit;
 }
+
 .modal.modal-fullscreen.force-fullscreen {
     /* Remove the padding inside the body */
 }
+
 .modal.modal-fullscreen.force-fullscreen .modal-body {
     padding: 0;
 }
+
 .modal.modal-fullscreen.force-fullscreen .modal-header,
 .modal.modal-fullscreen.force-fullscreen .modal-footer {
     left: 0;
     position: absolute;
     right: 0;
 }
+
 .modal.modal-fullscreen.force-fullscreen .modal-header {
     top: 0;
 }
+
 .modal.modal-fullscreen.force-fullscreen .modal-footer {
     bottom: 0;
 }

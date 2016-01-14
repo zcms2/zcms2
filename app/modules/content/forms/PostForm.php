@@ -13,7 +13,7 @@ use Phalcon\Validation\Validator\InclusionIn;
 /**
  * Class PostForm
  *
- * @package ZCMS\Backend\Content\Forms
+ * @package ZCMS\Modules\Content\Forms
  */
 class PostForm extends ZForm
 {

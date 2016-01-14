@@ -17,7 +17,7 @@ use ZCMS\Core\Utilities\ZArrayHelper;
 /**
  * Class Role Controller
  *
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class RoleController extends ZAdminController
 {

@@ -13,7 +13,7 @@ use Phalcon\Mvc\View;
  *
  * Backup and download database. SuperAdmin with verify password need to download backup file!
  *
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class DatabaseController extends ZAdminController
 {

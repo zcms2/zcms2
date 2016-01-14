@@ -7,7 +7,7 @@ use ZCMS\Core\ZModule;
 /**
  * Class Module
  *
- * @package ZCMS\Backend\System
+ * @package ZCMS\Modules\System
  */
 class Module extends ZModule
 {

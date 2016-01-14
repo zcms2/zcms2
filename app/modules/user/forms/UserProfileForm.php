@@ -10,7 +10,7 @@ use ZCMS\Core\Forms\ZForm;
 /**
  * Class UserProfileForm
  *
- * @package ZCMS\backend\user\forms
+ * @package ZCMS\Modules\user\forms
  */
 class UserProfileForm extends ZForm
 {

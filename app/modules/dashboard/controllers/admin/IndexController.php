@@ -8,7 +8,7 @@ use ZCMS\Core\ZAdminController;
  * Class IndexController
  *
  * @author ZCMS Team
- * @package ZCMS\Backend\Admin\Controllers
+ * @package ZCMS\Modules\Admin\Controllers
  */
 class IndexController extends ZAdminController
 {

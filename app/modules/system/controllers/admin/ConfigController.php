@@ -12,7 +12,7 @@ use ZCMS\Modules\System\Forms\ConfigForm;
 /**
  * Class ConfigController
  *
- * @package ZCMS\Backend\System\Controllers
+ * @package ZCMS\Modules\System\Controllers
  */
 class ConfigController extends ZAdminController
 {

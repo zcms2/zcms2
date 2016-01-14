@@ -9,7 +9,7 @@ use ZCMS\Modules\User\Forms\UserProfileForm;
 /**
  * Class ProfileController
  *
- * @package ZCMS\Backend\User\Controllers
+ * @package ZCMS\Modules\User\Controllers
  */
 class ProfileController extends ZAdminController
 {

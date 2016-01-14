@@ -1,22 +1,23 @@
 <?php
 
-namespace ZCMS\Modules\Media;
+namespace ZCMS\Modules\Index;
 
 use ZCMS\Core\ZModule;
 
 /**
- * Class Module
+ * Class Module Profile
  *
- * @package ZCMS\Modules\Media
+ * @package ZCMS\Modules\Index
  */
 class Module extends ZModule
 {
+
     /**
      * Define module name
      *
      * @var string
      */
-    protected $module_name = 'media';
+    protected $module_name = 'index';
 
     /**
      * Module Constructor

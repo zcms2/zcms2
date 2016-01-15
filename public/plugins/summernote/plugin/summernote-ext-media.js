@@ -118,18 +118,20 @@
             });
 
             $mediaDialog.one('shown.bs.modal', function () {
-                if (!$mediaDialog.hasClass('modal-fullscreen')) {
-                    $mediaDialog.addClass('modal-fullscreen');
-                }
+                //if (!$mediaDialog.hasClass('modal-fullscreen')) {
+                //    $mediaDialog.addClass('modal-fullscreen');
+                //}
+                //if (!$mediaDialog.hasClass('modal-lg')) {
+                    $mediaDialog.find('.modal-dialog').addClass('modal-lg');
+                //}
                 $mediaDialog.on('click', '.smn-thumb', function (event) {
-                    //console.log($(this).hasClass('selected'));
                     if ($(this).hasClass('selected')) {
-                        $(".smn-thumb").removeClass('selected');
+                        $('.zcms-main-media-dialog .smn-thumb').removeClass('selected');
                         $mediaUrl.val('');
                         $mediaInfo.data = JSON.parse($(this).find('img').attr('data-content'));
                         toggleBtn($mediaBtn, false);
                     } else {
-                        $(".smn-thumb").removeClass('selected');
+                        $('.zcms-main-media-dialog .smn-thumb').removeClass('selected');
                         $(this).addClass('selected');
                         $mediaUrl.val(JSON.parse($(this).find('img').attr('data-content')));
                         $mediaInfo.data = JSON.parse($(this).find('img').attr('data-content'));
@@ -229,7 +231,6 @@
                     '<ul id="smn-attachments">';
 
                 $.get(_baseUri + '/admin/media/manager/getMedia/', function (result) {
-
                     var append = '';
                     if (result.code) {
                         for (var i = 0; i < result.data.length; i++) {

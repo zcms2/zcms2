@@ -10,6 +10,11 @@
     <link href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- DatePicker3 -->
     <link href="{{ _baseUri }}/public/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- DateTimePicker -->
+    <link href="{{ _baseUri }}/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ _baseUri }}/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- Media Select-->
+    <link href="{{ _baseUri }}/templates/backend/default/zcms/css/summernote-ext-media.css" rel="stylesheet" type="text/css"/>
     <!-- Data Tables -->
     <link href="{{ _baseUri }}/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
@@ -31,6 +36,9 @@
     <![endif]-->
     <script>
         var _baseUri = '{{ _baseUri }}';
+        var _mediaTarget = null;
+        var _ZCMS = {};
+        _ZCMS.dateFormat = JSON.parse('{{ _dateFormat|json_encode }}');
     </script>
 </head>
 <body class="sidebar-mini skin-green">
@@ -95,10 +103,9 @@
     </div>
 
     <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b><a href="http://phalconphp.com/">Phalcon 2 Framework</a> &amp; <a href="https://almsaeedstudio.com/">AdminLTE</a></b> 2.0
+        <div class="text-right">
+            <strong><a href="http://www.zcms.com">&copy; ZCMS</a> {{ date('Y') }}</strong> - <i>V{{ _version }}</i> . Power by <a href="http://phalconphp.com/">Phalcon Framework</a>
         </div>
-        <strong>Copyright <a href="http://www.zcms.com">&copy; ZCMS Team</a> {{ date('Y') }}</strong> - <i>Version {{ _version }}</i> .All rights reserved.
     </footer>
 </div>
 <!-- jQuery -->
@@ -106,17 +113,60 @@
 <script src="{{ _baseUri }}/plugins/jquery-ui/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap JS -->
 <script src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- Moment -->
+<script src="{{ _baseUri }}/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
 <!-- DatePicker -->
 <script src="{{ _baseUri }}/public/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- DateTimePicker -->
+<script src="{{ _baseUri }}/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{ _baseUri }}/templates/backend/default/js/app.min.js" type="text/javascript"></script>
 <!-- Pace -->
 <script src="{{ _baseUri }}/plugins/pace/pace.min.js" type="text/javascript"></script>
 <!-- ZCMS JS -->
 <script src="{{ _baseUri }}/templates/backend/default/zcms/js/zcms.js" type="text/javascript"></script>
-<!-- Coder JS -->
-{{ assets.outputJs('js_footer') }}<!-- End Coder JS -->
-<!-- Custom View JS -->
-{% block js_footer %}{% endblock %}<!-- End Custom View JS -->
-{% include '../../../../templates/backend/footer.volt' %}</body>
+<!-- Coder JS -->{{ assets.outputJs('js_footer') }}<!-- End Coder JS -->
+<!-- Custom View JS -->{% block js_footer %}{% endblock %}
+<!-- End Custom View JS -->
+<div class="zcms-custom-main-media-dialog modal" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" tabindex="-1">×</button>
+                <h4 class="modal-title">Insert Media</h4></div>
+            <div class="modal-body">
+                {#<div class="form-group row-fluid">#}
+                    {#<div>#}
+                        {#<ul class="nav nav-tabs" role="tablist">#}
+                            {#<li role="presentation" class="active"><a href="#zcms-media-library" aria-controls="zcms-media-library" role="tab" data-toggle="tab">Media Library</a></li>#}
+                            {#<li role="presentation"><a href="#zcms-upload-files" aria-controls="zcms-upload-files" role="tab" data-toggle="tab">Upload Files</a></li>#}
+                            {#<li role="presentation"><a href="#zcms-insert-image-url" aria-controls="zcms-insert-image-url" role="tab" data-toggle="tab">Insert from URL</a></li>#}
+                        {#</ul>#}
+                        {#<div class="tab-content">#}
+                            {#<div role="tabpanel" class="tab-pane active" id="zcms-media-library">#}
+                                {#<div class="zcms-media-library-search-bar"><input class="zcms_media_keyword pull-right col-md-6" style="margin:5px 0;" placeholder="Search..." name="media_keyword">#}
+
+                                    {#<div class="clearfix"></div>#}
+                                {#</div>#}
+                                {#<div class="zcms-custom-media-files">#}
+                                    {#<ul id="smn-custom-attachments">#}
+                                    {#</ul>#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div role="tabpanel" class="tab-pane" id="zcms-upload-files">...</div>#}
+                            {#<div role="tabpanel" class="tab-pane" id="zcms-insert-image-url">...</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<input type="hidden" name="zcms_select_item" id="zcms_select_item">#}
+
+                {#<div class="clearfix"></div>#}
+            </div>
+            <div class="modal-footer">
+                {#<button type="button" href="#" class="btn btn-primary note-media-btn disabled" disabled="">Insert Media</button>#}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

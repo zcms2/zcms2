@@ -19,7 +19,7 @@ class CategoryForm extends ZForm
      *
      * @var string
      */
-    public $_titleColumn = 'title';
+    public $_seoTitleColumn = 'title';
 
     /**
      * @var string

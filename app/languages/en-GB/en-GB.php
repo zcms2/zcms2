@@ -20,10 +20,10 @@ return [
     "gb_category" => "Category",
 
     //Date time format
-    'gb_date_format' => 'Y-d-m',
-    'gb_date_time_format' => 'Y-m-d, H:i:s',
-    'gb_full_date_format' => 'yyyy-dd-mm',
-    'gb_time_format_y_m_d_h_i' => 'Y-m-d H:i',
+    'gb_date_format' => 'm-d-Y',
+    'gb_datetime_format' => 'm/d/Y h:i A',
+    'gb_js_date_time_format' => 'MM/DD/YYYY h:mm A',
+    'gb_view_full_date_format' => 'M d, Y \a\t h:i A',
 
     //Pagination
     'gb_last' => 'Last',

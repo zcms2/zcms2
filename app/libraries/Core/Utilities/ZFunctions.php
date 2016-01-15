@@ -4,7 +4,6 @@ use Phalcon\Di;
 use ZCMS\Core\ZSEO;
 use ZCMS\Core\ZSidebar;
 use ZCMS\Core\ZTranslate;
-use ZCMS\Core\Cache\ZCache;
 use ZCMS\Core\Utilities\URLify;
 
 /**
@@ -761,19 +760,6 @@ function moneyFormat($number, $lang = 'vi')
 }
 
 /**
- * Format date
- *
- * @param string $date
- * @param string $lang
- * @return string
- */
-function date_time_format($date, $lang = 'en_US')
-{
-    $formatter = new MessageFormatter($lang, "{0, date}");
-    return $formatter->format([strtotime($date)]);
-}
-
-/**
  * Generate alias from string
  *
  * @param string $str
@@ -802,7 +788,7 @@ function generateAlias($str, $space_character = '-', $length = 255)
  * @param string $format
  * @return bool
  */
-function validate_date($date, $format = 'Y-m-d')
+function validate_datetime($date, $format = 'Y-m-d H:i:s')
 {
     $dateTime = \DateTime::createFromFormat($format, $date);
     return $dateTime && $dateTime->format($format) == $date;
@@ -818,10 +804,57 @@ function validate_date($date, $format = 'Y-m-d')
  */
 function change_date_format($date, $formatFrom, $formatTo)
 {
-    if (!$date || !validate_date($date, $formatFrom)) {
+    if (!$date || !validate_datetime($date, $formatFrom)) {
         return '';
     }
     return \DateTime::createFromFormat($formatFrom, $date)->format($formatTo);
+}
+
+/**
+ * View date in volt template
+ * @param $dbDate
+ * @return string
+ */
+function view_date($dbDate)
+{
+    return change_date_format($dbDate,'Y-m-d H:i:s',__('gb_view_full_date_format'));
+}
+/**
+ * Convert to database date time
+ *
+ * @param $date
+ * @param bool|true $defaultNow
+ * @return string
+ */
+function db_datetime($date, $defaultNow = true)
+{
+    if (!$date || !validate_datetime($date, __('gb_datetime_format'))) {
+        if ($defaultNow) {
+            return date('Y-m-d H:i:s');
+        } else {
+            return '';
+        }
+    }
+    return \DateTime::createFromFormat(__('gb_datetime_format'), $date)->format('Y-m-d H:i:s');
+}
+
+/**
+ * Convert to database date
+ *
+ * @param $date
+ * @param bool|true $defaultNow
+ * @return string
+ */
+function db_date($date, $defaultNow = true)
+{
+    if (!$date || !validate_datetime($date, __('gb_date_format'))) {
+        if ($defaultNow) {
+            return date('Y-m-d');
+        } else {
+            return '';
+        }
+    }
+    return \DateTime::createFromFormat(__('gb_date_format'), $date)->format('Y-m-d');
 }
 
 /**
@@ -860,4 +893,21 @@ function randomString($length = 22, $specialCharacters = false)
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+
+/**
+ * Format date
+ *
+ * @param string $date
+ * @param string $lang
+ * @return string
+ */
+function date_time_format($date, $lang = ZCMS_APPLICATION_LANGUAGE)
+{
+    if (class_exists('MessageFormatter')) {
+        $formatter = new MessageFormatter($lang, "{0, date}");
+        return $formatter->format([strtotime($date)]);
+    } else {
+        return change_date_format($date, 'Y-m-d H:i:s', __('gb_date_format'));
+    }
 }

@@ -22,6 +22,8 @@ return [
     'm_content_form_post_form_published' => 'Status',
     'm_content_form_post_form_intro_text' => 'Excerpt',
     'm_content_form_post_form_full_text' => 'Content',
+    'm_content_form_post_form_created_at' => 'Created',
+    'm_content_form_post_form_published_at' => 'Published',
 
     //Category message
     'm_content_category_message_parent_category_not_exists' => 'Parent category not exits',

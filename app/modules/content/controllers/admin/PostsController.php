@@ -274,15 +274,15 @@ class PostsController extends ZAdminController
             return;
         }
 
-        $postForm = new PostForm($post);
+        $postForm = new PostForm($post, ['edit' => true]);
         $this->view->setVar('form', $postForm);
+        $this->view->setVar('post', $post);
         if ($this->request->isPost() && $postForm->isValid($_POST, $post)) {
             if ($post->save()) {
                 $this->flashSession->success('m_content_post_message_update_post_successfully');
                 $this->response->redirect('/admin/content/posts/edit/' . $post->post_id . '/');
             } else {
                 $this->setFlashSession($post->getMessages(), 'notice');
-                return;
             }
         }
         $this->view->pick('posts/new');

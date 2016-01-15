@@ -117,15 +117,29 @@ class Posts extends ZModel
      */
     public function initialize()
     {
-
+        $this->skipAttributesOnUpdate([
+            'created_at'
+        ]);
     }
 
-    public function beforeSave()
+    public function beforeValidationOnCreate()
+    {
+        $this->_repaidData();
+    }
+
+    public function beforeValidationOnUpdate()
+    {
+        $this->_repaidData();
+    }
+
+    private function _repaidData()
     {
         $this->title = strip_tags($this->title);
-        if($this->alias == ''){
+        $this->intro_text = strip_tags($this->intro_text);
+        $this->published_at = db_datetime($this->published_at);
+        if (!$this->alias) {
             $this->alias = generateAlias($this->title);
-        }else{
+        } else {
             $this->alias = generateAlias($this->alias);
         }
     }

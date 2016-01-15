@@ -15,7 +15,7 @@
 }
 
 .note-editor {
-    border: 1px solid #d2d6de;
+    border: 1px solid #d2d6de !important;
 }
 
 .pace .pace-progress {
@@ -136,6 +136,11 @@
     padding: 6px 10px;
 }
 
+.post-featured-image img{
+    max-width: 100%;
+    cursor: pointer;
+}
+
 .content {
     padding-top: 5px;
 }
@@ -146,6 +151,12 @@
 
 .alert {
     padding: 10px;
+}
+
+.daterangepicker.dropdown-menu.single .ranges{
+    float: left;
+    width: 100%;
+    text-align: center;
 }
 
 table.dataTable thead > tr > th {

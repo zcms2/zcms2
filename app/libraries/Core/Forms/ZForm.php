@@ -23,7 +23,7 @@ class ZForm extends Form
      *
      * @var string
      */
-    public $_titleColumn = '';
+    public $_seoTitleColumn = '';
 
     /**
      * @var string
@@ -65,7 +65,7 @@ class ZForm extends Form
      */
     public function isValid($data = null, $entity = null, $setAttributeErrorName = true)
     {
-        if ($this->_titleColumn != '') {
+        if ($this->_seoTitleColumn != '') {
             $data = $this->repaidSEOData($data);
         }
 
@@ -237,7 +237,7 @@ class ZForm extends Form
     {
         if (is_array($data)) {
             if ($data['zcms_seo_title'] == '') {
-                $data['zcms_seo_title'] = $data[$this->_titleColumn];
+                $data['zcms_seo_title'] = $data[$this->_seoTitleColumn];
             }
             $data['zcms_metadata']['title'] = $data['zcms_seo_title'];
             $data['zcms_metadata']['robots'] = $data['zcms_meta_robot_index'] . ',' . $data['zcms_meta_robot_follow'];
@@ -388,7 +388,7 @@ class ZForm extends Form
      */
     public function bind(array $data, $entity, $whiteList = null)
     {
-        if ($this->_titleColumn != '') {
+        if ($this->_seoTitleColumn != '') {
             $data = $this->repaidSEOData($data);
             unset($data['zcms_seo_title']);
             unset($data['zcms_meta_robot_advance']);

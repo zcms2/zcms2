@@ -59,6 +59,9 @@ class ZAdminTemplate
                 $view->setVar('_filterColumn', $filterForm->getForm());
             }
         }
+        $view->setVar('_dateFormat', [
+            'gb_js_date_time_format' => __('gb_js_date_time_format')
+        ]);
         $view->setVar('_toolbarHelpers', ZToolbarHelper::getInstance($this->moduleBaseName, $view->getControllerName()));
     }
 

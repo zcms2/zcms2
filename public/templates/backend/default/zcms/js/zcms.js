@@ -1,13 +1,5 @@
 if ("undefined" === typeof ZCMS) var ZCMS = {};
 
-//ZCMS.submitForm = function (f) {
-//    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-//    if ("function" == typeof f.onsubmit) f.onsubmit();
-//    "function" == typeof f.fireEvent && f.fireEvent("submit");
-//    f.submit();
-//    return false;
-//};
-
 ZCMS.submitForm = function (f) {
     if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
     if ("function" == typeof f.onsubmit) f.onsubmit();
@@ -164,22 +156,7 @@ ZCMS.resetFilter = function () {
     $('#adminForm').submit();
 };
 
-ZCMS.initDateRange = function (idStartDate, idEndDate) {
-    $('#' + idEndDate).attr("disabled", "disabled");
-
-    $('#' + idStartDate).datepicker({
-        autoclose: true
-    }).on('changeDate', function (ev) {
-        toDate.setStartDate(ev.date);
-        $('#' + idEndDate).removeAttr("disabled");
-        $('#' + idEndDate).focus();
-    }).data('datepicker');
-    var toDate = $('#' + idEndDate).datepicker({
-        autoclose: true
-    }).data('datepicker');
-};
-
-ZCMS.htmlencode = function (str) {
+ZCMS.htmlEncode = function (str) {
     if (str != null) {
         return str.replace(/[&<>"']/g, function ($0) {
             return "&" + {"&": "amp", "<": "lt", ">": "gt", '"': "quot", "'": "#39"}[$0] + ";";
@@ -234,19 +211,171 @@ ZCMS.alertModal = function (title, message, title_theme, title_is_html, message_
     $('#zcms-alert-modal').modal('show');
 };
 
-jQuery(document).ready(function () {
+ZCMS.__processMediaBeforeDisplay = function (media) {
+    var segment = media.mime_type.split('/');
+    if (segment.length == 2) {
+        var normalType = segment[0];
+        if (normalType == 'video') {
+            media.image_display = _baseUri + '/media/default/video.png';
+        } else if (normalType == 'audio') {
+            media.image_display = _baseUri + '/media/default/audio.png';
+        } else if (normalType == 'image') {
+            if (media.src && (media.src.indexOf('http://') >= 0 || media.src.indexOf('https://') >= 0)) {
+                media.image_display = media.src;
+            } else {
+                media.image_display = _baseUri + media.src;
+            }
+        } else {
+            media.image_display = _baseUri + '/media/default/file.png';
+        }
+        return media;
+    } else {
+        return '';
+    }
+};
+
+ZCMS.__processMediaBeforeInsert = function (media) {
+    var segment = media.mime_type.split('/'),
+        result = '';
+    if (segment.length == 2) {
+        var normalType = segment[0];
+        if (normalType == 'video') {
+            result = '<video controls><source src="' + _baseUri + media.src + '" type="' + media.mime_type + '">Your browser does not support the video tag.</video>';
+        } else if (normalType == 'audio') {
+
+        } else if (normalType == 'image') {
+            //result = '<figure id="' + media.media_id + '" class="img-caption aligncenter"><a href="' + media.src + '"><img class="size-full img-image-' + media.media_id + '" src="' + media.src + '" alt="'+ media.title +'"></a><figcaption class="img-caption-text">' + media.title + '</figcaption></figure>';
+            result = '<a href="' + media.src + '"><img class="size-full img-image-' + media.media_id + '" src="' + _baseUri + media.src + '" alt="' + media.title + '"></a>';
+        } else {
+            result = '<a title="' + media.src + '" href="' + _baseUri + media.src + '">' + media.title + '</a>';
+        }
+        result = $.parseHTML(result);
+        return result[0];
+    } else {
+        return '';
+    }
+};
+
+ZCMS.__initSelectMedia = function () {
+    var mediaDialog = $('.zcms-custom-main-media-dialog');
+    if (mediaDialog.hasClass('init-success')) {
+        return true;
+    } else {
+        mediaDialog.addClass('init-success');
+    }
+    var body =
+        '<div class="form-group row-fluid">' +
+        '<div>' +
+        '<ul class="nav nav-tabs" role="tablist">' +
+        '<li role="presentation" class="active"><a href="#zcms-media-library" aria-controls="zcms-media-library" role="tab" data-toggle="tab">Media Library</a></li>' +
+        '<li role="presentation"><a href="#zcms-upload-files" aria-controls="zcms-upload-files" role="tab" data-toggle="tab">Upload Files</a></li>' +
+        '<li role="presentation"><a href="#zcms-insert-image-url" aria-controls="zcms-insert-image-url" role="tab" data-toggle="tab">Insert from URL</a></li>' +
+        '</ul>' +
+        '<div class="tab-content">' +
+        '<div role="tabpanel" class="tab-pane active" id="zcms-media-library">' +
+        '<div class="zcms-media-library-search-bar"><input class="zcms_media_keyword pull-right col-md-6" style="margin:5px 0;" placeholder="' + 'Search' + '" name="media_keyword"><div class="clearfix"></div></div>' +
+        '<div class="zcms-media-files">' +
+        '<ul id="smn-custom-attachments">';
+    $.get(_baseUri + '/admin/media/manager/getMedia/', function (result) {
+        var append = '';
+        if (result.code) {
+            for (var i = 0; i < result.data.length; i++) {
+                var tmp = ZCMS.__processMediaBeforeDisplay(result.data[i]);
+                append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
+            }
+        }
+        $('#smn-custom-attachments').html(append);
+    }, 'JSON');
+    body += '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div role="tabpanel" class="tab-pane" id="zcms-upload-files">...</div>' +
+        '<div role="tabpanel" class="tab-pane" id="zcms-insert-image-url">...</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<input type="hidden" name="zcms_select_item" id="zcms_select_item">' +
+        '<div class="clearfix"></div>';
+    var footer = '<button type="button" href="#" class="btn btn-primary note-media-btn disabled" disabled>Insert Media</button>';
+    $('.zcms-custom-main-media-dialog .modal-body').html(body);
+    $('.zcms-custom-main-media-dialog .modal-footer').html(footer);
+};
+
+ZCMS.__toggleBtn = function ($btn, isEnable) {
+    $btn.toggleClass('disabled', !isEnable);
+    $btn.attr('disabled', !isEnable);
+};
+
+ZCMS.selectMedia = function (type, idInput, idImage) {
+    _mediaTarget = idInput;
+    ZCMS.__initSelectMedia();
+    var $mediaDialog = $('.zcms-custom-main-media-dialog'),
+        $mediaUrl = $mediaDialog.find('#zcms_select_item'),
+        $mediaBtn = $mediaDialog.find('.note-media-btn'),
+        $mediaSearch = $mediaDialog.find('.zcms_media_keyword'),
+        $mediaItems = $mediaDialog.find(".smn-thumb"),
+        $mediaFiles = $mediaDialog.find(".zcms-media-files"),
+        $mediaInfo = {};
+    $mediaInfo.keyword = $mediaSearch.val();
+
+    $mediaDialog.one('shown.bs.modal', function () {
+        $mediaDialog.on('click', '.smn-thumb', function (event) {
+            if ($(this).hasClass('selected')) {
+                $('.zcms-custom-main-media-dialog .smn-thumb').removeClass('selected');
+                $mediaUrl.val('');
+                $mediaInfo.data = JSON.parse($(this).find('img').attr('data-content'));
+                ZCMS.__toggleBtn($mediaBtn, false);
+            } else {
+                $('.zcms-custom-main-media-dialog .smn-thumb').removeClass('selected');
+                $(this).addClass('selected');
+                $mediaUrl.val(JSON.parse($(this).find('img').attr('data-content')));
+                $mediaInfo.data = JSON.parse($(this).find('img').attr('data-content'));
+                ZCMS.__toggleBtn($mediaBtn, true);
+            }
+        });
+
+        $mediaSearch.keyup(function (event) {
+            $mediaInfo.keyword = $(this).val();
+            $mediaFiles.attr('data-page', '1');
+            $.get(_baseUri + '/admin/media/manager/getMedia/', {keyword: $mediaInfo.keyword}, function (result) {
+                var append = '';
+                if (result.code) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        var tmp = ZCMS.__processMediaBeforeDisplay(result.data[i]);
+                        append += '<li class="smn-thumb"><div class="smn-nav"><i class="glyphicon glyphicon-ok"></i></div><img src="' + tmp.image_display + '" alt="' + tmp.title + '" data-content=\'' + JSON.stringify(tmp) + '\'></li>';
+                    }
+                }
+                $('#smn-custom-attachments').html(append);
+            }, 'JSON');
+        });
+
+        $mediaBtn.click(function (event) {
+            //event.preventDefault();
+            $(_mediaTarget).val($mediaInfo.data.image_display);
+            $(idImage).attr('src', $mediaInfo.data.image_display);
+            $mediaItems.removeClass('selected');
+            $mediaDialog.modal('hide');
+        });
+    }).one('hidden.bs.modal', function () {
+        $mediaDialog.off();
+        $mediaFiles.off();
+        $mediaBtn.off();
+    }).modal('show');
+};
+
+$(document).ready(function () {
     //Check & UnCheck all checkbox
-    jQuery('#adminForm #item_check_all').click(function () {
+    $('#item_check_all').click(function () {
         var check_all = $('.check_element');
-        if (jQuery('#item_check_all').is(':checked')) {
+        if ($('#item_check_all').is(':checked')) {
             check_all.prop('checked', true);
             check_all.each(function () {
-                jQuery(this).parent().addClass('checked').attr('aria-checked', 'true');
+                $(this).parent().addClass('checked').attr('aria-checked', 'true');
             });
         } else {
             check_all.prop('checked', false);
             check_all.each(function () {
-                jQuery(this).parent().removeClass('checked').attr('aria-checked', 'false');
+                $(this).parent().removeClass('checked').attr('aria-checked', 'false');
             });
         }
     });
@@ -259,35 +388,44 @@ jQuery(document).ready(function () {
     });
 
     // Add validate message
-    jQuery('#adminForm input, #adminForm textarea, #adminForm select').each(function () {
-        if (!jQuery(this).hasClass('custom-attribute')) {
-            if (jQuery(this).hasClass('has-error')) {
+    $('#adminForm input, #adminForm textarea, #adminForm select').each(function () {
+        if (!$(this).hasClass('custom-attribute')) {
+            if ($(this).hasClass('has-error')) {
                 var message = $(this).attr('data-content');
-                jQuery(this).parent().addClass('has-error');
-                jQuery(this).parent().append('<span class="help-block">' + message + '</span>');
-            } else if (jQuery(this).hasClass('has-success')) {
-                jQuery(this).parent().addClass('has-success');
-                jQuery(this).parent().append('<span class="help-block">&nbsp;</span>');
+                $(this).parent().addClass('has-error');
+                $(this).parent().append('<span class="help-block">' + message + '</span>');
+            } else if ($(this).hasClass('has-success')) {
+                $(this).parent().addClass('has-success');
+                $(this).parent().append('<span class="help-block">&nbsp;</span>');
             }
         }
 
     });
 
     //Render date picker
-    jQuery('body').delegate('.date-picker', 'mouseover', function () {
-        jQuery(this).datepicker({
+    $('body').on('.date-picker', 'mouseover', function () {
+        $(this).datepicker({
             autoclose: true
         });
     });
 
-    jQuery('.zcms-form-filter').keypress(function (e) {
+    $('.date-time-picker').daterangepicker({
+        singleDatePicker: true,
+        //showDropdowns: true,
+        timePicker: true,
+        timePickerIncrement: 5,
+        locale: {
+            format: _ZCMS.dateFormat['gb_js_date_time_format']
+        }
+    });
+
+    $('.zcms-form-filter').keypress(function (e) {
         if (e.which == 13) {
-            jQuery('#adminForm').submit();
+            $('#adminForm').submit();
         }
     });
 
     ZCMS.balanceColumnHeight();
-
 });
 
 //Redirect location
@@ -297,8 +435,8 @@ ZCMS.setLocation = function ($location) {
 
 // Fixed toolbar button
 var check_scroll = false;
-jQuery(window).scroll(function () {
-    var page_header = jQuery('.page-header');
+$(window).scroll(function () {
+    var page_header = $('.page-header');
     if ($(window).scrollTop() >= 100) {
         if (!check_scroll) {
             page_header.clone().addClass('navbar-fixed-top').appendTo(page_header.parent());
@@ -306,7 +444,7 @@ jQuery(window).scroll(function () {
         }
     }
     else {
-        jQuery('.page-header.navbar-fixed-top').remove();
+        $('.page-header.navbar-fixed-top').remove();
         check_scroll = false;
     }
 });
@@ -319,10 +457,10 @@ $('.alert button.close').click(function () {
 });
 
 $('#zcms-search').click(function () {
-    var trFilter = $('#adminForm table tr.tr-filter');
-    if(trFilter.hasClass('tr-filter-showed')){
+    var trFilter = $('#adminForm tr.tr-filter');
+    if (trFilter.hasClass('tr-filter-showed')) {
         $('#adminForm').submit();
-    }else{
+    } else {
         trFilter.addClass('tr-filter-showed');
         return false;
     }

@@ -2,6 +2,8 @@
 
 namespace ZCMS\Modules\Content\Forms;
 
+use Phalcon\Forms\Element\Hidden;
+use ZCMS\Core\Forms\Element\DateTime;
 use ZCMS\Core\Forms\ZForm;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Select;
@@ -24,7 +26,7 @@ class PostForm extends ZForm
      *
      * @var string
      */
-    public $_titleColumn = 'title';
+    public $_seoTitleColumn = 'title';
 
     /**
      * @var string
@@ -80,6 +82,19 @@ class PostForm extends ZForm
         } else {
             $elementParent = new Select('category_id', $categoryFilter, ['required' => 'required']);
         }
+        if ($post && $post->published_at) {
+            $published_at = change_date_format($post->published_at, 'Y-m-d H:i:s', __('gb_datetime_format'));
+            $post->published_at = $published_at;
+        }else{
+            $published_at = change_date_format(date('Y-m-i H:i:s'), 'Y-m-d H:i:s', __('gb_datetime_format'));
+        }
+
+        $publishedAt = new DateTime('published_at', ['value' => $published_at]);
+
+        $this->add($publishedAt);
+
+        $image = new Hidden('image',['id'=>'post-featured-image']);
+        $this->add($image);
 
         /**
          * @var \Phalcon\Mvc\Model\ResultsetInterface $categories

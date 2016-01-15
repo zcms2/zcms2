@@ -107,7 +107,7 @@ class ManagerController extends ZAdminController
                 'conditions' => 'media_id IN (' . implode(',', $ids) . ')'
             ]);
             foreach ($medias as $m) {
-                if(file_exists(ROOT_PATH . '/public' . $m->src)){
+                if (file_exists(ROOT_PATH . '/public' . $m->src)) {
                     unlink(ROOT_PATH . '/public' . $m->src);
                 }
                 $m->delete();
@@ -123,13 +123,13 @@ class ManagerController extends ZAdminController
 
     public function getMediaAction()
     {
-        $keyword = $this->request->get('keyword');
+        $keyword = str_replace('-', ' ', trim($this->request->get('keyword', 'string')));
         $page = (int)$this->request->get('page');
-        if($page <= 0){
+        if ($page <= 0) {
             $page = 1;
         }
         $offset = ($page - 1) * 20;
-        if($offset <= 0){
+        if ($offset <= 0) {
             $offset = 0;
         }
         if ($keyword) {

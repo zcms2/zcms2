@@ -172,10 +172,10 @@ class ZModule implements ModuleDefinitionInterface
                 '.volt' => function ($view, $di) {
                     $volt = new Volt($view, $di);
 
-                    if (ZCMS_APPLICATION_LOCATION == 'frontend') {
+                    if (ZCMS_APPLICATION_LOCATION == 'admin') {
                         $compile = (bool)($di->get('config')->backendTemplate->compileTemplate);
-                    }else{
-                        $compile = (bool)($di->get('config')->frontTemplate->compileTemplate);
+                    } else {
+                        $compile = (bool)($di->get('config')->frontendTemplate->compileTemplate);
                     }
 
                     $volt->setOptions([
@@ -198,10 +198,14 @@ class ZModule implements ModuleDefinitionInterface
                     $compiler->addFunction('moneyFormat', 'moneyFormat');
                     $compiler->addFunction('number_format', 'number_format');
                     $compiler->addFunction('change_date_format', 'change_date_format');
+                    $compiler->addFunction('date_time_format', 'date_time_format');
                     $compiler->addFunction('in_array', 'in_array');
                     $compiler->addFunction('zcms_header', 'zcms_header');
                     $compiler->addFunction('zcms_header_prefix', 'zcms_header_prefix');
-                    $compiler->addFunction('change_date_format', 'change_date_format');
+                    $compiler->addFunction('view_date', 'view_date');
+                    $compiler->addFilter('view_date', function ($resolvedArgs) {
+                        return 'view_date(' . $resolvedArgs . ')';
+                    });
                     $compiler->addFilter('t', function ($resolvedArgs) {
                         return '__(' . $resolvedArgs . ')';
                     });

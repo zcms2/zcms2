@@ -34,7 +34,7 @@ class DateTime extends Element implements ElementInterface
         }
 
         if (!isset($attributes['data-date-format'])) {
-            $attributes['data-date-format'] = 'dd-mm-yyyy hh:ii:ss';
+            $attributes['data-date-format'] = __('gb_js_date_time_format');
         }
         return Tag::textField($this->prepareAttributes($attributes));
     }

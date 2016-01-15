@@ -161,7 +161,7 @@ class ZFormFilter
 //        $attributes['readonly'] = 'readonly';
 
         //Add attribute date format
-        $attributes['data-date-format'] = __('gb_full_date_format');
+        $attributes['data-date-format'] = __('gb_js_date_format');
 
         //Add placeholder
         $element = new Text($name, $attributes);

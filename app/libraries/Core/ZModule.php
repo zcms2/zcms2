@@ -108,6 +108,27 @@ class ZModule implements ModuleDefinitionInterface
              */
             $eventsManager = $di->getShared('eventsManager');
 
+            if (ZCMS_APPLICATION_LOCATION == 'frontend') {
+                $eventsManager->attach("dispatch:beforeException", function ($event, $dispatcher, $exception) {
+                    /**
+                     * @var Dispatcher $dispatcher
+                     * @var \Phalcon\Mvc\Dispatcher\Exception $exception
+                     */
+                    switch ($exception->getCode()) {
+                        case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                        case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                            $dispatcher->forward([
+                                'namespace' => 'ZCMS\Modules\Dashboard\Controllers\Admin',
+                                'module' => 'dashboard',
+                                'controller' => 'index',
+                                'action' => 'index'
+                            ]);
+                            return false;
+                    }
+                    return true;
+                });
+            }
+
             //Attach acl in dispatcher
             $eventsManager->attach('dispatch', $di->get('acl'));
 
@@ -123,10 +144,15 @@ class ZModule implements ModuleDefinitionInterface
             //Create Phalcon\Mvc\View
             $view = new ZView();
 
-            $template = new ZAdminTemplate($this->module);
-
             //Attach event
             $eventsManager = $di->getShared('eventsManager');
+
+            if (ZCMS_APPLICATION_LOCATION == 'admin') {
+                $template = new ZAdminTemplate($this->module);
+            } else {
+                $template = new ZFrontTemplate($this->module);
+            }
+
             if (method_exists($eventsManager, 'attach')) {
                 $eventsManager->attach('view:beforeRender', $template);
                 $eventsManager->attach('view:afterRender', $template);
@@ -146,6 +172,12 @@ class ZModule implements ModuleDefinitionInterface
                 '.volt' => function ($view, $di) {
                     $volt = new Volt($view, $di);
 
+                    if (ZCMS_APPLICATION_LOCATION == 'frontend') {
+                        $compile = (bool)($di->get('config')->backendTemplate->compileTemplate);
+                    }else{
+                        $compile = (bool)($di->get('config')->frontTemplate->compileTemplate);
+                    }
+
                     $volt->setOptions([
                         'compiledPath' => function ($templatePath) {
                             $templatePath = strstr($templatePath, '/app');
@@ -156,20 +188,23 @@ class ZModule implements ModuleDefinitionInterface
                             }
                             return ROOT_PATH . '/cache/volt' . $dirName . '/' . basename($templatePath, '.volt') . '.php';
                         },
-                        'compileAlways' => method_exists($di, 'get') ? (bool)($di->get('config')->backendTemplate->compileTemplate) : false
+                        'compileAlways' => method_exists($di, 'get') ? $compile : false
                     ]);
                     $compiler = $volt->getCompiler();
                     $compiler->addFunction('get_sidebar', 'get_sidebar');
                     $compiler->addFunction('__', '__');
-                    $compiler->addFilter('t', function ($resolvedArgs) {
-                        return '__(' . $resolvedArgs . ')';
-                    });
                     $compiler->addFunction('strtotime', 'strtotime');
                     $compiler->addFunction('human_timing', 'human_timing');
                     $compiler->addFunction('moneyFormat', 'moneyFormat');
                     $compiler->addFunction('number_format', 'number_format');
                     $compiler->addFunction('change_date_format', 'change_date_format');
                     $compiler->addFunction('in_array', 'in_array');
+                    $compiler->addFunction('zcms_header', 'zcms_header');
+                    $compiler->addFunction('zcms_header_prefix', 'zcms_header_prefix');
+                    $compiler->addFunction('change_date_format', 'change_date_format');
+                    $compiler->addFilter('t', function ($resolvedArgs) {
+                        return '__(' . $resolvedArgs . ')';
+                    });
                     return $volt;
                 }
             ]);

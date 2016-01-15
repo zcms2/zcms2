@@ -95,17 +95,13 @@ function zcms_load_admin_router($router)
  */
 function zcms_load_frontend_router($router)
 {
-    echo '<pre>';
-    var_dump(__METHOD__);
-    echo '</pre>';
-    die();
+
     //Get frontend module
-    $frontendModule = get_child_folder(ROOT_PATH . '/app/frontend/');
-    $frontendModule = array_reverse($frontendModule);
-    foreach ($frontendModule as $module) {
-        $moduleRouterClassName = str_replace(' ', '', ucwords(str_replace('-', ' ', $module)));
+    global $_modules;
+    foreach ($_modules as $module) {
+        $moduleRouterClassName = str_replace(' ', '', ucwords(str_replace('-', ' ', $module['baseName'])));
         $routerClass = 'Router' . $moduleRouterClassName;
-        $fileRoute = ROOT_PATH . "/app/frontend/{$module}/{$routerClass}.php";
+        $fileRoute = ROOT_PATH . "/app/frontend/{$module['baseName']}/{$routerClass}.php";
         if (file_exists($fileRoute)) {
             require_once($fileRoute);
             if (class_exists($routerClass)) {
@@ -612,14 +608,14 @@ function check_resource($path, $moduleBaseName)
             }
 
             if (!isset($resource['namespace'])) {
-                if (DEBUG) die(__('gb_message_module_resource_must_namespace'.$path, ['1' => $path]));
+                if (DEBUG) die(__('gb_message_module_resource_must_namespace' . $path, ['1' => $path]));
                 return false;
             }
 
-            if (!isset($resource['acl'])) {
-                if (DEBUG) die(__('gb_message_module_resource_must_acl', ['1' => $path]));
-                return false;
-            }
+//            if (!isset($resource['acl'])) {
+//                if (DEBUG) die(__('gb_message_module_resource_must_acl', ['1' => $path]));
+//                return false;
+//            }
 
             if (isset($resource['acl'])) {
                 if (!is_array($resource['acl'])) {
@@ -627,10 +623,10 @@ function check_resource($path, $moduleBaseName)
                     return false;
                 }
 
-                if (!count($resource['acl'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_rule', ['1' => $path]));
-                    return false;
-                }
+//                if (!count($resource['acl'])) {
+//                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_rule', ['1' => $path]));
+//                    return false;
+//                }
             }
 
             $resource['rules'] = [];

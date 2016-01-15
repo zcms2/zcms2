@@ -6,7 +6,6 @@
     </div>
 {% endblock %}
 <!-- END Main menu and slide show -->
-
 <!-- END Flash Session -->
 {% block content %}
 {% endblock %}

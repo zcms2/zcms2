@@ -1,1 +1,1 @@
-{% extends "../../../../templates/backend/index.volt" %}
+{% extends '../../../../templates/backend/index.volt' %}

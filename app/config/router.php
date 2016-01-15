@@ -10,20 +10,23 @@ $router->setDefaultController('index');
 $router->setDefaultAction('index');
 
 /**
- * Frontend router
+ * Default frontend router
  */
 $router->add('/', [
-    'namespace' => 'ZCMS\Modules\Index\Controllers\Admin',
+    'namespace' => 'ZCMS\Modules\Index\Controllers',
     'module' => 'index',
     'controller' => 'index',
     'action' => 'index'
 ]);
 
+/**
+ * Default admin router
+ */
 $router->add('/admin[/]?', [
     'namespace' => 'ZCMS\Modules\Dashboard\Controllers\Admin',
     'module' => 'dashboard',
     'controller' => 'index',
-    'action' => 'index',
+    'action' => 'index'
 ]);
 
 //Load router

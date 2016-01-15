@@ -10,7 +10,7 @@ if (is_dir(ROOT_PATH . '/app/install/') && file_exists(ROOT_PATH . '/public/inst
     die();
 }
 
-if (strpos($_SERVER['QUERY_STRING'], '_url=/admin/') == false) {
+if (strpos($_SERVER['QUERY_STRING'], '_url=/admin/') !== false) {
     define('ZCMS_APPLICATION_LOCATION', 'admin');
 } else {
     define('ZCMS_APPLICATION_LOCATION', 'frontend');

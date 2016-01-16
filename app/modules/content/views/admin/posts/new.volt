@@ -50,7 +50,7 @@
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Post info</h3>
+                            <h3 class="box-title">Publish</h3>
 
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -69,17 +69,6 @@
                                 {{ form.label('published_at') }}
                                 {{ form.render('published_at') }}
                             </div>
-                            {% if post is defined %}
-                                <div class="form-group">
-                                    <p>
-                                        <b><i class="fa fa-calendar"></i> {{ 'Created'|t }}:</b> <i>{{ post.created_at|view_date }}</i>
-                                    </p>
-
-                                    <p>
-                                        <b><i class="fa fa-calendar"></i> {{ 'Updated'|t }}:</b> <i>{{ post.updated_at|view_date }}</i>
-                                    </p>
-                                </div>
-                            {% endif %}
                         </div>
                     </div>
                     <div class="box box-default">
@@ -98,6 +87,29 @@
                             {% endif %}
                             {{ form.render('image') }}
                         </div>
+                    </div>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Info</h3>
+
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        {% if post is defined %}
+                            <div class="box-body" style="display: block;">
+                                <div class="form-group">
+                                    <p>
+                                        <b><i class="fa fa-calendar"></i> {{ 'Created'|t }}:</b> <i>{{ post.created_at|view_date }}</i>
+                                    </p>
+
+                                    <p>
+                                        <b><i class="fa fa-calendar"></i> {{ 'Updated'|t }}:</b> <i>{{ post.updated_at|view_date }}</i>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>

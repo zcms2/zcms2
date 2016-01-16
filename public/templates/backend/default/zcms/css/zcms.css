@@ -141,6 +141,11 @@
     cursor: pointer;
 }
 
+.zcms-toolbar-button-separate{
+    margin-left: 5px;
+    color: #333;
+}
+
 .content {
     padding-top: 5px;
 }

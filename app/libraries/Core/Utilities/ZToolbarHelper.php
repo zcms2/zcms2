@@ -344,6 +344,11 @@ class ZToolbarHelper
         }
     }
 
+    public function addSeparate()
+    {
+        $this->buttons[] = '<span class="zcms-toolbar-button-separate"> | </span>';
+    }
+
     /**
      * Add save button
      * @param string $rule

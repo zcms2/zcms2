@@ -1,11 +1,15 @@
-if ("undefined" === typeof ZCMS) var ZCMS = {};
+var ZCMS = {};
+
+ZCMS.setLocation = function ($location) {
+    window.location.href = $location;
+};
 
 ZCMS.submitForm = function (f) {
     if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
     if ("function" == typeof f.onsubmit) f.onsubmit();
     "function" == typeof f.fireEvent && f.fireEvent("submit");
     var hasErrorRequiredField = false;
-    var ErrorRequiredFieldID = '';
+    var errorRequiredFieldID = '';
     $('[required]').each(function () {
         if ($(this).val() == '') {
             $(this).parent().addClass('has-error');
@@ -15,8 +19,8 @@ ZCMS.submitForm = function (f) {
                 $(this).parent().find('.help-block').css('display', 'block');
             }
             hasErrorRequiredField = true;
-            if (ErrorRequiredFieldID == '') {
-                ErrorRequiredFieldID = $(this).attr('id');
+            if (errorRequiredFieldID == '') {
+                errorRequiredFieldID = $(this).attr('id');
             }
 
         } else {
@@ -26,29 +30,26 @@ ZCMS.submitForm = function (f) {
     });
 
     if (hasErrorRequiredField == true) {
-        if (ErrorRequiredFieldID != '') {
-            $('#' + ErrorRequiredFieldID).focus();
+        if (errorRequiredFieldID != '') {
+            $('#' + errorRequiredFieldID).focus();
         }
         return false;
     } else {
-        ErrorRequiredFieldID = '';
+        errorRequiredFieldID = '';
     }
 
     f.submit();
     return false;
 };
 
-ZCMS.columnOrdering = function (a, b, f) {
-    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-    f.filter_order.value = a;
-    f.filter_order_dir.value = b;
-    ZCMS.submitForm(f);
+ZCMS.columnOrdering = function (filterOrder, filterOrderDir) {
+    $('#filter_order').val(filterOrder);
+    $('#filter_order_dir').val(filterOrderDir);
+    $('#adminForm').submit();
 };
 
-ZCMS.editButtonSubmit = function (obj, f) {
-    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
+ZCMS.editButtonSubmit = function (obj) {
     var link = obj.getAttribute("href");
-    f.setAttribute("action", link);
     if (ZCMS.hasCheckItems()) {
         var items = document.getElementsByClassName('check_element');
         window.location.href = link + items[ZCMS.hasCheckItems() - 1].value;
@@ -160,52 +161,6 @@ ZCMS.htmlEncode = function (str) {
         });
     }
     return str;
-};
-
-ZCMS.balanceColumnHeight = function () {
-    if ($(window).width() >= 992) {
-        var pnl_left = $('.pnl-left');
-        var pnl_right = $('.pnl-right');
-        var pnl_left_height = pnl_left.height();
-        var pnl_right_height = pnl_right.height();
-        if (pnl_left_height >= pnl_right_height) {
-            pnl_right.height(pnl_left_height);
-        } else {
-            pnl_left.height(pnl_right_height);
-        }
-    }
-};
-
-ZCMS.alertModal = function (title, message, title_theme, title_is_html, message_is_html) {
-    if (title_is_html === undefined) title_is_html = true;
-    if (message_is_html === undefined) message_is_html = true;
-
-    var modal_header = $('#zcms-alert-modal > .modal-header > h4');
-    var modal_body = $('#zcms-alert-modal > .modal-body');
-
-    if (title_is_html) {
-        if (title_theme == 'success') {
-            title = '<i class="fa fa-check-circle" style="color: #3c763d"></i> ' + title;
-        } else if (title_theme == 'info') {
-            title = '<i class="fa fa-info-circle" style="color: #31708f"></i> ' + title;
-        } else if (title_theme == 'warning') {
-            title = '<i class="fa fa-exclamation-triangle" style="color: #bb995f"></i> ' + title;
-        } else if (title_theme == 'error') {
-            title = '<i class="fa fa-times-circle" style="color: #a94442"></i> ' + title;
-        }
-
-        modal_header.html(title);
-    } else {
-        modal_header.text(title);
-    }
-
-    if (message_is_html) {
-        modal_body.html(message);
-    } else {
-        modal_body.text(message);
-    }
-
-    $('#zcms-alert-modal').modal('show');
 };
 
 ZCMS.__processMediaBeforeDisplay = function (media) {
@@ -360,7 +315,7 @@ ZCMS.selectMedia = function (type, idInput, idImage) {
     }).modal('show');
 };
 
-$(document).ready(function () {
+$(function () {
     //Check & UnCheck all checkbox
     $('#item_check_all').click(function () {
         var check_all = $('.check_element');
@@ -400,16 +355,26 @@ $(document).ready(function () {
     });
 
     //Render filter date picker
-    $('.date-picker.zcms-form-filter').daterangepicker({
-        singleDatePicker: true,
-        locale: {
-            format: _ZCMS.dateFormat['gb_js_standard_table_date_format']
+    $('.date-picker.zcms-form-filter').each(function () {
+        if ($(this).val() == '') {
+            $(this).daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: _ZCMS.dateFormat['gb_js_standard_table_date_format']
+                }
+            }),$(this).val('');
+        }else{
+            $(this).daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: _ZCMS.dateFormat['gb_js_standard_table_date_format']
+                }
+            });
         }
     });
 
     $('.date-time-picker').daterangepicker({
         singleDatePicker: true,
-        //showDropdowns: true,
         timePicker: true,
         timePickerIncrement: 5,
         locale: {
@@ -423,43 +388,38 @@ $(document).ready(function () {
         }
     });
 
-    ZCMS.balanceColumnHeight();
-});
+    $('.alert button.close').click(function () {
+        var alert = $(this).parent().parent();
+        if (alert.hasClass('zcms-toolbar-helper')) {
+            alert.remove();
+        }
+    });
 
-//Redirect location
-ZCMS.setLocation = function ($location) {
-    window.location.href = $location;
-};
+    $('#zcms-search').click(function () {
+        var trFilter = $('#adminForm tr.tr-filter');
+        if (trFilter.hasClass('tr-filter-showed')) {
+            $('#adminForm').submit();
+        } else {
+            trFilter.addClass('tr-filter-showed');
+            return false;
+        }
+    });
+
+    //ZCMS.balanceColumnHeight();
+});
 
 // Fixed toolbar button
-var check_scroll = false;
-$(window).scroll(function () {
-    var page_header = $('.page-header');
-    if ($(window).scrollTop() >= 100) {
-        if (!check_scroll) {
-            page_header.clone().addClass('navbar-fixed-top').appendTo(page_header.parent());
-            check_scroll = true;
-        }
-    }
-    else {
-        $('.page-header.navbar-fixed-top').remove();
-        check_scroll = false;
-    }
-});
-
-$('.alert button.close').click(function () {
-    var alert = $(this).parent().parent();
-    if (alert.hasClass('zcms-toolbar-helper')) {
-        alert.remove();
-    }
-});
-
-$('#zcms-search').click(function () {
-    var trFilter = $('#adminForm tr.tr-filter');
-    if (trFilter.hasClass('tr-filter-showed')) {
-        $('#adminForm').submit();
-    } else {
-        trFilter.addClass('tr-filter-showed');
-        return false;
-    }
-});
+//var check_scroll = false;
+//$(window).scroll(function () {
+//    var page_header = $('.page-header');
+//    if ($(window).scrollTop() >= 100) {
+//        if (!check_scroll) {
+//            page_header.clone().addClass('navbar-fixed-top').appendTo(page_header.parent());
+//            check_scroll = true;
+//        }
+//    }
+//    else {
+//        $('.page-header.navbar-fixed-top').remove();
+//        check_scroll = false;
+//    }
+//});

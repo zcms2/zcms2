@@ -1,4 +1,6 @@
 {% if _pageLayout is defined and _filter is defined %}
+    {{ _filterColumn.render('filter_order') }}
+    {{ _filterColumn.render('filter_order_dir') }}
     {% if _filterColumn is defined %}
         <div class="row cms-toolbar-helper">
             <div class="col-md-8">
@@ -9,7 +11,7 @@
             <div class="col-md-4">
                 <div class="dataTables_filter">
                     <label>
-                        <button type="reset" onclick="return ZCMS.resetFilter();" class="btn btn-warning btn-sm"><i
+                        <button type="button" onclick="return ZCMS.resetFilter();" class="btn btn-warning btn-sm"><i
                                     class="fa fa-undo"></i> {{ __('gb_reset') }}</button>
                     </label>
                     <label>

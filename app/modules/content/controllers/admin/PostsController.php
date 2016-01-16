@@ -64,6 +64,7 @@ class PostsController extends ZAdminController
 
         //Get filter
         $filter = $this->getFilter();
+//        echo '<pre>'; var_dump($filter);echo '</pre>'; die();
         $this->view->setVar('_filter', $filter);
 
         $conditions = [];

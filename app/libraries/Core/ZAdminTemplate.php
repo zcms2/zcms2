@@ -52,15 +52,17 @@ class ZAdminTemplate
     public function beforeRender($event, $view)
     {
         $view->setVar('_limit', $view->getDI()->get('config')->pagination->limit);
-        if (isset($view->_pageLayout) && isset($view->_filter)) {
+        if (isset($view->_pageLayout) && isset($view->_filter) && isset($view->_filterOptions)) {
             $filter = array_column($view->_pageLayout, 'filter');
             if (!empty($filter)) {
-                $filterForm = new ZFormFilter($filter, $view->_filter);
+                $filterForm = new ZFormFilter($filter, $view->_filter, $view->_filterOptions);
                 $view->setVar('_filterColumn', $filterForm->getForm());
             }
         }
         $view->setVar('_dateFormat', [
-            'gb_js_date_time_format' => __('gb_js_date_time_format')
+            'gb_js_date_time_format' => __('gb_js_date_time_format'),
+            'gb_date_format' => __('gb_date_format'),
+            'gb_js_standard_table_date_format' => __('gb_js_standard_table_date_format')
         ]);
         $view->setVar('_toolbarHelpers', ZToolbarHelper::getInstance($this->moduleBaseName, $view->getControllerName()));
     }

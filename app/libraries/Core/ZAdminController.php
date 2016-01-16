@@ -348,8 +348,8 @@ class ZAdminController extends Controller
                 foreach ($this->_filterOptions as $key => $item) {
                     if ($item['method'] == 'POST') {
                         $this->_filter[$key] = $this->request->getPost($key, $item['type'], $item['value']);
-                        if($item['validator'] == 'DATE' && !validate_date($this->_filter[$key],__('gb_date_format'))){
-                            $this->_filter[$key] = $item['value'];
+                        if ($item['validator'] == 'DATE' && !validate_datetime($this->_filter[$key], __('gb_standard_table_date_format'))) {
+                            $this->_filter[$key] = change_date_format($item['value'], __('gb_standard_table_date_format'), 'Y-m-d');
                             $_POST[$key] = $item['value'];
                         }
                         if ($key != 'filter_order' && $key != 'filter_order_dir' && $this->_filter[$key] != $item['value']) {
@@ -385,8 +385,8 @@ class ZAdminController extends Controller
                 $this->view->setVar('_isFilter', false);
             }
         }
-//        echo '<pre>'; var_dump($_POST);echo '</pre>'; die();
         $filterSessionGlobal->set($sessionBagKey, $this->_filter);
+        $this->view->setVar('_filterOptions', $this->_filterOptions);
         return $this->_filter;
     }
 

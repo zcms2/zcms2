@@ -45,14 +45,6 @@ ZCMS.columnOrdering = function (a, b, f) {
     ZCMS.submitForm(f);
 };
 
-ZCMS.resetFilter = function (f) {
-    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-    f.filter_order.value = "";
-    f.filter_order_dir.value = "";
-    f.filter_search.value = "";
-    ZCMS.submitForm(f);
-};
-
 ZCMS.editButtonSubmit = function (obj, f) {
     if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
     var link = obj.getAttribute("href");
@@ -150,8 +142,13 @@ ZCMS.trashSubmit = function (obj, f) {
 };
 
 ZCMS.resetFilter = function () {
+    $('#adminForm tr.tr-filter').removeClass('tr-filter-showed').css('display', 'none');
     $('.dataTables_length input').val('');
     $('input[type="text"].zcms-form-filter').val('');
+    var filterOrder = $('#filter_order');
+    filterOrder.val(filterOrder.attr('data-default'));
+    var filterOrderDir = $('#filter_order_dir');
+    filterOrderDir.val(filterOrderDir.attr('data-default'));
     $('select.zcms-form-filter option').attr('selected', '').val('');
     $('#adminForm').submit();
 };
@@ -402,11 +399,12 @@ $(document).ready(function () {
 
     });
 
-    //Render date picker
-    $('body').on('.date-picker', 'mouseover', function () {
-        $(this).datepicker({
-            autoclose: true
-        });
+    //Render filter date picker
+    $('.date-picker.zcms-form-filter').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: _ZCMS.dateFormat['gb_js_standard_table_date_format']
+        }
     });
 
     $('.date-time-picker').daterangepicker({

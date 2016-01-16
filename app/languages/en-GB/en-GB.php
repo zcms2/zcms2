@@ -24,6 +24,8 @@ return [
     'gb_datetime_format' => 'm/d/Y h:i A',
     'gb_js_date_time_format' => 'MM/DD/YYYY h:mm A',
     'gb_view_full_date_format' => 'M d, Y \a\t h:i A',
+    'gb_js_standard_table_date_format' => 'MM-DD-YYYY',
+    'gb_standard_table_date_format' => 'm-d-Y',
 
     //Pagination
     'gb_last' => 'Last',

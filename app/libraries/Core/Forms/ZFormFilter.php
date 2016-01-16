@@ -2,6 +2,7 @@
 
 namespace ZCMS\Core\Forms;
 
+use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Text;
@@ -28,16 +29,28 @@ class ZFormFilter
      *
      * @param array $options
      * @param array $filter
+     * @param array $filterOptions
      */
-    public function __construct($options = [], $filter = [])
+    public function __construct($options = [], $filter = [], $filterOptions = [])
     {
         $this->_form = new Form();
         $this->_options = $options;
+        if (isset($filterOptions['filter_order'])) {
+            $filterOrder = new Hidden('filter_order', ['value' => $filter['filter_order'], 'data-default' => $filterOptions['filter_order']['value']]);
+            $this->_form->add($filterOrder);
+        }
+        if (isset($filterOptions['filter_order_dir'])) {
+            $filterOrderDir = new Hidden('filter_order_dir', ['value' => $filter['filter_order_dir'], 'data-default' => $filterOptions['filter_order_dir']['value']]);
+            $this->_form->add($filterOrderDir);
+        }
         foreach ($this->_options as $option) {
             $option['type'] = strtoupper($option['type']);
             if (!isset($option['attributes'])) {
                 $option['attributes'] = [];
             }
+//            if(isset($filterOptions[$option['name']]) && $filterOptions[$option['name']]['value']){
+//                $option['attributes']['data-default'] = $filterOptions[$option['name']]['value'];
+//            }
             if (!isset($option['attributes']['value'])) {
                 if (isset($filter[$option['name']])) {
                     $option['attributes']['value'] = $filter[$option['name']];
@@ -70,7 +83,7 @@ class ZFormFilter
         if (!isset($attributes['class'])) {
             $attributes['class'] = 'form-control input-sm zcms-form-filter';
         } else {
-            $attributes['class'] .= ' date-picker form-control input-sm zcms-form-filter';
+            $attributes['class'] .= ' form-control input-sm zcms-form-filter';
         }
         $element = new Text($name, $attributes);
         $this->_form->add($element);
@@ -122,12 +135,6 @@ class ZFormFilter
         } else {
             $attributes['class'] .= ' form-control date-picker input-sm zcms-form-filter';
         }
-        //Add attribute date view mode
-        $attributes['data-date-viewmode'] = 'years';
-
-        //Add attribute date format
-        //$attributes['data-date-format'] = 'yyyy-mm-dd';
-        $attributes['data-date-format'] = 'dd-mm-yyyy';
 
         //Add placeholder
         $attributes['placeholder'] = __('gb_date_from');
@@ -156,12 +163,6 @@ class ZFormFilter
         } else {
             $attributes['class'] .= ' form-control date-picker input-sm zcms-form-filter';
         }
-        //Add attribute date view mode
-        $attributes['data-date-viewmode'] = 'years';
-//        $attributes['readonly'] = 'readonly';
-
-        //Add attribute date format
-        $attributes['data-date-format'] = __('gb_js_date_format');
 
         //Add placeholder
         $element = new Text($name, $attributes);

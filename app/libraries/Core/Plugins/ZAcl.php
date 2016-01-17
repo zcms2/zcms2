@@ -169,14 +169,10 @@ class ZAcl extends Plugin
                 }
                 if ($this->isAllowed($rule)) {
                     if (time() - $this->auth['last_use_admin'] > $config->auth->lifetime) {
-                        //$this->session->remove('auth');
                         $this->flashSession->warning(__('gb_session_login_timeout'));
-//                        $this->response->redirect('/admin/user/login/');
                         $this->response->redirect('/admin/');
                         return false;
                     } else {
-//                        $this->auth['last_use_admin'] = time();
-//                        $this->session->set('auth', $this->auth);
                         return true;
                     }
                 } else {
@@ -195,6 +191,7 @@ class ZAcl extends Plugin
                     return false;
                 }
             } else {
+                $this->flashSession->clear();
                 if ($config->debug) {
                     $this->flashSession->warning(__('gb_permission_denied_for_action', [
                         1 => $this->getRuleError($rule) . ' => ' . $module . '<strong style=\'color: white;\'> | </strong>' . $controller . '<strong style=\'color: white;\'> | </strong>' . $action

@@ -621,81 +621,78 @@ function check_resource($path, $moduleBaseName)
                     if (DEBUG) die(__('gb_message_module_resource_acl_must_be_array', ['1' => $path]));
                     return false;
                 }
-
-//                if (!count($resource['acl'])) {
-//                    if (DEBUG) die(__('gb_message_module_resource_acl_must_be_rule', ['1' => $path]));
-//                    return false;
-//                }
             }
 
             $resource['rules'] = [];
-            foreach ($resource['acl'] as $r) {
-                if (!isset($r['controller'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_controller', ['1' => $path]));
-                    return false;
-                }
-
-                if (!isset($r['controller_name'])) {
-                    //$r['controller_name'] = $prefix . $moduleBaseName . '_' . $r['controller'] . '_desc';
-                    $r['controller_name'] = $prefix . $moduleBaseName . '_' . $r['controller'];
-                }
-
-                if (!isset($r['rules'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules', ['1' => $path]));
-                    return false;
-                }
-                if (!is_array($r['rules']) || !count($r['rules'])) {
-                    if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules_item', ['1' => $r['controller'], '2' => $path]));
-                    return false;
-                }
-                foreach ($r['rules'] as $ruleItem) {
-                    if (!is_array($ruleItem)) {
-                        if (DEBUG) die(__('gb_message_module_resource_structure_rules_in_controller_on_section_acl_item_error', ['1' => $r['controller'], '2' => $path]));
+            if (isset($resource['acl'])) {
+                foreach ($resource['acl'] as $r) {
+                    if (!isset($r['controller'])) {
+                        if (DEBUG) die(__('gb_message_module_resource_acl_item_must_controller', ['1' => $path]));
                         return false;
                     }
-                }
 
-                foreach ($r['rules'] as $rule) {
-                    $tmp = [];
-                    $tmp['controller'] = $r['controller'];
-                    $tmp['controller_name'] = $r['controller_name'];
-
-                    if (!isset($rule['action'])) {
-                        die(__('gb_message_module_resource_must_action_in_rules_on_controller', ['1' => $r['controller'], '2' => $path]));
+                    if (!isset($r['controller_name'])) {
+                        //$r['controller_name'] = $prefix . $moduleBaseName . '_' . $r['controller'] . '_desc';
+                        $r['controller_name'] = $prefix . $moduleBaseName . '_' . $r['controller'];
                     }
 
-                    $tmp['action'] = strtolower($rule['action']);
+                    if (!isset($r['rules'])) {
+                        if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules', ['1' => $path]));
+                        return false;
+                    }
+                    if (!is_array($r['rules']) || !count($r['rules'])) {
+                        if (DEBUG) die(__('gb_message_module_resource_acl_item_must_rules_item', ['1' => $r['controller'], '2' => $path]));
+                        return false;
+                    }
+                    foreach ($r['rules'] as $ruleItem) {
+                        if (!is_array($ruleItem)) {
+                            if (DEBUG) die(__('gb_message_module_resource_structure_rules_in_controller_on_section_acl_item_error', ['1' => $r['controller'], '2' => $path]));
+                            return false;
+                        }
+                    }
 
-                    if (!isset($rule['action_name']) || $rule['action_name'] == '') {
+                    foreach ($r['rules'] as $rule) {
+                        $tmp = [];
+                        $tmp['controller'] = $r['controller'];
+                        $tmp['controller_name'] = $r['controller_name'];
 
-                        if (array_key_exists($tmp['action'], $baseActions)) {
-                            $tmp['action_name'] = $baseActions[$tmp['action']];
+                        if (!isset($rule['action'])) {
+                            die(__('gb_message_module_resource_must_action_in_rules_on_controller', ['1' => $r['controller'], '2' => $path]));
+                        }
+
+                        $tmp['action'] = strtolower($rule['action']);
+
+                        if (!isset($rule['action_name']) || $rule['action_name'] == '') {
+
+                            if (array_key_exists($tmp['action'], $baseActions)) {
+                                $tmp['action_name'] = $baseActions[$tmp['action']];
+                            } else {
+                                $tmp['action_name'] = $prefix . $moduleBaseName . '_' . $r['controller'] . '_' . $rule['action'];
+                            }
                         } else {
-                            $tmp['action_name'] = $prefix . $moduleBaseName . '_' . $r['controller'] . '_' . $rule['action'];
-                        }
-                    } else {
-                        $tmp['action_name'] = $rule['action_name'];
-                    }
-
-                    $tmp['sub_action'] = '';
-                    if (isset($rule['action'])) {
-                        if (isset($rule['sub_action'])) {
-                            $tmp['sub_action'] = $rule['sub_action'];
+                            $tmp['action_name'] = $rule['action_name'];
                         }
 
-                        if (strlen($tmp['sub_action'])) {
-                            $sub_action = preg_replace('/[^A-Z,0-9\s]/i', '', $tmp['sub_action']);
-                            if ($sub_action != $rule['sub_action']) {
-                                if (DEBUG) {
-                                    die(__('gb_message_module_resource_please_check_sub_action_in_rules_on_controller', ['1' => $rule['sub_action'], '2' => $r['controller'], '3' => $path]));
+                        $tmp['sub_action'] = '';
+                        if (isset($rule['action'])) {
+                            if (isset($rule['sub_action'])) {
+                                $tmp['sub_action'] = $rule['sub_action'];
+                            }
+
+                            if (strlen($tmp['sub_action'])) {
+                                $sub_action = preg_replace('/[^A-Z,0-9\s]/i', '', $tmp['sub_action']);
+                                if ($sub_action != $rule['sub_action']) {
+                                    if (DEBUG) {
+                                        die(__('gb_message_module_resource_please_check_sub_action_in_rules_on_controller', ['1' => $rule['sub_action'], '2' => $r['controller'], '3' => $path]));
+                                    }
                                 }
                             }
                         }
+                        $resource['rules'][] = $tmp;
                     }
-                    $resource['rules'][] = $tmp;
                 }
+                unset($resource['acl']);
             }
-            unset($resource['acl']);
             return $resource;
         }
     }
@@ -817,8 +814,9 @@ function change_date_format($date, $formatFrom, $formatTo)
  */
 function view_date($dbDate)
 {
-    return change_date_format($dbDate,'Y-m-d H:i:s',__('gb_view_full_date_format'));
+    return change_date_format($dbDate, 'Y-m-d H:i:s', __('gb_view_full_date_format'));
 }
+
 /**
  * Convert to database date time
  *

@@ -51,7 +51,7 @@ class ModuleController extends ZAdminController
 
         //Get all filter
         $filter = $this->getFilter();
-
+        $this->view->setVar('_filter', $filter);
         $conditions = [];
 
         //Get all template
@@ -61,13 +61,10 @@ class ModuleController extends ZAdminController
         ]);
 
         $currentPage = $this->request->getQuery('page', 'int');
-        $paginationLimit = $this->config->pagination->limit;
 
         //Create pagination
-        $this->view->setVar('_page', ZPagination::getPaginationModel($items, $paginationLimit, $currentPage));
+        $this->view->setVar('_page', ZPagination::getPaginationModel($items, $this->config->pagination->limit, $currentPage));
 
-        //Set search value
-        $this->view->setVar('_filter', $filter);
 
         //Set column name, value
         $this->view->setVar('_pageLayout', [
@@ -217,7 +214,10 @@ class ModuleController extends ZAdminController
 
                 if (!$coreModule->save()) {
                     //Do some thing
-                    echo '<pre>'; var_dump($coreModule->getMessages());echo '</pre>'; die();
+                    echo '<pre>';
+                    var_dump($coreModule->getMessages());
+                    echo '</pre>';
+                    die();
                 } else {
                     $arrayModuleReturn['success'][] = [$coreModule->name];
                 }

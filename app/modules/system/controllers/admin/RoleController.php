@@ -27,7 +27,6 @@ class RoleController extends ZAdminController
         $this->_toolbar->addNewButton();
         $this->_toolbar->addEditButton();
         $this->_toolbar->addDeleteButton();
-
         $this->updateRules();
         UserRoles::updateModuleMenu();
         $this->updateACLCache();

@@ -49,46 +49,43 @@ ZCMS.columnOrdering = function (filterOrder, filterOrderDir) {
 };
 
 ZCMS.editButtonSubmit = function (obj) {
-    var link = obj.getAttribute("href");
     if (ZCMS.hasCheckItems()) {
         var items = document.getElementsByClassName('check_element');
-        window.location.href = link + items[ZCMS.hasCheckItems() - 1].value;
+        window.location.href = obj.getAttribute('href') + items[ZCMS.hasCheckItems() - 1].value;
     } else {
-        alert("Please choose item to edit!");
+        alert('Please choose item to edit!');
     }
     return false;
 };
 
 ZCMS.hasCheckItems = function () {
     var items = document.getElementsByClassName('check_element');
-    for (i = 0; i < items.length; i++) {
+    for (var i = 0; i < items.length; i++) {
         if (items[i].checked == true) return (i + 1);
     }
     return 0;
 };
 
-ZCMS.publishedSubmit = function (obj, f) {
+ZCMS.publishedSubmit = function (obj) {
     if (ZCMS.hasCheckItems()) {
-        var r = confirm("Do you want published item(s) ?");
+        var r = confirm('Do you want published item(s) ?');
         if (r == true) {
-            if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-            var link = obj.getAttribute("href");
-            f.setAttribute("action", link);
+            var f = document.getElementById('adminForm');
+            f.setAttribute('action', obj.getAttribute('href'));
             ZCMS.submitForm(f);
         }
     } else {
-        alert("Please choose item to published!");
+        alert('Please choose item to published!');
     }
     return false;
 };
 
-ZCMS.customSubmit = function (obj, confirmMessage, errorAlert, f) {
+ZCMS.customSubmit = function (obj, confirmMessage, errorAlert) {
     if (ZCMS.hasCheckItems()) {
         var r = confirm(confirmMessage);
         if (r == true) {
-            if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-            var link = obj.getAttribute("href");
-            f.setAttribute("action", link);
+            var f = document.getElementById('adminForm');
+            f.setAttribute('action', obj.getAttribute('href'));
             ZCMS.submitForm(f);
         }
     } else {
@@ -97,47 +94,44 @@ ZCMS.customSubmit = function (obj, confirmMessage, errorAlert, f) {
     return false;
 };
 
-ZCMS.unPublishedSubmit = function (obj, f) {
+ZCMS.unPublishedSubmit = function (obj) {
     if (ZCMS.hasCheckItems()) {
-        var r = confirm("Do you want unpublished item(s) ?");
+        var r = confirm('Do you want unpublished item(s) ?');
         if (r == true) {
-            if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-            var link = obj.getAttribute("href");
-            f.setAttribute("action", link);
+            var f = document.getElementById('adminForm');
+            f.setAttribute('action', obj.getAttribute('href'));
             ZCMS.submitForm(f);
         }
     } else {
-        alert("Please choose item to unpublished!");
+        alert('Please choose item to unpublished!');
     }
     return false;
 };
 
-ZCMS.deleteSubmit = function (obj, f) {
+ZCMS.deleteSubmit = function (obj) {
     if (ZCMS.hasCheckItems()) {
-        var r = confirm("Do you want delete item(s) ?");
+        var r = confirm('Do you want delete item(s) ?');
         if (r == true) {
-            if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-            var link = obj.getAttribute("href");
-            f.setAttribute("action", link);
+            var f = document.getElementById('adminForm');
+            f.setAttribute('action', obj.getAttribute('href'));
             ZCMS.submitForm(f);
         }
     } else {
-        alert("Please choose item to delete!");
+        alert('Please choose item to delete!');
     }
     return false;
 };
 
-ZCMS.trashSubmit = function (obj, f) {
+ZCMS.trashSubmit = function (obj) {
     if (ZCMS.hasCheckItems()) {
-        var r = confirm("Do you want trash item(s) ?");
+        var r = confirm('Do you want trash item(s) ?');
         if (r == true) {
-            if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-            var link = obj.getAttribute("href");
-            f.setAttribute("action", link);
+            var f = document.getElementById('adminForm');
+            f.setAttribute('action', obj.getAttribute('href'));
             ZCMS.submitForm(f);
         }
     } else {
-        alert("Please choose item to trash!");
+        alert('Please choose item to trash!');
     }
     return false;
 };
@@ -157,7 +151,7 @@ ZCMS.resetFilter = function () {
 ZCMS.htmlEncode = function (str) {
     if (str != null) {
         return str.replace(/[&<>"']/g, function ($0) {
-            return "&" + {"&": "amp", "<": "lt", ">": "gt", '"': "quot", "'": "#39"}[$0] + ";";
+            return "&" + {"&": "amp", "<": "lt", ">": "gt", '"': "quot", "'": "#39"}[$0] + ';';
         });
     }
     return str;

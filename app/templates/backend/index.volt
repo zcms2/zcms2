@@ -8,8 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
     <link href="{{ _baseUri }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <!-- DatePicker3 -->
-    <link href="{{ _baseUri }}/public/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- DateTimePicker -->
     <link href="{{ _baseUri }}/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{ _baseUri }}/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
@@ -115,8 +113,6 @@
 <script src="{{ _baseUri }}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Moment -->
 <script src="{{ _baseUri }}/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
-<!-- DatePicker -->
-<script src="{{ _baseUri }}/public/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- DateTimePicker -->
 <script src="{{ _baseUri }}/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <!-- AdminLTE App -->

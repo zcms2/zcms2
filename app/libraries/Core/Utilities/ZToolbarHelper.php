@@ -362,9 +362,10 @@ class ZToolbarHelper
      */
     public function addSaveEditButton($rules = ['edit', 'edit_all'], $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
     {
-        if (!is_array($rules) && gettype($rules) == 'string') {
+        if (gettype($rules) == 'string') {
             $rules = [$rules];
-        } else {
+        }
+        if (!is_array($rules)) {
             return;
         }
         foreach ($rules as $rule) {

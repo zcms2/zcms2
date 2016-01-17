@@ -136,6 +136,9 @@
     padding: 6px 10px;
 }
 
+.post-featured-image{
+    text-align: center;
+}
 .post-featured-image img{
     max-width: 100%;
     cursor: pointer;

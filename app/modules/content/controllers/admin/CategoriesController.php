@@ -24,6 +24,8 @@ class CategoriesController extends ZAdminController
         //Add toolbar button
         $this->_toolbar->addPublishedButton();
         $this->_toolbar->addUnPublishedButton();
+        $this->_toolbar->addEditButton();
+        $this->_toolbar->addSeparate();
         $this->_toolbar->addNewButton();
         $this->_toolbar->addDeleteButton();
 

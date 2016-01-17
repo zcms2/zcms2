@@ -13,12 +13,12 @@
                                 <td>{{ text_field('name', 'class':'form-control', 'value':edit_data.name, 'autocomplete':'off', 'required':'required') }}</td>
                             </tr>
                             <tr>
-                                <td width="20%"><label for="name">{{ __('Is default') }}</label></td>
-                                <td>{{ select('is_default',['0' : __('gb_no'), '1' : __('gb_yes')],'class' : 'form-control', 'value' : edit_data.is_default) }}</td>
-                            </tr>
-                            <tr>
                                 <td width="20%"><label>Location</label></td>
                                 <td>{{ select_static('location', ['0' : 'Frontend', '1' : 'Backend'], 'class' : 'form-control', 'value' : edit_data.location ) }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20%"><label for="name">{{ __('Is default') }}</label></td>
+                                <td>{{ select('is_default',['0' : __('gb_no'), '1' : __('gb_yes')],'class' : 'form-control', 'value' : edit_data.is_default) }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <hr />
+                <hr/>
             </div>
         </form>
     </div>

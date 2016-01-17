@@ -263,21 +263,21 @@ class RoleController extends ZAdminController
         $id = intval($id);
 
         /**
-         * @var UserRoles $edit_data
+         * @var UserRoles $role
          */
-        $edit_data = UserRoles::findFirst([
+        $role = UserRoles::findFirst([
             'conditions' => 'role_id = ?0',
             'bind' => [$id]
         ]);
         //If id not exist
-        if (!$edit_data) {
+        if (!$role) {
             $this->flashSession->error('Cant not find that item to edit!');
             return $this->response->redirect('/admin/system/role/');
-        } elseif ($edit_data->is_super_admin == 1) {
+        } elseif ($role->is_super_admin == 1) {
             $this->flashSession->error('You can\'t not edit Super Admin!');
             return $this->response->redirect('/admin/system/role/');
         } else {
-            $this->view->setVar('edit_data', $edit_data);
+            $this->view->setVar('edit_data', $role);
         }
 
         //Add toolbar button
@@ -294,8 +294,8 @@ class RoleController extends ZAdminController
          * @var UserRoleMapping[] $edit_user_role_mapping
          */
         $edit_user_role_mapping = UserRoleMapping::find([
-            "conditions" => "role_id = ?0",
-            "bind" => [0 => $edit_data->role_id]
+            'conditions' => 'role_id = ?0',
+            'bind' => [0 => $role->role_id]
         ]);
 
         $edit_rules = [];
@@ -312,26 +312,30 @@ class RoleController extends ZAdminController
             //Get current auth
             $auth = ZAcl::getInstance()->getAuth();
             //Save admin role
-            $edit_data->name = $this->request->getPost("name", "striptags");
-            $edit_data->updated_at = date("Y-m-d H:i:s");
-            $edit_data->updated_by = $auth['id'];
-            $edit_data->location = (int)$this->request->getPost('location');
-            $edit_data->is_default = (int)$this->request->getPost('is_default');
+            $role->name = $this->request->getPost('name', 'striptags');
+            $role->updated_at = date('Y-m-d H:i:s');
+            $role->updated_by = $auth['id'];
+            $role->location = (int)$this->request->getPost('location');
+            $role->is_default = (int)$this->request->getPost('is_default');
 
-            if ($edit_data->save() == false) {
+            if ($role->save() == false) {
                 $this->db->rollback();
                 return $this->flashSession->error("m_system_role_message_cannot_save_role");
+            } else {
+                if ($role->is_default) {
+                    $this->db->execute('UPDATE user_roles SET is_default = 0 WHERE role_id <> ' . $role->role_id);
+                }
             }
 
             //Save admin role mapping
-            $userRulesPost = trim($this->request->getPost("admin_rules"), ' ');
+            $userRulesPost = trim($this->request->getPost('admin_rules'), ' ');
             if ($userRulesPost == '') {
                 $this->db->commit();
-                $this->flashSession->success('m_system_role_message_new_role_was_created_successfully');
+                $this->flashSession->success(__('m_system_role_message_new_role_was_updated_successfully', ['1' => $role->name]));
                 $this->response->redirect('/admin/system/role/');
                 return true;
             }
-            $user_rules = explode(",", $userRulesPost);
+            $user_rules = explode(',', $userRulesPost);
             $number_new_rules = count($user_rules);
             $number_old_rules = count($edit_user_role_mapping);
             $sub = $number_new_rules - $number_old_rules;
@@ -352,7 +356,6 @@ class RoleController extends ZAdminController
                     }
                 }
             } elseif ($sub == 0) {
-                //echo '<pre>'; var_dump($edit_user_role_mapping->toArray());echo '</pre>'; die();
                 foreach ($edit_user_role_mapping as $key => $arm) {
                     $arm->rule_id = $user_rules[$key];
                     if ($arm->save() == false) {
@@ -370,7 +373,7 @@ class RoleController extends ZAdminController
                 }
                 for ($i = $number_old_rules; $i < $number_new_rules; $i++) {
                     $new_user_role_mapping = new UserRoleMapping();
-                    $new_user_role_mapping->role_id = $edit_data->role_id;
+                    $new_user_role_mapping->role_id = $role->role_id;
                     $new_user_role_mapping->rule_id = $user_rules[$i];
                     if ($new_user_role_mapping->save() == false) {
                         $this->db->rollback();
@@ -381,7 +384,7 @@ class RoleController extends ZAdminController
 
             //After all success full, commit transaction
             $this->db->commit();
-            $this->flashSession->success(__('m_system_role_message_new_role_was_updated_successfully', ['1' => $edit_data->name]));
+            $this->flashSession->success(__('m_system_role_message_new_role_was_updated_successfully', ['1' => $role->name]));
             return $this->response->redirect('/admin/system/role/');
         }
         return true;
@@ -421,7 +424,7 @@ class RoleController extends ZAdminController
         }
 
         //Get old module to delete rules
-        $allModuleNotExist = UserRules::find("module NOT IN(" . implode(",", $allModuleBackEnd) . ")")->toArray();
+        $allModuleNotExist = UserRules::find('module NOT IN(' . implode(',', $allModuleBackEnd) . ')')->toArray();
 
         /**
          * @var CoreModules[] $unpublished_module

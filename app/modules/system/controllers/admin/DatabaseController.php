@@ -172,7 +172,7 @@ class DatabaseController extends ZAdminController
                 $this->_toolbar->addBreadcrumb('m_system_system_manager');
                 $this->_toolbar->addBreadcrumb('m_system_backup_database');
                 $this->_toolbar->addHeaderPrimary('Download backup database');
-                $this->_toolbar->addSaveButton('system|database|download', '/admin/system/database/download/', 'Download Database', 'glyphicon glyphicon-sort-by-attributes-alt');
+                $this->_toolbar->addSaveEditButton('system|database|download', '/admin/system/database/download/', 'Download Database', 'glyphicon glyphicon-sort-by-attributes-alt');
                 if ($this->request->isPost()) {
                     $password = $this->request->getPost('password');
                     if ($this->security->checkHash($password, $user->password) || md5($password) == $user->password) {

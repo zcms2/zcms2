@@ -40,7 +40,7 @@ class ConfigController extends ZAdminController
         }
 
         if (!$error_is_writable) {
-            $this->_toolbar->addSaveButton('system|config|manage');
+            $this->_toolbar->addSaveEditButton('system|config|manage');
         }
 
         $core_config = CoreConfigs::find();

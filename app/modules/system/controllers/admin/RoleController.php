@@ -132,8 +132,8 @@ class RoleController extends ZAdminController
     public function newAction()
     {
         //Add toolbar button
-        $this->_toolbar->addSaveButton('new');
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveNewButton();
+        $this->_toolbar->addCancelButton();
 
         $this->_addCSSAndJS();
 
@@ -280,8 +280,8 @@ class RoleController extends ZAdminController
         }
 
         //Add toolbar button
-        $this->_toolbar->addSaveButton('edit');
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveEditButton();
+        $this->_toolbar->addCancelButton();
 
         $this->_addCSSAndJS();
 

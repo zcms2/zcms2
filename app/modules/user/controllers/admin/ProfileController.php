@@ -33,7 +33,7 @@ class ProfileController extends ZAdminController
             return $this->response->redirect('/admin/user/profile/');
         }
 
-        $this->_toolbar->addSaveButton('profile|index|index');
+        $this->_toolbar->addSaveEditButton('index');
         $this->_toolbar->addCancelButton('dashboard|index|index');
 
         $oldUserData = clone $userData;

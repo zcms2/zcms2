@@ -216,8 +216,8 @@ class UserController extends ZAdminController
      */
     public function newAction()
     {
-        $this->_toolbar->addSaveButton();
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveNewButton();
+        $this->_toolbar->addCancelButton();
 
         $this->view->setVar('admin_role', UserRoles::find());
         $form = new UserForm();
@@ -249,23 +249,26 @@ class UserController extends ZAdminController
      */
     public function editAction($id)
     {
-        $id = intval($id);
-
-        //Add toolbar button
-        $this->_toolbar->addSaveButton();
-        $this->_toolbar->addCancelButton('index');
-
         /**
          * @var Users $currentEditUser
          */
         $currentEditUser = Users::findFirst($id);
 
         //If id not exist
-        if (!$currentEditUser || $currentEditUser->user_id == Users::getCurrentUser()['id']) {
+        if (!$currentEditUser) {
             $this->flashSession->error('m_system_user_message_user_not_exist');
             $this->response->redirect('/admin/system/user/');
-            return null;
+            return false;
+        } else {
+            if ($currentEditUser->user_id == Users::getCurrentUser()['id']) {
+                $this->response->redirect('/admin/user/profile/');
+                return true;
+            }
         }
+
+        //Add toolbar button
+        $this->_toolbar->addSaveEditButton();
+        $this->_toolbar->addCancelButton();
 
         $oldUserInfo = clone $currentEditUser;
 

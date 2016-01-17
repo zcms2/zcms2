@@ -183,8 +183,8 @@ class CategoriesController extends ZAdminController
      */
     public function newAction()
     {
-        $this->_toolbar->addSaveButton('new');
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveNewButton();
+        $this->_toolbar->addCancelButton();
 
         $categoryForm = new CategoryForm();
         $this->view->setVar('form', $categoryForm);
@@ -235,7 +235,6 @@ class CategoriesController extends ZAdminController
             return;
         }
 
-
         $parentCategory = $category->parent();
         if ($parentCategory) {
             $oldParent = $parentCategory->category_id;
@@ -243,8 +242,8 @@ class CategoriesController extends ZAdminController
             $oldParent = 0;
         }
 
-        $this->_toolbar->addSaveButton('edit');
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveEditButton();
+        $this->_toolbar->addCancelButton();
 
         $categoryForm = new CategoryForm($category, ['edit' => true]);
         $this->view->setVar('form', $categoryForm);

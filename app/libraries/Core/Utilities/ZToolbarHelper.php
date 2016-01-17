@@ -130,6 +130,7 @@ class ZToolbarHelper
         if (is_string($option)) {
             $option = ['title' => $option];
         }
+
         //Check link
         if (isset($option['title'])) {
             $translation = array_key_exists('translation', $option);
@@ -351,22 +352,31 @@ class ZToolbarHelper
 
     /**
      * Add save button
-     * @param string $rule
+     *
+     * @param string|array $rules
      * @param string $buttonLink
      * @param string $buttonName
      * @param string $buttonIconClass
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addSaveButton($rule, $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
+    public function addSaveEditButton($rules = ['edit', 'edit_all'], $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
     {
-        if ($rule && $this->_isAllowed($rule)) {
-            $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
+        if (!is_array($rules) && gettype($rules) == 'string') {
+            $rules = [$rules];
+        } else {
+            return;
+        }
+        foreach ($rules as $rule) {
+            if ($rule && $this->_isAllowed($rule)) {
+                $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
+                return;
+            }
         }
     }
 
     /**
-     * Add save and edit button
+     * Add save new button
      *
      * @param string $rule
      * @param string $buttonLink
@@ -375,9 +385,9 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addSaveAndEditButton($rule, $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'glyphicon glyphicon-floppy-saved', $buttonTypeClass = 'btn btn-primary', $onClickEvent = "return ZCMS.saveAndEditForm('save_and_edit');")
+    public function addSaveNewButton($rule = 'new', $buttonLink = null, $buttonName = 'gb_save', $buttonIconClass = 'fa fa-save', $buttonTypeClass = 'btn btn-primary', $onClickEvent = 'return ZCMS.submitForm();')
     {
-        if ($this->_isAllowed($rule)) {
+        if ($rule && $this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
         }
     }
@@ -399,6 +409,8 @@ class ZToolbarHelper
     }
 
     /**
+     * Add cancel button
+     *
      * @param string $rule
      * @param string $buttonLink
      * @param string $buttonName
@@ -406,7 +418,7 @@ class ZToolbarHelper
      * @param string $buttonTypeClass
      * @param string $onClickEvent
      */
-    public function addCancelButton($rule, $buttonLink = null, $buttonName = 'gb_cancel', $buttonIconClass = 'fa fa-reply', $buttonTypeClass = 'btn btn-warning', $onClickEvent = '')
+    public function addCancelButton($rule = 'index', $buttonLink = null, $buttonName = 'gb_cancel', $buttonIconClass = 'fa fa-reply', $buttonTypeClass = 'btn btn-warning', $onClickEvent = '')
     {
         if ($this->_isAllowed($rule)) {
             $this->buttons[] = $this->renderButton($rule, $buttonName, $buttonLink, $buttonIconClass, $buttonTypeClass, $onClickEvent);
@@ -450,6 +462,8 @@ class ZToolbarHelper
     }
 
     /**
+     * Render edit link
+     *
      * @param string $rule
      * @param string $name
      * @param string $link

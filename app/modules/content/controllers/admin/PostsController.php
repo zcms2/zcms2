@@ -237,8 +237,8 @@ class PostsController extends ZAdminController
      */
     public function newAction()
     {
-        $this->_toolbar->addSaveButton('new');
-        $this->_toolbar->addCancelButton('index');
+        $this->_toolbar->addSaveNewButton();
+        $this->_toolbar->addCancelButton();
 
         $postForm = new PostForm();
         $this->view->setVar('form', $postForm);
@@ -261,9 +261,6 @@ class PostsController extends ZAdminController
      */
     public function editAction($id = 0)
     {
-        $this->_toolbar->addSaveButton('edit');
-        $this->_toolbar->addCancelButton('index');
-
         /**
          * @var Posts $post
          */
@@ -276,6 +273,9 @@ class PostsController extends ZAdminController
             $this->response->redirect('/admin/content/posts');
             return;
         }
+
+        $this->_toolbar->addSaveEditButton();
+        $this->_toolbar->addCancelButton();
 
         $postForm = new PostForm($post, ['edit' => true]);
         $this->view->setVar('form', $postForm);

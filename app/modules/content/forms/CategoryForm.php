@@ -62,13 +62,13 @@ class CategoryForm extends ZForm
 
         if (isset($options['edit'])) {
             $parent = $category->parent();
-            if($parent){
+            if ($parent) {
                 $value = $parent->category_id;
-            }else{
+            } else {
                 $root = PostCategory::getRoot('content');
                 $value = $root->category_id;
             }
-            $elementParent = new Select('parent', $categoryFilter,['value' => $value, 'required' => 'required']);
+            $elementParent = new Select('parent', $categoryFilter, ['value' => $value, 'required' => 'required']);
         } else {
             $elementParent = new Select('parent', $categoryFilter, ['required' => 'required']);
         }

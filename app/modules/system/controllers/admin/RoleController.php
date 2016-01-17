@@ -41,22 +41,21 @@ class RoleController extends ZAdminController
 
         //Get all filter
         $filter = $this->getFilter();
+        //Set view filter
+        $this->view->setVar('_filter', $filter);
+
         $items = $this->modelsManager->createBuilder()
             ->columns('ar.role_id AS id, ar.name AS name, ar.is_default, ar.location, ar.updated_at AS updated_at, ar.updated_by AS updated_by, ar.created_at AS created_at')
             ->addFrom('ZCMS\Core\Models\UserRoles', "ar")
             ->where(implode(' AND ', $conditions))
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
-        $currentPage = $this->request->getQuery("page", "int", 1);
 
-        $paginationLimit = $this->config->pagination->limit;
+        $currentPage = $this->request->getQuery('page', 'int', 1);
 
         //Create pagination
-        $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $paginationLimit, $currentPage));
+        $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $this->config->pagination->limit, $currentPage));
 
-        //Set search value
-        $this->view->setVar('_filter', $filter);
-
-        //Set column name, value
+        //Set view layout
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',

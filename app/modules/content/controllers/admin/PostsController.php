@@ -112,7 +112,7 @@ class PostsController extends ZAdminController
             ->where(implode(' AND ', $conditions))
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
 
-        $currentPage = $this->request->getQuery('page', 'int');
+        $currentPage = $this->request->getQuery('page', 'int', 1);
 
         /**
          * Get all post categories

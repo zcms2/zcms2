@@ -55,15 +55,15 @@ class LoginController extends ZFrontController
             if ($status === true) {
                 $user = Users::getCurrentUser();
                 $this->flashSession->success('Hi, ' . $user['full_name'] . '!');
-                if($this->session->get('_redirect_from')){
+                if ($this->session->get('_redirect_from')) {
                     $this->response->redirect(dirname(BASE_URI) . $this->session->get('_redirect_from'));
-                }else{
+                } else {
                     $this->response->redirect('/');
                 }
-            } elseif($status === false) {
+            } elseif ($status === false) {
                 $this->flashSession->error('User or password not match');
                 $this->response->redirect('/user/login/');
-            }else{
+            } else {
                 $this->flashSession->error('Your account is not active yet');
                 $this->response->redirect('/user/login/');
             }
@@ -73,9 +73,10 @@ class LoginController extends ZFrontController
     /**
      * Add social login
      */
-    private function _addSocialLogin(){
+    private function _addSocialLogin()
+    {
         $isSocialLogin = false;
-        if($this->config->social->facebook->appID){
+        if ($this->config->social->facebook->appID) {
             $fb = ZFacebook::getInstance();
             $helper = $fb->getRedirectLoginHelper();
             $permissions = $this->config->social->facebook->permissions->toArray();
@@ -83,7 +84,7 @@ class LoginController extends ZFrontController
             $isSocialLogin = true;
         }
 
-        if($this->config->social->google->clientID){
+        if ($this->config->social->google->clientID) {
             $google = ZGoogle::getInstance();
             $this->view->setVar('googleLoginUrl', $google->getAuthUrl());
             $isSocialLogin = true;

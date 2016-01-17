@@ -16,14 +16,14 @@
                                         <input type="password" id="password" name="password" value="" class="form-control">
                                     </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div>
-                                        <span class="symbol required"></span>Required Fields
-                                        <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <span class="symbol required"></span>Required Fields
+                                                <hr>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>

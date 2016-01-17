@@ -85,7 +85,7 @@ class PostForm extends ZForm
         if ($post && $post->published_at) {
             $published_at = change_date_format($post->published_at, 'Y-m-d H:i:s', __('gb_datetime_format'));
             $post->published_at = $published_at;
-        }else{
+        } else {
             $published_at = change_date_format(date('Y-m-i H:i:s'), 'Y-m-d H:i:s', __('gb_datetime_format'));
         }
 
@@ -93,7 +93,7 @@ class PostForm extends ZForm
 
         $this->add($publishedAt);
 
-        $image = new Hidden('image',['id'=>'post-featured-image']);
+        $image = new Hidden('image', ['id' => 'post-featured-image']);
         $this->add($image);
 
         /**

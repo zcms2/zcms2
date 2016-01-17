@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ form.label('first_name')}}
+                                        {{ form.label('first_name') }}
                                         {{ form.render('first_name') }}
                                     </div>
                                     <div class="form-group">
@@ -41,6 +41,7 @@
                                     <label class="control-label">
                                         {{ __('m_user_help_text_click_image_upload_new_avatar_avatar_must_square') }}
                                     </label>
+
                                     <div class="" style="cursor: pointer" onclick="openFileBrowser(this)"><img
                                                 src="{{ _baseUri }}{% if avatar is defined and avatar|length > 0 %}{{ avatar }}{% else %}{{ _baseUri }}/images/tmp/select-image.png{% endif %}"
                                                 style="width: 128px; height: 128px; border: 1px solid #c0c0c0; padding: 2px; border-radius: 3px">

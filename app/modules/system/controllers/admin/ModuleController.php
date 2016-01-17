@@ -60,13 +60,12 @@ class ModuleController extends ZAdminController
             'order' => $filter['filter_order'] . ' ' . $filter['filter_order_dir'],
         ]);
 
-        $currentPage = $this->request->getQuery('page', 'int');
+        $currentPage = $this->request->getQuery('page', 'int', 1);
 
         //Create pagination
         $this->view->setVar('_page', ZPagination::getPaginationModel($items, $this->config->pagination->limit, $currentPage));
 
-
-        //Set column name, value
+        //Set view layout
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',

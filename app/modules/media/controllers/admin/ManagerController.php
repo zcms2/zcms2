@@ -64,15 +64,15 @@ class ManagerController extends ZAdminController
             ->where(implode(' AND ', $conditions))
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
 
-        $currentPage = $this->request->getQuery('page', 'int');
+        $currentPage = $this->request->getQuery('page', 'int', 1);
         $paginationLimit = $this->config->pagination->limit;
 
         //Create pagination
         $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $paginationLimit, $currentPage));
 
-        //Set search value
+        //Set view filter
         $this->view->setVar('_filter', $filter);
-        //Set column name, value
+        //Set view layout
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',

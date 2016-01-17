@@ -16,6 +16,9 @@ class ErrorController extends ZFrontController
      */
     public function notFound404Action()
     {
-        echo '<pre>'; var_dump(__METHOD__);echo '</pre>'; die();
+        echo '<pre>';
+        var_dump(__METHOD__);
+        echo '</pre>';
+        die();
     }
 }

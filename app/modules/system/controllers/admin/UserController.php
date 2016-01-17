@@ -55,8 +55,8 @@ class UserController extends ZAdminController
 
         //Get all filter
         $filter = $this->getFilter();
-
-        //echo '<pre>'; var_dump($filter);echo '</pre>'; die();
+        //Set view filter
+        $this->view->setVar('_filter', $filter);
 
         $conditions = [];
         //$conditions[] = 'user_id != ' . Users::getCurrentUser()['id'];
@@ -77,9 +77,6 @@ class UserController extends ZAdminController
             'order' => $filter['filter_order'] . ' ' . $filter['filter_order_dir'],
         ]);
 
-        $currentPage = $this->request->getQuery('page', 'int');
-        $paginationLimit = $this->config->pagination->limit;
-
         $filter_location = [
             '' => __('gb_select_location'),
             'backend' => __('gb_backend'),
@@ -90,11 +87,10 @@ class UserController extends ZAdminController
         $this->view->setVar('filter_location', $filter_location);
 
         //Create pagination
-        $this->view->setVar('_page', ZPagination::getPaginationModel($items, $paginationLimit, $currentPage));
+        $currentPage = $this->request->getQuery('page', 'int', 1);
+        $this->view->setVar('_page', ZPagination::getPaginationModel($items, $this->config->pagination->limit, $currentPage));
 
-        //Set search value
-        $this->view->setVar('_filter', $filter);
-        //Set column name, value
+        //Set view layout
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',

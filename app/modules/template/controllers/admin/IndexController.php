@@ -1,6 +1,6 @@
 <?php
 
-namespace  ZCMS\Modules\Template\Controllers\Admin;
+namespace ZCMS\Modules\Template\Controllers\Admin;
 
 use ZCMS\Core\Models\CoreTemplates;
 use ZCMS\Core\ZAdminController;
@@ -39,6 +39,8 @@ class IndexController extends ZAdminController
 
         //Get all filter
         $filter = $this->getFilter();
+        //Set view filter
+        $this->view->setVar('_filter', $filter);
 
         $conditions = [];
 
@@ -62,7 +64,7 @@ class IndexController extends ZAdminController
             $this->flashSession->notice(__('m_template_notice_there_are_no_template_matching_your_query'));
         }
 
-        $currentPage = $this->request->getQuery('page', 'int');
+        $currentPage = $this->request->getQuery('page', 'int', 1);
         $paginationLimit = $this->config->pagination->limit;
 
         $filter_location = [
@@ -77,10 +79,7 @@ class IndexController extends ZAdminController
         //Create pagination
         $this->view->setVar('_page', ZPagination::getPaginationModel($items, $paginationLimit, $currentPage));
 
-        //Set search value
-        $this->view->setVar('_filter', $filter);
-
-        //Set column name, value
+        //Set view layout
         $this->view->setVar('_pageLayout', [
             [
                 'type' => 'check_all',

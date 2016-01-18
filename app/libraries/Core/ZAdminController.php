@@ -261,10 +261,8 @@ class ZAdminController extends Controller
                 $ids = $this->request->getPost('ids');
                 ZArrayHelper::toInteger($ids);
             }
-            echo '<pre>'; var_dump($_POST);echo '</pre>'; die();
-            if (is_array($ids)) {
+            if (is_array($ids) && count($ids)) {
                 $query = "UPDATE {$this->_modelBaseName} SET published = 1 " . $extraQuery . " WHERE {$this->_modelPrimaryKey} IN (" . implode(',', $ids) . ")";
-                echo '<pre>'; var_dump($query);echo '</pre>'; die();
                 $this->db->execute($query);
                 $this->flashSession->success(__($this->_getPrefixMessage() . 'message_items_successfully_published', ["1" => $this->db->affectedRows()]));
             }

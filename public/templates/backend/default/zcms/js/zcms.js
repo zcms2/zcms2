@@ -382,7 +382,7 @@ $(function () {
         }
     });
 
-    $('.alert button.close').click(function () {
+    $('.alert button.close, .callout button.close').click(function () {
         var alert = $(this).parent().parent();
         if (alert.hasClass('zcms-toolbar-helper')) {
             alert.remove();

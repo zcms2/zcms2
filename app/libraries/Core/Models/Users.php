@@ -428,7 +428,7 @@ class Users extends ZModel
          * @var \Phalcon\Security $security
          */
         $security = Di::getDefault()->get('security');
-        $token = $security->getToken();
+        $token = $security->getToken(32);
         $session->set('auth', [
             'full_name' => $this->display_name,
             'first_name' => $this->first_name,
@@ -480,7 +480,7 @@ class Users extends ZModel
         $security = Di::getDefault()->get('security');
 
         if ($user && Users::checkPassword($password, $user->salt, $user->password)) {
-            $token = $security->getToken();
+            $token = $security->getToken(32);
             /**
              * @var UserRoles $role
              */

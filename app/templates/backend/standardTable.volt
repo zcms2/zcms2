@@ -8,6 +8,7 @@
                     {{ _toolbarHelpers.renderHtmlFilter() }}
                 {% endif %}
             </div>
+            {% if _hasFilter %}
             <div class="col-md-4">
                 <div class="dataTables_filter">
                     <label>
@@ -20,6 +21,7 @@
                     </label>
                 </div>
             </div>
+            {% endif %}
         </div>
     {% endif %}
     <div class="table-responsive">
@@ -215,7 +217,7 @@
         {% endfor %}
     </tr>
 
-    {% if _filterColumn is defined %}
+    {% if _filterColumn is defined and _hasFilter == true %}
         <tr class="tr-filter{% if _isFilter %} tr-filter-showed{% endif %}" {% if not _isFilter %}style="display: none"{% endif %}>
             {% for item in _pageLayout %}
                 {% if item['filter'] is defined %}

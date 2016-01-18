@@ -56,6 +56,11 @@ class ZAdminTemplate
             $filter = array_column($view->_pageLayout, 'filter');
             $filterForm = new ZFormFilter($filter, $view->_filter, $view->_filterOptions);
             $view->setVar('_filterColumn', $filterForm->getForm());
+            if(count($filter)){
+                $view->setVar('_hasFilter', true);
+            }else{
+                $view->setVar('_hasFilter', false);
+            }
         }
         $view->setVar('_dateFormat', [
             'gb_js_date_time_format' => __('gb_js_date_time_format'),

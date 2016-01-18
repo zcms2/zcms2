@@ -5,6 +5,7 @@ ZCMS.setLocation = function ($location) {
 };
 
 ZCMS.submitForm = function (f) {
+    if (!f) {f = document.getElementById('adminForm');}
     var hasErrorRequiredField = false;
     var errorRequiredFieldID = '';
     $('[required]').each(function () {
@@ -352,8 +353,8 @@ $(function () {
                 locale: {
                     format: _ZCMS.dateFormat['gb_js_standard_table_date_format']
                 }
-            }),$(this).val('');
-        }else{
+            }), $(this).val('');
+        } else {
             $(this).daterangepicker({
                 singleDatePicker: true,
                 locale: {

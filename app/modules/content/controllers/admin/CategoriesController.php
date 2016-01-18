@@ -67,6 +67,7 @@ class CategoriesController extends ZAdminController
             ->join('ZCMS\Core\Models\Users', 'c.created_by = u.user_id', 'u')
             ->where(implode(' AND ', $conditions))
             ->orderBy($filter['filter_order'] . ' ' . $filter['filter_order_dir']);
+
         $currentPage = $this->request->getQuery('page', 'int', 1);
 
         $this->view->setVar('_page', ZPagination::getPaginationQueryBuilder($items, $this->config->pagination->limit, $currentPage));

@@ -5,9 +5,6 @@ ZCMS.setLocation = function ($location) {
 };
 
 ZCMS.submitForm = function (f) {
-    if ("undefined" === typeof f && (f = document.getElementById("adminForm"), !f)) f = document.adminForm;
-    if ("function" == typeof f.onsubmit) f.onsubmit();
-    "function" == typeof f.fireEvent && f.fireEvent("submit");
     var hasErrorRequiredField = false;
     var errorRequiredFieldID = '';
     $('[required]').each(function () {
@@ -22,7 +19,6 @@ ZCMS.submitForm = function (f) {
             if (errorRequiredFieldID == '') {
                 errorRequiredFieldID = $(this).attr('id');
             }
-
         } else {
             $(this).parent().addClass('has-success').removeClass('has-error');
             $(this).parent().find('.help-block').css('display', 'none');

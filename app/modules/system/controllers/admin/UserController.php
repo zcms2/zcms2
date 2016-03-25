@@ -68,7 +68,7 @@ class UserController extends ZAdminController
         $filter['filter_search'] = trim($filter['filter_search']);
 
         if ($filter['filter_search']) {
-            $conditions[] = "CONCAT(first_name, ' ', last_name) ILIKE '%" . $filter['filter_search'] . "%' OR email like '%" . $filter['filter_search'] . "%'";
+            $conditions[] = "CONCAT(first_name, ' ', last_name) LIKE '%" . $filter['filter_search'] . "%' OR email like '%" . $filter['filter_search'] . "%'";
         }
 
         //Get all user

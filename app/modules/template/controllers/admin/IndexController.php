@@ -35,7 +35,6 @@ class IndexController extends ZAdminController
         $this->addFilter('filter_order', 'template_id', 'string');
         $this->addFilter('filter_order_dir', 'ASC', 'string');
         $this->addFilter('filter_search', '', 'string');
-        $this->addFilter('filter_location', '', 'string');
 
         //Get all filter
         $filter = $this->getFilter();
@@ -46,10 +45,6 @@ class IndexController extends ZAdminController
 
         if (trim($filter['filter_search'])) {
             $conditions[] = "name like '%" . trim($filter['filter_search']) . "%'";
-        }
-
-        if ($filter['filter_location']) {
-            $conditions[] = "location = '" . $filter['filter_location'] . "'";
         }
 
         /**
@@ -66,15 +61,6 @@ class IndexController extends ZAdminController
 
         $currentPage = $this->request->getQuery('page', 'int', 1);
         $paginationLimit = $this->config->pagination->limit;
-
-        $filter_location = [
-            '' => __('gb_select_location'),
-            'admin' => __('gb_admin'),
-            'frontend' => __('gb_frontend')
-        ];
-
-        //Set filter to view
-        $this->view->setVar('filter_location', $filter_location);
 
         //Create pagination
         $this->view->setVar('_page', ZPagination::getPaginationModel($items, $paginationLimit, $currentPage));
@@ -275,9 +261,7 @@ class IndexController extends ZAdminController
      */
     private function _addTemplateLang()
     {
-        $templates = get_child_folder(ROOT_PATH . '/app/templates/backend/');
-        ZTranslate::getInstance()->addTemplateLang($templates);
         $templates = get_child_folder(ROOT_PATH . '/app/templates/frontend/');
-        ZTranslate::getInstance()->addTemplateLang($templates, 'frontend');
+        ZTranslate::getInstance('frontend')->addTemplateLang($templates, 'frontend');
     }
 }

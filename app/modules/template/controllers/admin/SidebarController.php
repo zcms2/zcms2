@@ -237,7 +237,7 @@ class SidebarController extends ZAdminController
         if ($this->request->isAjax()) {
             //Add widget frontend translation
             $allWidget = get_child_folder(ROOT_PATH . '/app/widgets/frontend/');
-            ZTranslate::getInstance()->addWidgetLang($allWidget, 'frontend');
+            ZTranslate::getInstance('frontend')->addWidgetLang($allWidget, 'frontend');
 
             /**
              * @var CoreTemplates $defaultFrontEndTemplate
@@ -322,7 +322,10 @@ class SidebarController extends ZAdminController
 
         if ($this->request->isAjax()) {
             $widgetId = $this->request->getPost('zwidget_id', 'int', 0);
-            $widget = CoreWidgetValues::findFirst($widgetId);
+            $widget = CoreWidgetValues::findFirst([
+                'conditions' => 'widget_value_id = ?0',
+                'bind'=>[$widgetId]
+            ]);
             if ($widget) {
                 if ($widget->delete()) {
                     $content = '1';

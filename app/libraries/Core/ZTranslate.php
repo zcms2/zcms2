@@ -42,7 +42,7 @@ class ZTranslate
      * @param string $location
      * @return ZTranslate
      */
-    public static function getInstance($location)
+    public static function getInstance($location = 'frontend')
     {
         if (!is_array(self::$instance) || !isset(self::$instance[$location])) {
             self::$instance[$location] = new ZTranslate($location);

@@ -8,19 +8,11 @@
                         <div class="col-md-5">
                             <div class="dataTables_length">
                                 <div class="input-group input-group-sm">
-                                    {#<span class="input-group-addon">Search</span>#}
-                                    {#{{ text_field("filter_search", "value": _filter['filter_search'], "class" : "form-control input-sm") }}#}
-                                    {#<span class="input-group-btn">#}
-                                    {#<input type="reset" class="btn btn-danger btn-sm"#}
-                                    {#value="{{ __('gb_reset_button') }}" onclick="return ZCMS.resetFilter();">#}
-                                    {#{{ submit_button("go", "value": __('gb_go_button'), "class" : "btn btn-primary btn-sm") }}#}
-                                    {#</span>#}
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-7">
                             <div class="dataTables_filter">
-                                <label>{{ select_static("filter_location", filter_location, "value" : _filter['filter_location'], "class" : "form-control", "onchange" : "ZCMS.submitForm()") }}</label>
                             </div>
                         </div>
                     </div>

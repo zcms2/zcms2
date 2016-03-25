@@ -257,11 +257,15 @@ class IndexController extends ZAdminController
     }
 
     /**
-     * Add template language
+     * Add template language (backend and frontend)
      */
     private function _addTemplateLang()
     {
+        $template = ZTranslate::getInstance('admin');
+        $templatesPath = ROOT_PATH . '/app/templates/backend/languages/' . $this->config->website->language . '/' . $this->config->website->language . '.php';
+        $template->addLang($templatesPath);
+
         $templates = get_child_folder(ROOT_PATH . '/app/templates/frontend/');
-        ZTranslate::getInstance('frontend')->addTemplateLang($templates, 'frontend');
+        $template->addTemplateLang($templates, 'frontend');
     }
 }

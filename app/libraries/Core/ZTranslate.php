@@ -140,7 +140,7 @@ class ZTranslate
      * @param string|mixed $templateName
      * @param string $location
      */
-    public function addTemplateLang($templateName, $location = 'admin')
+    public function addTemplateLang($templateName, $location = 'frontend')
     {
         if (is_array($templateName)) {
             foreach ($templateName as $template) {
